@@ -14,7 +14,7 @@
       <AnchorPane prefHeight="635.0" prefWidth="445.0">
          <children>
             <Label layoutX="111.0" layoutY="466.0" prefHeight="17.0" prefWidth="227.0" style="-fx-alignment: center;" text="Location:" textAlignment="CENTER" />
-            <Label layoutX="137.0" layoutY="69.0" prefHeight="95.0" prefWidth="171.0" text="Scheduling Appointment" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="loginTitle" layoutX="137.0" layoutY="69.0" prefHeight="95.0" prefWidth="171.0" text="Scheduling Appointment" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
