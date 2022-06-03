@@ -3,4 +3,4 @@ associated properties.
 
 Working on completing the login page. Need to translate french, add the additional label for
 the location, create the user model and DAO for user, and then write the code for verifying
-username/password against database, creating alerts
+username/password against database, creating alert.
