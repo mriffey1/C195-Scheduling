@@ -1,0 +1,6 @@
+6/3/22 6:38PM - updated updates for the language resource bundle and began creating the
+associated properties.
+
+Working on completing the login page. Need to translate french, add the additional label for
+the location, create the user model and DAO for user, and then write the code for verifying
+username/password against database, creating alerts
