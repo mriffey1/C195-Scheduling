@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Customers">
+<AnchorPane prefHeight="500.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Customers">
    <children>
-      <TableView layoutX="16.0" layoutY="15.0" prefHeight="338.0" prefWidth="744.0">
+      <TableView fx:id="custTable" layoutX="16.0" layoutY="15.0" prefHeight="338.0" prefWidth="744.0">
         <columns>
-          <TableColumn prefWidth="90.76366806030273" text="Customer ID" />
-          <TableColumn prefWidth="105.5999755859375" text="Customer Name" />
-            <TableColumn prefWidth="117.8182373046875" text="Address" />
-            <TableColumn prefWidth="127.4180908203125" text="Postal Code" />
-            <TableColumn prefWidth="104.72732543945312" text="Phone #" />
-            <TableColumn prefWidth="124.7999267578125" text="First Level Division" />
+          <TableColumn fx:id="custIdCol" prefWidth="90.76366806030273" text="Customer ID" />
+          <TableColumn fx:id="custNameCol" prefWidth="105.5999755859375" text="Customer Name" />
+            <TableColumn fx:id="custAddressCol" prefWidth="117.8182373046875" text="Address" />
+            <TableColumn fx:id="custPostalCol" prefWidth="127.4180908203125" text="Postal Code" />
+            <TableColumn fx:id="custPhoneCol" prefWidth="104.72732543945312" text="Phone #" />
+            <TableColumn fx:id="custFirstCol" prefWidth="124.7999267578125" text="First Level Division" />
         </columns>
       </TableView>
       <GridPane layoutX="16.0" layoutY="363.0">
@@ -31,9 +25,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefWidth="75.0" text="Delete" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" prefWidth="75.0" text="Add" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefWidth="75.0" text="Update" />
+            <Button fx:id="custDeleteLabel" mnemonicParsing="false" onAction="#actionCustDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="2" />
+            <Button fx:id="custAddLabel" mnemonicParsing="false" onAction="#actionCustAdd" prefWidth="75.0" text="Add" GridPane.columnIndex="1" />
+            <Button fx:id="custUpdateLabel" mnemonicParsing="false" onAction="#actionCustUpdate" prefWidth="75.0" text="Update" />
          </children>
       </GridPane>
    </children>

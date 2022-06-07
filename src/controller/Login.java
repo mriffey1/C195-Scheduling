@@ -9,10 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 import static DAO.UserDAO.*;
@@ -36,11 +39,21 @@ public class Login implements Initializable {
         String Password = txtFieldUserPassword.getText();
 
 
+        String filename = "login_activity.txt", items;
+        FileWriter fwritter = new FileWriter(filename, true);
+        Scanner keyboard = new Scanner(System.in);
+        PrintWriter pwVariable = new PrintWriter(fwritter);
+
+
+
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             System.out.println("Error username blank");
 
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(2);
+            fwritter.write(User_Name + " has failed login due to password being blank");
+            fwritter.write("\n");
+            fwritter.close();
 
         } else if (!usernameValidation(User_Name)) {
             helper.ErrorMsg.getError(1);
@@ -55,6 +68,10 @@ public class Login implements Initializable {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+
+            fwritter.write(User_Name + " has successfully logged on");
+            fwritter.write("\n");
+            fwritter.close();
         }
 
     }
