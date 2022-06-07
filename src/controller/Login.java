@@ -35,6 +35,7 @@ public class Login implements Initializable {
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
+
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
 
@@ -50,17 +51,20 @@ public class Login implements Initializable {
 
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(2);
-            fwritter.write(User_Name + " has failed login due to password being blank");
+            fwritter.write(User_Name + " has failed login due to password being blank " +  new java.util.Date());
             fwritter.write("\n");
             fwritter.close();
 
         } else if (!usernameValidation(User_Name)) {
             helper.ErrorMsg.getError(1);
+            // System.out.println("Test");
 
         } else if (!passwordValidation(Password)) {
             helper.ErrorMsg.getError(2);
 
-        } else if (select(User_Name, Password)) {
+        } else if (userLogin(User_Name, Password)) {
+
+            helper.ErrorMsg.confirmation(1);
             FXMLLoader loader = new FXMLLoader();
             Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
             Scene scene = new Scene(parent);
@@ -68,10 +72,10 @@ public class Login implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-            fwritter.write(User_Name + " has successfully logged on");
+            fwritter.write(User_Name + " has successfully logged on " +  new java.util.Date());
             fwritter.write("\n");
             fwritter.close();
-        }
+        } else helper.ErrorMsg.getError(2);
 
     }
 
