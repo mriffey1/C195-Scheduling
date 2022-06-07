@@ -1,6 +1,5 @@
 package controller;
 
-import DAO.userDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,10 +11,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-public class login implements Initializable {
+import static DAO.UserDAO.*;
+
+public class Login implements Initializable {
 
     public Label labelLocation;
     public TextField txtFieldUserName;
@@ -29,22 +31,26 @@ public class login implements Initializable {
     Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
-    public void actionLoginButton(ActionEvent actionEvent) throws IOException {
+    public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
 
 
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             System.out.println("Error username blank");
+
         } else if (Password.isEmpty() || Password.isBlank()) {
-            System.out.println("Password is blank");
-        } else if (userDAO.select(User_Name, Password) == false) {
-            System.out.println("Incorrect username");
+            helper.ErrorMsg.getError(2);
 
-        } else if (userDAO.select(User_Name, Password) == true) {
+        } else if (!usernameValidation(User_Name)) {
+            helper.ErrorMsg.getError(1);
+
+        } else if (!passwordValidation(Password)) {
+            helper.ErrorMsg.getError(2);
+
+        } else if (select(User_Name, Password)) {
             FXMLLoader loader = new FXMLLoader();
-
-            Parent parent = FXMLLoader.load(getClass().getResource("../view/customers.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -56,8 +62,8 @@ public class login implements Initializable {
     public void actionCancelButton(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.WARNING, langBundle.getString("Cancel"));
         alert.setTitle("Exit Application");
-        alert.setHeaderText("Are you sure you want to exit?");
-        alert.setContentText("Press OK to exit or press Cancel to stay.");
+        alert.setHeaderText(langBundle.getString("Areyousureyouwanttoexit?"));
+        alert.setContentText(langBundle.getString("PressOKtoexitorpressCanceltostay."));
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
         alert.showAndWait();

@@ -1,4 +1,4 @@
 package controller;
 
-public class reports {
+public class Reports {
 }
