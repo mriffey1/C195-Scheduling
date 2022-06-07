@@ -45,7 +45,6 @@ public class Login implements Initializable {
         PrintWriter pwVariable = new PrintWriter(fwritter);
 
 
-
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             System.out.println("Error username blank");
 
