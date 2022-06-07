@@ -1,10 +1,16 @@
 package controller;
 
+import DAO.userDAO;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -22,7 +28,28 @@ public class login implements Initializable {
 
     Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
-    public void actionLoginButton(ActionEvent actionEvent) {
+
+    public void actionLoginButton(ActionEvent actionEvent) throws IOException {
+        String User_Name = txtFieldUserName.getText();
+        String Password = txtFieldUserPassword.getText();
+
+
+        if (User_Name.isEmpty() || User_Name.isBlank()) {
+            System.out.println("Error username blank");
+        } else if (Password.isEmpty() || Password.isBlank()) {
+            System.out.println("Password is blank");
+        } else if (userDAO.select(User_Name, Password) == false) {
+            System.out.println("Incorrect username");
+
+        } else if (userDAO.select(User_Name, Password) == true) {
+            FXMLLoader loader = new FXMLLoader();
+
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/customers.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
 
     }
 
@@ -55,7 +82,6 @@ public class login implements Initializable {
         loginTitle.setText(langBundle.getString("SchedulingApplication"));
         loginButton.setText(langBundle.getString("Login"));
         cancelButton.setText(langBundle.getString("Cancel"));
-
 
 
     }
