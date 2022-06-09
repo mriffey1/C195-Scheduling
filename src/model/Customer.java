@@ -1,21 +1,22 @@
 package model;
 
 public class Customer {
-    private int customerID;
+    private int customerId;
     private String customerName;
     private String customerAddress;
     private String customerPostalCode;
-    private int customerDivision;
     private String customerPhone;
+    private int customerDivision;
+
 
 
     public Customer(){
 
     }
-    public Customer(int customerID, String customerName, String customerAddress,
-                    String customerPostalCode, int customerDivision, String customerPhone) {
+    public Customer(int customerId, String customerName, String customerAddress,
+                    String customerPostalCode, String customerPhone, int customerDivision) {
 
-        this.customerID = customerID;
+        this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
@@ -23,15 +24,15 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public Customer(Integer customerId, String customerName, String customerAddress, String customerPostal, String customerPhone, Integer customerDivision) {
+//    public Customer(Integer customerId, String customerName, String customerAddress, String customerPostal, String customerPhone, Integer customerDivision) {
+//    }
+
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setCustomerID(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {
@@ -67,9 +68,9 @@ public class Customer {
         this.customerDivision = customerDivision;
     }
 
-    public Customer(String customerName, int customerID) {
+    public Customer(String customerName, int customerId) {
         this.customerName = customerName;
-        this.customerID = customerID;
+        this.customerId = customerId;
     }
 
     public String getCustomerPhone() {

@@ -1,8 +1,6 @@
 package controller;
 
 import DAO.CustomerDAO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +18,9 @@ import model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Customers implements Initializable {
-    ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
-    ObservableList<Customer> customerList = FXCollections.observableArrayList();
+
     @FXML
     private TableView<Customer> custTable;
     @FXML
@@ -45,16 +40,8 @@ public class Customers implements Initializable {
     public Button custUpdateLabel;
 
 
-
-
     public void actionCustDelete(ActionEvent actionEvent) throws Exception {
-        CustomerList = CustomerDAO.getCustomerList();
-        custTable.setItems(CustomerList);
-        custTable.refresh();
 
-        CustomerList = CustomerDAO.getCustomerList();
-        custTable.setItems(CustomerList);
-        custTable.refresh();
     }
 
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
@@ -77,14 +64,10 @@ public class Customers implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            CustomerList.setAll(CustomerDAO.getCustomerList());
+    public void initialize(URL url, ResourceBundle resourceBundle)  {
 
-        } catch (Exception ex) {
-            Logger.getLogger(Customers.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        custTable.setItems(CustomerDAO.getCustomerList());
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
@@ -92,9 +75,8 @@ public class Customers implements Initializable {
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
 
 
-
     }
-    }
+}
 
 
 

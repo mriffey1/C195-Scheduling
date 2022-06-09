@@ -15,7 +15,7 @@ public abstract class JDBC {
   //  public static Connection conn;  // Connection Interface
     private static Connection conn = null;
 
-    public JDBC() {};
+
     public static Connection openConnection() {
         try {
             Class.forName(driver); // Locate Driver
