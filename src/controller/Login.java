@@ -48,10 +48,12 @@ public class Login implements Initializable {
 
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             System.out.println("Error username blank");
+        } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) {
+            helper.ErrorMsg.getError(3);
 
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(2);
-            fwritter.write(User_Name + " has failed login due to password being blank " +  new java.util.Date());
+            fwritter.write(User_Name + " has failed login due to password being blank " + new java.util.Date());
             fwritter.write("\n");
             fwritter.close();
 
@@ -72,7 +74,7 @@ public class Login implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-            fwritter.write(User_Name + " has successfully logged on " +  new java.util.Date());
+            fwritter.write(User_Name + " has successfully logged on " + new java.util.Date());
             fwritter.write("\n");
             fwritter.close();
         } else helper.ErrorMsg.getError(2);

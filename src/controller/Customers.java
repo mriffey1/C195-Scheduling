@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.CustomerDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Customers implements Initializable {
@@ -40,7 +43,18 @@ public class Customers implements Initializable {
     public Button custUpdateLabel;
 
 
+    ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
+
     public void actionCustDelete(ActionEvent actionEvent) throws Exception {
+        Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null) {
+            System.out.println("Error");
+        } else {
+            CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+            CustomerList = CustomerDAO.getCustomerList();
+            custTable.setItems(CustomerList);
+            custTable.refresh();
+        }
 
     }
 
@@ -53,18 +67,29 @@ public class Customers implements Initializable {
         stage.show();
     }
 
-    public void actionCustUpdate(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/CustomerModify.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    public void actionCustUpdate(ActionEvent actionEvent) throws IOException, SQLException {
+        if (custTable.getSelectionModel().getSelectedItem() != null) {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/CustomerModify.fxml"));
+            loader.load();
+
+            CustomerModify MCController = loader.getController();
+            MCController.getCustomerInfo(custTable.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } else {
+
+            System.out.println("Error");
+        }
     }
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)  {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         custTable.setItems(CustomerDAO.getCustomerList());
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));

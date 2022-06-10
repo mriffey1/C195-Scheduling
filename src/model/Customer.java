@@ -1,5 +1,13 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+/**
+ * Model for Customers
+ *
+ * @author Megan Riffey
+ */
 public class Customer {
     private int customerId;
     private String customerName;
@@ -9,12 +17,12 @@ public class Customer {
     private int customerDivision;
 
 
+    static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
 
-    public Customer(){
-
+    public Customer() {
     }
-    public Customer(int customerId, String customerName, String customerAddress,
-                    String customerPostalCode, String customerPhone, int customerDivision) {
+
+    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivision) {
 
         this.customerId = customerId;
         this.customerName = customerName;
@@ -24,63 +32,118 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-//    public Customer(Integer customerId, String customerName, String customerAddress, String customerPostal, String customerPhone, Integer customerDivision) {
-//    }
 
+    //   public static ObservableList<Customer> getAllCustomers() {
+    //      return CustomerList;
+    //   }
+
+    /**
+     * Gets customerId
+     *
+     * @return customerId
+     */
     public int getCustomerId() {
         return customerId;
     }
 
+    /**
+     * Sets customerId
+     * @param customerId
+     */
     public void setCustomerID(int customerId) {
         this.customerId = customerId;
     }
 
+    /**
+     * Returns customer's name
+     * @return customerName
+     */
     public String getCustomerName() {
         return customerName;
     }
 
+    /**
+     * Set's customer's name
+     * @param customerName
+     */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
+    /**
+     * Return's customer's address
+     * @return customerAddress
+     */
     public String getCustomerAddress() {
         return customerAddress;
     }
 
+    /**
+     * Sets customer address
+     * @param customerAddress
+     */
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
     }
 
+    /**
+     * Returns customer postal code
+     * @return customerPostalCode
+     */
     public String getCustomerPostalCode() {
         return customerPostalCode;
     }
 
+    /**
+     * Sets customer postal code
+     * @param customerPostalCode
+     */
     public void setCustomerPostalCode(String customerPostalCode) {
         this.customerPostalCode = customerPostalCode;
     }
 
-
+    /**
+     * Returns customerDivision Code
+     * @return
+     */
     public int getCustomerDivision() {
         return customerDivision;
     }
 
+    /**
+     * Sets customer's division code
+     * @param customerDivision
+     */
     public void setCustomerDivision(int customerDivision) {
         this.customerDivision = customerDivision;
     }
+
 
     public Customer(String customerName, int customerId) {
         this.customerName = customerName;
         this.customerId = customerId;
     }
 
+    /**
+     * Returns customer's phone number
+     * @return customerPhone
+     */
     public String getCustomerPhone() {
         return customerPhone;
     }
 
+    /**
+     * Set's customer's phone number
+     * @param customerPhone
+     */
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
 
+    /**
+     * Returns customerName as string
+     * @return customerName
+     */
     @Override
     public String toString() {
         return customerName;

@@ -31,6 +31,12 @@ public class ErrorMsg implements Initializable {
                 alert.setContentText(langBundle.getString("incorrectPassword"));
                 alert.showAndWait();
                 break;
+
+            case 3:
+                alert.setTitle(langBundle.getString("ErrorUserPass"));
+                alert.setContentText(langBundle.getString("incorrectEverything"));
+                alert.showAndWait();
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }

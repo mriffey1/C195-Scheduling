@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Model Class that creates the User Objects
+ *
+ * @author Megan Riffey
+ */
 public class User {
     private int userID;
     private String userName;
@@ -7,7 +12,6 @@ public class User {
     private String createdBy;
     private String lastUpdate;
     private String lastUpdatedBy;
-
 
     public User(int userID, String userName, String password, String createdBy, String lastUpdate, String lastUpdatedBy) {
         this.userID = userID;
@@ -18,27 +22,57 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    /**
+     * Returns the userID
+     *
+     * @return userID
+     */
     public int getUserID() {
         return userID;
     }
 
-    public void setUserID() {
+    /**
+     * Sets the userID
+     *
+     * @param userID
+     */
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
+    /**
+     * Returns the userName
+     *
+     * @return userName
+     */
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName() {
+    /**
+     * Sets the userName
+     *
+     * @param userName
+     */
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Returns the createdBy
+     *
+     * @return createdBy
+     */
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy() {
+    /**
+     * Sets the createdBy
+     *
+     * @param createdBy
+     */
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 }

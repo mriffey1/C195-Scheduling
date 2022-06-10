@@ -12,15 +12,14 @@ public abstract class JDBC {
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
     private static String password = "Passw0rd!"; // Password
-  //  public static Connection conn;  // Connection Interface
-    private static Connection conn = null;
+    public static Connection conn;  // Connection Interface
+  //  private static Connection conn = null;
 
 
     public static Connection openConnection() {
         try {
             Class.forName(driver); // Locate Driver
             conn = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-            System.out.println("Connection successful!");
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
@@ -36,7 +35,7 @@ public abstract class JDBC {
         }
     }
 
-    public static Connection database(){
+   public static Connection database(){
         return conn;
     }
 }
