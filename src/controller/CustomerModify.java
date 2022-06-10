@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.CustomerDAO;
+import DAO.FirstLvlDivisionDAO;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import model.FirstLVLDivision;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,26 +27,35 @@ public class CustomerModify implements Initializable {
     public TextField customerPhoneTextField;
     public TextField customerAddressTextField;
     public TextField customerPostalTextField;
-    public ComboBox customerDivisionCombo;
+    public ComboBox<FirstLVLDivision> customerDivisionCombo;
     public ComboBox customerCountryCombo;
     public Button saveButton;
     public Button cancelButton;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList<FirstLVLDivision> divisionList = FirstLvlDivisionDAO.getAllDivisionId();
+        customerDivisionCombo.setItems(divisionList);
+        customerDivisionCombo.setVisibleRowCount(10);
+
+    }
 
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
 
-     try {
-         int id = Integer.parseInt(customerIDTextField.getText());
-         String name = customerNameTextField.getText();
-         String address = customerAddressTextField.getText();
-         String zip = customerPostalTextField.getText();
-         String phone = customerPhoneTextField.getText();
+        try {
+            int id = Integer.parseInt(customerIDTextField.getText());
+            String name = customerNameTextField.getText();
+            String address = customerAddressTextField.getText();
+            String zip = customerPostalTextField.getText();
+            String phone = customerPhoneTextField.getText();
+            int divisionId = customerDivisionCombo.getValue().getDivisionID();
+            CustomerDAO.updateCustomer(name, address, zip, phone, divisionId, id);
 
-         CustomerDAO.updateCustomer(name, address, zip, phone, id);
-     }  catch(NumberFormatException e){
-         e.printStackTrace();
-     }
 
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         System.out.println("Test");
         FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
@@ -51,8 +63,6 @@ public class CustomerModify implements Initializable {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
@@ -71,11 +81,8 @@ public class CustomerModify implements Initializable {
         customerAddressTextField.setText(customer.getCustomerAddress());
         customerPhoneTextField.setText(customer.getCustomerPhone());
         customerPostalTextField.setText(customer.getCustomerPostalCode());
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
     }
+
+
 }

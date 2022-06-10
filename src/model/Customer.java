@@ -14,7 +14,8 @@ public class Customer {
     private String customerAddress;
     private String customerPostalCode;
     private String customerPhone;
-    private int customerDivision;
+    private int customerDivisionId;
+    private int customerCountryId;
 
 
     static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
@@ -22,13 +23,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivision) {
+    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivisionId, int customerCountryId) {
 
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
-        this.customerDivision = customerDivision;
+        this.customerDivisionId = customerDivisionId;
+        this.customerCountryId = customerCountryId;
         this.customerPhone = customerPhone;
     }
 
@@ -48,6 +50,7 @@ public class Customer {
 
     /**
      * Sets customerId
+     *
      * @param customerId
      */
     public void setCustomerID(int customerId) {
@@ -56,6 +59,7 @@ public class Customer {
 
     /**
      * Returns customer's name
+     *
      * @return customerName
      */
     public String getCustomerName() {
@@ -64,6 +68,7 @@ public class Customer {
 
     /**
      * Set's customer's name
+     *
      * @param customerName
      */
     public void setCustomerName(String customerName) {
@@ -72,6 +77,7 @@ public class Customer {
 
     /**
      * Return's customer's address
+     *
      * @return customerAddress
      */
     public String getCustomerAddress() {
@@ -80,6 +86,7 @@ public class Customer {
 
     /**
      * Sets customer address
+     *
      * @param customerAddress
      */
     public void setCustomerAddress(String customerAddress) {
@@ -88,6 +95,7 @@ public class Customer {
 
     /**
      * Returns customer postal code
+     *
      * @return customerPostalCode
      */
     public String getCustomerPostalCode() {
@@ -96,6 +104,7 @@ public class Customer {
 
     /**
      * Sets customer postal code
+     *
      * @param customerPostalCode
      */
     public void setCustomerPostalCode(String customerPostalCode) {
@@ -104,20 +113,29 @@ public class Customer {
 
     /**
      * Returns customerDivision Code
+     *
      * @return
      */
-    public int getCustomerDivision() {
-        return customerDivision;
+    public int getCustomerDivisionId() {
+        return customerDivisionId;
     }
 
     /**
      * Sets customer's division code
-     * @param customerDivision
+     *
+     * @param customerDivisionId
      */
-    public void setCustomerDivision(int customerDivision) {
-        this.customerDivision = customerDivision;
+    public void setCustomerDivision(int customerDivisionId) {
+        this.customerDivisionId = customerDivisionId;
     }
 
+    public int getCustomerCountryId() {
+        return customerCountryId;
+    }
+
+    public void setCustomerCountryId(int customerCountryId) {
+        this.customerCountryId = customerCountryId;
+    }
 
     public Customer(String customerName, int customerId) {
         this.customerName = customerName;
@@ -126,6 +144,7 @@ public class Customer {
 
     /**
      * Returns customer's phone number
+     *
      * @return customerPhone
      */
     public String getCustomerPhone() {
@@ -134,6 +153,7 @@ public class Customer {
 
     /**
      * Set's customer's phone number
+     *
      * @param customerPhone
      */
     public void setCustomerPhone(String customerPhone) {
@@ -142,6 +162,7 @@ public class Customer {
 
     /**
      * Returns customerName as string
+     *
      * @return customerName
      */
     @Override

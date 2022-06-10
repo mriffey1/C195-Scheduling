@@ -10,9 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
@@ -50,13 +48,24 @@ public class Customers implements Initializable {
         if (selectedCustomer == null) {
             System.out.println("Error");
         } else {
-            CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
-            CustomerList = CustomerDAO.getCustomerList();
-            custTable.setItems(CustomerList);
-            custTable.refresh();
+            Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+            confirmRemoval.setTitle("Alert");
+            confirmRemoval.setContentText("Remove Selected Part?");
+            confirmRemoval.getButtonTypes().clear();
+            confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+            confirmRemoval.showAndWait();
+            if (confirmRemoval.getResult() == ButtonType.OK) {
+                CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                helper.ErrorMsg.confirmation(2);
+                CustomerList = CustomerDAO.getCustomerList();
+                custTable.setItems(CustomerList);
+                custTable.refresh();
+            } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
+                confirmRemoval.close();
+            }
         }
-
     }
+
 
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -97,8 +106,7 @@ public class Customers implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivision"));
-
+        custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
 
     }
 }

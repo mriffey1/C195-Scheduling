@@ -59,6 +59,13 @@ public class ErrorMsg implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) ;
                 break;
+            case 2:
+                alert.setTitle("Customer has been removed");
+                alert.setHeaderText("Success");
+                alert.setContentText("Customer has been successfully removed. ");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll( ButtonType.OK);
+                alert.showAndWait();
         }
     }
 
@@ -72,26 +79,20 @@ public class ErrorMsg implements Initializable {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         switch (whichWarning) {
             case 1:
-                alert.setTitle("Add Item has been canceled");
-                alert.setHeaderText("Cancel");
-                alert.setContentText("Are you sure you want to cancel? \nYou will return to the main screen.");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) ;
+                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                confirmRemoval.setTitle("Alert");
+                confirmRemoval.setContentText("Remove Selected Part?");
+                Optional<ButtonType> answer = confirmRemoval.showAndWait();
+                if (answer.isPresent() && answer.get() == ButtonType.OK)
                 break;
             case 2:
                 alert.setTitle("Delete Product");
                 alert.setHeaderText("Are you sure you want to delete?");
                 alert.setContentText("Press OK to delete this product. ");
                 alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) ;
+                if (alert.getResult() == ButtonType.OK);
                 break;
-            case 3:
-                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-                confirmRemoval.setTitle("Alert");
-                confirmRemoval.setContentText("Remove Selected Part?");
-                Optional<ButtonType> answer = confirmRemoval.showAndWait();
-                if (answer.isPresent() && answer.get() == ButtonType.OK) ;
-                break;
+
         }
     }
 
