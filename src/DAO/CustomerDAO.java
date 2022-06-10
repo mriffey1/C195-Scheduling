@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class CustomerDAO {
 
-
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try {

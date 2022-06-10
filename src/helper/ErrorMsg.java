@@ -31,12 +31,15 @@ public class ErrorMsg implements Initializable {
                 alert.setContentText(langBundle.getString("incorrectPassword"));
                 alert.showAndWait();
                 break;
-
             case 3:
                 alert.setTitle(langBundle.getString("ErrorUserPass"));
                 alert.setContentText(langBundle.getString("incorrectEverything"));
                 alert.showAndWait();
                 break;
+            case 4:
+                alert.setTitle("Please confirm deletion");
+                alert.setContentText("Please confirm you would like to delete this customer.");
+                alert.showAndWait();
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }
@@ -48,10 +51,13 @@ public class ErrorMsg implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         switch (confirmation) {
             case 1:
-                alert.setTitle("Successfully logged in");
-                alert.setHeaderText("Success");
+                alert.setTitle(langBundle.getString("Successfullyloggedin"));
+                alert.setHeaderText(langBundle.getString("Success"));
                 alert.setContentText(langBundle.getString("loggedInMessage"));
-                alert.showAndWait();
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(ButtonType.OK);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) ;
                 break;
         }
     }

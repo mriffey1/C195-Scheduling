@@ -35,11 +35,8 @@ public class Login implements Initializable {
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
-
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
-
-
         String filename = "login_activity.txt", items;
         FileWriter fwritter = new FileWriter(filename, true);
         Scanner keyboard = new Scanner(System.in);
