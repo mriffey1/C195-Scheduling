@@ -81,6 +81,8 @@ public class CustomerModify implements Initializable {
         customerAddressTextField.setText(customer.getCustomerAddress());
         customerPhoneTextField.setText(customer.getCustomerPhone());
         customerPostalTextField.setText(customer.getCustomerPostalCode());
+        FirstLVLDivision s = FirstLvlDivisionDAO.returnDivisionLevel(customer.getCustomerDivisionId());
+        customerDivisionCombo.setValue(s);
 
     }
 

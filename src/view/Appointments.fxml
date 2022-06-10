@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.Appointments"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Appointments">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="1099.0">
+         <children>
+            <GridPane layoutX="14.0" layoutY="447.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.36363288311931" minWidth="10.0" prefWidth="100.36363288311931" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.36363288311931" minWidth="10.0" prefWidth="100.36363288311931" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="appointDeleteLabel" mnemonicParsing="false" onAction="#actionAppointDelete" prefWidth="75.0" text="Delete" GridPane.columnIndex="2" />
+                  <Button fx:id="appointAddLabel" mnemonicParsing="false" onAction="#actionAppointAdd" prefWidth="75.0" text="Add" GridPane.columnIndex="1" />
+                  <Button fx:id="appointUpdateLabel" mnemonicParsing="false" onAction="#actionAppointUpdate" prefWidth="75.0" text="Update" />
+               </children>
+            </GridPane>
+            <TabPane fx:id="tabPane" layoutX="15.0" layoutY="14.0" prefHeight="415.0" prefWidth="1065.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="allAppointmentsTab" closable="false" text="All Appointments">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="830.0">
+                           <children>
+                              <TableView fx:id="appointTable" prefHeight="527.0" prefWidth="1063.0">
+                                 <columns>
+                                    <TableColumn fx:id="appointIdCol" prefWidth="102.98181533813477" text="Appointment ID" />
+                                    <TableColumn fx:id="appointTitleCol" prefWidth="64.58184814453125" text="Title" />
+                                    <TableColumn fx:id="appointDescriptionCol" prefWidth="118.69090270996094" text="Description" />
+                                    <TableColumn fx:id="appointLocationCol" prefWidth="126.54541015625" text="Location" />
+                                    <TableColumn fx:id="appointContactCol" prefWidth="117.81832885742188" text="Contact" />
+                                    <TableColumn fx:id="appointTypeCol" prefWidth="90.763671875" text="Type" />
+                                    <TableColumn fx:id="appointDateCol" prefWidth="122.1817626953125" text="Start Date/Time" />
+                                    <TableColumn fx:id="appointEndDateCol" prefWidth="126.54541015625" text="End Date/Time" />
+                                    <TableColumn fx:id="appointCustIdCol" prefWidth="98.6180419921875" text="Customer ID" />
+                                    <TableColumn fx:id="appointUserIdCol" prefWidth="82.9090576171875" text="User ID" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="appointmentsThisWeek" closable="false" text="Weekly Appointments">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="appointTable1" prefHeight="527.0" prefWidth="1063.0">
+                                 <columns>
+                                    <TableColumn fx:id="appointIdCol1" prefWidth="102.98181533813477" text="Appointment ID" />
+                                    <TableColumn fx:id="appointTitleCol1" prefWidth="64.58184814453125" text="Title" />
+                                    <TableColumn fx:id="appointDescriptionCol1" prefWidth="118.69090270996094" text="Description" />
+                                    <TableColumn fx:id="appointLocationCol1" prefWidth="126.54541015625" text="Location" />
+                                    <TableColumn fx:id="appointContactCol1" prefWidth="117.81832885742188" text="Contact" />
+                                    <TableColumn fx:id="appointTypeCol1" prefWidth="90.763671875" text="Type" />
+                                    <TableColumn fx:id="appointDateCol1" prefWidth="122.1817626953125" text="Start Date/Time" />
+                                    <TableColumn fx:id="appointEndDateCol1" prefWidth="126.54541015625" text="End Date/Time" />
+                                    <TableColumn fx:id="appointCustIdCol1" prefWidth="98.6180419921875" text="Customer ID" />
+                                    <TableColumn fx:id="appointUserIdCol1" prefWidth="82.9090576171875" text="User ID" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="appointmentsMonthly" closable="false" text="Monthly Appointments">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="appointTable11" prefHeight="527.0" prefWidth="1063.0">
+                                 <columns>
+                                    <TableColumn fx:id="appointIdCol11" prefWidth="102.98181533813477" text="Appointment ID" />
+                                    <TableColumn fx:id="appointTitleCol11" prefWidth="64.58184814453125" text="Title" />
+                                    <TableColumn fx:id="appointDescriptionCol11" prefWidth="118.69090270996094" text="Description" />
+                                    <TableColumn fx:id="appointLocationCol11" prefWidth="126.54541015625" text="Location" />
+                                    <TableColumn fx:id="appointContactCol11" prefWidth="117.81832885742188" text="Contact" />
+                                    <TableColumn fx:id="appointTypeCol11" prefWidth="90.763671875" text="Type" />
+                                    <TableColumn fx:id="appointDateCol11" prefWidth="122.1817626953125" text="Start Date/Time" />
+                                    <TableColumn fx:id="appointEndDateCol11" prefWidth="126.54541015625" text="End Date/Time" />
+                                    <TableColumn fx:id="appointCustIdCol11" prefWidth="98.6180419921875" text="Customer ID" />
+                                    <TableColumn fx:id="appointUserIdCol11" prefWidth="82.9090576171875" text="User ID" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

@@ -1,8 +1,5 @@
 package model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 /**
  * Model for Customers
  *
@@ -18,7 +15,7 @@ public class Customer {
     private int customerCountryId;
 
 
-    static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
+    // static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
 
     public Customer() {
     }
@@ -34,10 +31,6 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-
-    //   public static ObservableList<Customer> getAllCustomers() {
-    //      return CustomerList;
-    //   }
 
     /**
      * Gets customerId

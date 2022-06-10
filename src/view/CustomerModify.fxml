@@ -12,11 +12,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerModify">
    <children>
-      <GridPane layoutX="173.0" layoutY="63.0" prefHeight="257.0" prefWidth="278.0">
+      <GridPane layoutX="173.0" layoutY="63.0" prefHeight="257.0" prefWidth="297.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="134.39994880108804" minWidth="10.0" prefWidth="103.09089564299796" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.87275757844805" minWidth="10.0" prefWidth="18.94544415434534" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.2182318216121" minWidth="10.0" prefWidth="158.5818222777313" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="134.39994880108804" minWidth="10.0" prefWidth="103.3454315740413" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.87275757844805" minWidth="9.96365512816378" prefWidth="9.96365512816378" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.2182318216121" minWidth="10.0" prefWidth="189.47273949993573" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
@@ -35,13 +35,16 @@
             <Label text="Postal Code:" GridPane.rowIndex="4" />
             <Label text="Division:" GridPane.rowIndex="5" />
             <Label text="Country:" GridPane.rowIndex="6" />
-            <TextField fx:id="customerIDTextField" disable="true" prefHeight="26.0" prefWidth="127.0" GridPane.columnIndex="2" />
+            <TextField fx:id="customerIDTextField" disable="true" prefHeight="26.0" prefWidth="127.0" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.218181610107422" />
+               </font></TextField>
             <TextField fx:id="customerNameTextField" prefHeight="26.0" prefWidth="151.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="customerPhoneTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <TextField fx:id="customerAddressTextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField fx:id="customerPostalTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <ComboBox fx:id="customerDivisionCombo" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <ComboBox fx:id="customerCountryCombo" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="customerPostalTextField" prefHeight="26.0" prefWidth="209.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ComboBox fx:id="customerDivisionCombo" prefHeight="26.0" prefWidth="179.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <ComboBox fx:id="customerCountryCombo" prefHeight="26.0" prefWidth="179.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <Label layoutX="254.0" layoutY="23.0" text="Modify Customer">

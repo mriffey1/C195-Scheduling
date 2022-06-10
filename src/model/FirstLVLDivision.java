@@ -25,4 +25,8 @@ public class FirstLVLDivision {
     public void setDivisionName(String divisionName) {
         this.divisionName = divisionName;
     }
+    @Override
+    public String toString(){
+        return(divisionName);
+    }
 }

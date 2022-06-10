@@ -65,7 +65,7 @@ public class Login implements Initializable {
 
             helper.ErrorMsg.confirmation(1);
             FXMLLoader loader = new FXMLLoader();
-            Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/Appointments.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
