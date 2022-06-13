@@ -78,14 +78,11 @@ public class Customers implements Initializable {
 
     public void actionCustUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (custTable.getSelectionModel().getSelectedItem() != null) {
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/CustomerModify.fxml"));
             loader.load();
-
             CustomerModify MCController = loader.getController();
             MCController.getCustomerInfo(custTable.getSelectionModel().getSelectedItem());
-
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
@@ -108,6 +105,16 @@ public class Customers implements Initializable {
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
 
+    }
+
+    public void backToMenu(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 }
 

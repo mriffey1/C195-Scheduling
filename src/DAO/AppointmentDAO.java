@@ -14,7 +14,6 @@ public class AppointmentDAO {
 
     public static ObservableList<Appointment> getAppointmentList() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
-
         try {
             String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description, appointments.Location," +
                     "appointments.Start, appointments.End, appointments.Customer_ID, appointments.User_ID, appointments.Contact_ID FROM appointments";
@@ -34,7 +33,6 @@ public class AppointmentDAO {
                 Appointment c = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 appointmentList.add(c);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -45,12 +43,10 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getWeeklyAppointments() {
         ObservableList<Appointment> weeklyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description, appointments.Location," +
-                    "appointments.Start, appointments.End, appointments.Customer_ID, appointments.User_ID, appointments.Contact_ID FROM appointments WHERE appointments.Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)";
+            String sql = "SELECT * from appointments WHERE WEEK(Start) = WEEK(NOW())";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 int appointmentId = rs.getInt("Appointment_ID");
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
@@ -64,7 +60,6 @@ public class AppointmentDAO {
                 Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 weeklyList.add(weekly);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -72,6 +67,44 @@ public class AppointmentDAO {
         return weeklyList;
     }
 
+    public static void deleteAppointment(int appointmentId) {
 
+        try {
+            String sqldelete = "DELETE FROM appointments WHERE Appointment_ID = ?";
+            PreparedStatement deleteAppoint = JDBC.conn.prepareStatement(sqldelete);
+            deleteAppoint.setInt(1, appointmentId);
+            deleteAppoint.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ObservableList<Appointment> getMonthlyAppointments() {
+        ObservableList<Appointment> monthlyList = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * from appointments WHERE MONTH(Start) = MONTH(NOW())";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String appointmentTitle = rs.getString("Title");
+                String appointmentDescription = rs.getString("Description");
+                int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentType = rs.getString("Type");
+                Timestamp appointmentStart = rs.getTimestamp("Start");
+                Timestamp appointmentEnd = rs.getTimestamp("End");
+                int appointmentCustomerId = rs.getInt("Customer_ID");
+                int appointmentUserId = rs.getInt("User_ID");
+                String appointmentLocation = rs.getString("Location");
+                Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+                        appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
+                monthlyList.add(weekly);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return monthlyList;
+    }
 }
+
 

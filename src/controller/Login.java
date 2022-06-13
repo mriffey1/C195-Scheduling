@@ -65,10 +65,11 @@ public class Login implements Initializable {
 
             helper.ErrorMsg.confirmation(1);
             FXMLLoader loader = new FXMLLoader();
-            Parent parent = FXMLLoader.load(getClass().getResource("../view/Appointments.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
             fwritter.write(User_Name + " has successfully logged on " + new java.util.Date());
