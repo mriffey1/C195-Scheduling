@@ -124,7 +124,21 @@ public class Appointments implements Initializable {
     public void actionAppointAdd(ActionEvent actionEvent) {
     }
 
-    public void actionAppointUpdate(ActionEvent actionEvent) {
+    public void actionAppointUpdate(ActionEvent actionEvent) throws IOException {
+        if (appointTable.getSelectionModel().getSelectedItem() != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/AppointmentsModify.fxml"));
+            loader.load();
+            AppointmentsModify MCController = loader.getController();
+            MCController.getAppointmentInfo(appointTable.getSelectionModel().getSelectedItem());
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+       } else {
+
+            System.out.println("Error");
+       }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.CountryDAO;
 import DAO.CustomerDAO;
 import DAO.FirstLvlDivisionDAO;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
 import model.FirstLVLDivision;
 
@@ -28,7 +30,7 @@ public class CustomerModify implements Initializable {
     public TextField customerAddressTextField;
     public TextField customerPostalTextField;
     public ComboBox<FirstLVLDivision> customerDivisionCombo;
-    public ComboBox customerCountryCombo;
+    public ComboBox<Country> customerCountryCombo;
     public Button saveButton;
     public Button cancelButton;
 
@@ -39,10 +41,12 @@ public class CustomerModify implements Initializable {
         customerDivisionCombo.setItems(divisionList);
         customerDivisionCombo.setVisibleRowCount(10);
 
+        ObservableList<Country> countryList = CountryDAO.getAllCountry();
+        customerCountryCombo.setItems(countryList);
+        customerCountryCombo.setVisibleRowCount(10);
     }
 
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
-
         try {
             int id = Integer.parseInt(customerIDTextField.getText());
             String name = customerNameTextField.getText();
@@ -51,8 +55,6 @@ public class CustomerModify implements Initializable {
             String phone = customerPhoneTextField.getText();
             int divisionId = customerDivisionCombo.getValue().getDivisionID();
             CustomerDAO.updateCustomer(name, address, zip, phone, divisionId, id);
-
-
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -83,7 +85,8 @@ public class CustomerModify implements Initializable {
         customerPostalTextField.setText(customer.getCustomerPostalCode());
         FirstLVLDivision s = FirstLvlDivisionDAO.returnDivisionLevel(customer.getCustomerDivisionId());
         customerDivisionCombo.setValue(s);
-
+        Country c = CountryDAO.returnCountry(customer.getCustomerDivisionId());
+        customerCountryCombo.setValue(c);
     }
 
 

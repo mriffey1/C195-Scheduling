@@ -73,6 +73,7 @@ public class Customers implements Initializable {
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -86,9 +87,9 @@ public class Customers implements Initializable {
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
+            stage.centerOnScreen();
             stage.show();
         } else {
-
             System.out.println("Error");
         }
     }
@@ -96,7 +97,6 @@ public class Customers implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         custTable.setItems(CustomerDAO.getCustomerList());
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -104,7 +104,6 @@ public class Customers implements Initializable {
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
-
     }
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
