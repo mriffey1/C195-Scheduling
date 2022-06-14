@@ -46,7 +46,7 @@ public class CustomerDAO {
         }
     }
 
-    public static void updateCustomer(String name, String address, String zip, String phone, int divisionId, int id) {
+    public static void updateCustomer(String name, String address, String zip, String phone, int divisionId, int countryId, int id) {
         try {
             String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
             PreparedStatement updateCust = JDBC.conn.prepareStatement(sql);
@@ -55,6 +55,7 @@ public class CustomerDAO {
             updateCust.setString(3, phone);
             updateCust.setString(4, zip);
             updateCust.setInt(5, divisionId);
+           // updateCust.setInt(6, countryId);
             updateCust.setInt(6, id);
             updateCust.executeUpdate();
         } catch (SQLException e) {
@@ -71,27 +72,27 @@ public class CustomerDAO {
         insertCust.setString(4, customer.getCustomerPhone());
     }
 
-    public static ObservableList<Customer> getCustomersById() {
-        ObservableList<Customer> customerList = FXCollections.observableArrayList();
-        try {
-            String sql = "SELECT Customer_Name, Customer_ID FROM customers";
-
-            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                String customerName = rs.getString("Customer_Name");
-                int customerId = rs.getInt("Customer_ID");
-                Customer c = new Customer(customerName, customerId);
-                customerList.add(c);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return customerList;
-    }
+//    public static ObservableList<Customer> getCustomersById() {
+//        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+//        try {
+//            String sql = "SELECT Customer_Name, Customer_ID FROM customers";
+//
+//            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//
+//                String customerName = rs.getString("Customer_Name");
+//                int customerId = rs.getInt("Customer_ID");
+//                Customer c = new Customer(customerName, customerId);
+//                customerList.add(c);
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return customerList;
+//    }
 
 
 }

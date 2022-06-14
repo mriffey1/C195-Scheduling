@@ -36,14 +36,17 @@ public class CountryDAO {
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ps.setInt(1, countryId);
             ps.execute();
+
             ResultSet rs = ps.getResultSet();
+
             rs.next();
             int searchedCountryId = rs.getInt("Country_ID");
             String countryName = rs.getString("Country");
-            Country s = new Country(searchedCountryId, countryName);
-            return s;
+            Country c = new Country(searchedCountryId, countryName);
+            return c;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

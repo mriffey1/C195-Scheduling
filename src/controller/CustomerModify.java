@@ -54,7 +54,8 @@ public class CustomerModify implements Initializable {
             String zip = customerPostalTextField.getText();
             String phone = customerPhoneTextField.getText();
             int divisionId = customerDivisionCombo.getValue().getDivisionID();
-            CustomerDAO.updateCustomer(name, address, zip, phone, divisionId, id);
+            int countryId = customerCountryCombo.getValue().getCountryId();
+            CustomerDAO.updateCustomer(name, address, zip, phone, divisionId, countryId, id);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class CustomerModify implements Initializable {
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         System.out.println("Test");
         FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/CustomerAdd.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -85,8 +86,10 @@ public class CustomerModify implements Initializable {
         customerPostalTextField.setText(customer.getCustomerPostalCode());
         FirstLVLDivision s = FirstLvlDivisionDAO.returnDivisionLevel(customer.getCustomerDivisionId());
         customerDivisionCombo.setValue(s);
-        Country c = CountryDAO.returnCountry(customer.getCustomerDivisionId());
+        Country c = CountryDAO.returnCountry(customer.getCustomerCountryId());
         customerCountryCombo.setValue(c);
+
+
     }
 
 
