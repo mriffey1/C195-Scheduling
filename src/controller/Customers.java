@@ -43,6 +43,14 @@ public class Customers implements Initializable {
 
     ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
 
+    /**
+     * Action event for delete button on customer screen. If no customer is selected, an error message will be generated
+     * and if a valid customer is selected and has no attached appointments, a warning message to confirm removal will be generated
+     * and once OK is selected - the customer will be deleted from the database and the list of customers refreshed in the tableview.
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
     public void actionCustDelete(ActionEvent actionEvent) throws Exception {
         Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
@@ -66,7 +74,12 @@ public class Customers implements Initializable {
         }
     }
 
-
+    /**
+     * Action event for add button to add a customer. It will redirect to the CustomerAdd file.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/CustomerAdd.fxml"));
@@ -77,6 +90,14 @@ public class Customers implements Initializable {
         stage.show();
     }
 
+    /**
+     * Action event for update button for customers and will redirect to the CustomerModify file.
+     * If no customer is selected - an error message will be generated and displayed.
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void actionCustUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (custTable.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();

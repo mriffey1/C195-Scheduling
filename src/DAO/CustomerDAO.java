@@ -52,10 +52,9 @@ public class CustomerDAO {
             PreparedStatement updateCust = JDBC.conn.prepareStatement(sql);
             updateCust.setString(1, name);
             updateCust.setString(2, address);
-            updateCust.setString(3, phone);
-            updateCust.setString(4, zip);
+            updateCust.setString(3, zip);
+            updateCust.setString(4, phone);
             updateCust.setInt(5, divisionId);
-           // updateCust.setInt(6, countryId);
             updateCust.setInt(6, id);
             updateCust.executeUpdate();
         } catch (SQLException e) {
@@ -63,13 +62,17 @@ public class CustomerDAO {
         }
     }
 
-    public static void addCustomer(Customer customer) throws SQLException {
-        String sql = "INSERT INTO customers (Customer_ID = ?, Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?)";
+    public static void addCustomer(String name, String address, String zip, String phone, int divisionId) throws SQLException {
+        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement insertCust = JDBC.conn.prepareStatement(sql);
-        insertCust.setString(1, customer.getCustomerName());
-        insertCust.setString(2, customer.getCustomerAddress());
-        insertCust.setString(3, customer.getCustomerPostalCode());
-        insertCust.setString(4, customer.getCustomerPhone());
+        insertCust.setString(1, name);
+        insertCust.setString(2, address);
+        insertCust.setString(3, zip);
+        insertCust.setString(4, phone);
+        insertCust.setInt(5, divisionId);
+
+
+        insertCust.executeUpdate();
     }
 
 //    public static ObservableList<Customer> getCustomersById() {

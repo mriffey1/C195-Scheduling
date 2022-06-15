@@ -31,14 +31,32 @@ public class ErrorMsg implements Initializable {
                 alert.setContentText(langBundle.getString("incorrectPassword"));
                 alert.showAndWait();
                 break;
+
+            // Incorrect Username and Password
             case 3:
                 alert.setTitle(langBundle.getString("ErrorUserPass"));
                 alert.setContentText(langBundle.getString("incorrectEverything"));
                 alert.showAndWait();
                 break;
+
+            // Deletion of customer confirmation
             case 4:
                 alert.setTitle("Please confirm deletion");
                 alert.setContentText("Please confirm you would like to delete this customer.");
+                alert.showAndWait();
+                break;
+
+            // Username is blank error message
+            case 5:
+                alert.setTitle("ErrorBlankUserName");
+                alert.setContentText("blankUserName");
+                alert.showAndWait();
+                break;
+
+                // Password is blank error message
+            case 6:
+                alert.setTitle("ErrorBlankPassWord");
+                alert.setContentText("blankPassWord");
                 alert.showAndWait();
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
@@ -64,7 +82,7 @@ public class ErrorMsg implements Initializable {
                 alert.setHeaderText("Success");
                 alert.setContentText("Customer has been successfully removed. ");
                 alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll( ButtonType.OK);
+                alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
         }
     }
@@ -84,13 +102,13 @@ public class ErrorMsg implements Initializable {
                 confirmRemoval.setContentText("Remove Selected Part?");
                 Optional<ButtonType> answer = confirmRemoval.showAndWait();
                 if (answer.isPresent() && answer.get() == ButtonType.OK)
-                break;
+                    break;
             case 2:
                 alert.setTitle("Delete Product");
                 alert.setHeaderText("Are you sure you want to delete?");
                 alert.setContentText("Press OK to delete this product. ");
                 alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK);
+                if (alert.getResult() == ButtonType.OK) ;
                 break;
 
         }

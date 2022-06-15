@@ -50,5 +50,24 @@ public class FirstLvlDivisionDAO {
     }
 
 
-}
+    public static ObservableList<FirstLVLDivision> displayDivision(int countryId) throws SQLException {
+        ObservableList<FirstLVLDivision> divisionCountryOptions = FXCollections.observableArrayList();
+
+            String sql = "SELECT * FROM first_level_divisions WHERE Country_ID = " + countryId;
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+                int divisionId = rs.getInt("Division_ID");
+                String divisionName = rs.getString("Division");
+                countryId = rs.getInt("Country_ID");
+
+                FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId);
+                divisionCountryOptions.add(c);
+            }
+            return divisionCountryOptions;
+        }
+    }
+
 

@@ -8,18 +8,20 @@ import java.sql.SQLException;
 
 /**
  * User queries for database to ensure appropriate credentials and a valid login
+ *
  * @author Megan Riffey
  */
 
 public class UserDAO {
     /**
      * Selecting and preparing the username and password from database
+     *
      * @param User_Name
      * @param Password
      * @return
      * @throws SQLException
      */
-    public static boolean userLogin(String User_Name, String Password)  {
+    public static boolean userLogin(String User_Name, String Password) {
         try (PreparedStatement ps = JDBC.database().prepareStatement("SELECT * FROM Users WHERE  User_Name = ? AND  Password = ?")) {
             ps.setString(1, User_Name);
             ps.setString(2, Password);
@@ -35,11 +37,12 @@ public class UserDAO {
 
     /**
      * Username validation, added BINARY to ensure username was case-sensitive and would not allow accidental login.
+     *
      * @param User_Name
      * @return
      * @throws SQLException
      */
-    public static boolean usernameValidation(String User_Name)  {
+    public static boolean usernameValidation(String User_Name) {
         try (PreparedStatement ps = JDBC.database().prepareStatement("SELECT * FROM Users WHERE BINARY User_Name = ?")) {
             ps.setString(1, User_Name);
             ResultSet rs = ps.executeQuery();
@@ -55,6 +58,7 @@ public class UserDAO {
 
     /**
      * Password Validation - added Binary to ensure the password was case-sensitive and would prevent accidental login with incorrect credentials.
+     *
      * @param Password
      * @return
      * @throws SQLException
@@ -72,6 +76,22 @@ public class UserDAO {
         }
         return false;
     }
+
+    public static int getUserId(String userName) throws SQLException {
+        int userId = 0;
+        String sqlStatement = "select User_ID from users where User_Name = '" + userName + "'";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            userId = rs.getInt("User_ID");
+            System.out.println(userId);
+        }
+        return userId;
+    }
+
+
 }
+
 
 

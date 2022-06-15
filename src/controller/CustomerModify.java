@@ -36,7 +36,6 @@ public class CustomerModify implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         ObservableList<FirstLVLDivision> divisionList = FirstLvlDivisionDAO.getAllDivisionId();
         customerDivisionCombo.setItems(divisionList);
         customerDivisionCombo.setVisibleRowCount(10);
@@ -46,6 +45,13 @@ public class CustomerModify implements Initializable {
         customerCountryCombo.setVisibleRowCount(10);
     }
 
+    /**
+     * Action event for the save button. This will attempt to update the database and then redirect back to the Customers
+     * tableview to display newly modified customer.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         try {
             int id = Integer.parseInt(customerIDTextField.getText());
@@ -68,6 +74,12 @@ public class CustomerModify implements Initializable {
         stage.show();
     }
 
+    /**
+     * Action event for the cancel button. Upon click, it will redirect the user back to the main Customers tableview.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         System.out.println("Test");
         FXMLLoader loader = new FXMLLoader();
@@ -78,6 +90,12 @@ public class CustomerModify implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method gets the selected customer data from the database and displays it in the appropriate fields.
+     *
+     * @param customer
+     * @throws SQLException
+     */
     public void getCustomerInfo(Customer customer) throws SQLException {
         customerIDTextField.setText(Integer.toString(customer.getCustomerId()));
         customerNameTextField.setText(customer.getCustomerName());
@@ -89,8 +107,5 @@ public class CustomerModify implements Initializable {
         Country c = CountryDAO.returnCountry(customer.getCustomerCountryId());
         customerCountryCombo.setValue(c);
 
-
     }
-
-
 }
