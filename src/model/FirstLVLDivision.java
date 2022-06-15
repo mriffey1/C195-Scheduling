@@ -1,10 +1,16 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class FirstLVLDivision {
 
     private int divisionID;
     private String divisionName;
     private int countryId;
+    private LocalDateTime createDate;
+    private String createdBy;
+    private LocalDateTime lastUpdated;
+    private String lastUpdatedBy;
 
 
 
@@ -15,10 +21,15 @@ public class FirstLVLDivision {
 
     }
 
-    public FirstLVLDivision(int divisionID, String divisionName, int countryId) {
+    public FirstLVLDivision(int divisionID, String divisionName, int countryId, LocalDateTime createDate,
+                            String createdBy, LocalDateTime lastUpdated, String lastUpdatedBy) {
         this.divisionID = divisionID;
         this.divisionName = divisionName;
         this.countryId = countryId;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdated = lastUpdated;
+        this.lastUpdatedBy = lastUpdatedBy;
 
 
 

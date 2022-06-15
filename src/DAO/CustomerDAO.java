@@ -8,13 +8,19 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CustomerDAO {
 
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Country_ID FROM customers INNER JOIN first_level_divisions ON customers.Division_ID=first_level_divisions.Division_ID";
+
+               String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, " +
+                        "customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, " +
+                      "customers.Phone, customers.Division_ID, first_level_divisions.Country_ID FROM customers " +
+                       "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -23,9 +29,12 @@ public class CustomerDAO {
                 String customerAddress = rs.getString("Address");
                 String customerPostalCode = rs.getString("Postal_Code");
                 String customerPhone = rs.getString("Phone");
+                String createdBy = rs.getString("Created_By");
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerDivisionId = rs.getInt("Division_ID");
                 int customerCountryId = rs.getInt("Country_ID");
-                Customer c = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, customerDivisionId, customerCountryId);
+
+                Customer c = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, createdBy, lastUpdatedBy, customerDivisionId, customerCountryId);
 
                 customerList.add(c);
             }
@@ -46,33 +55,40 @@ public class CustomerDAO {
         }
     }
 
-    public static void updateCustomer(String name, String address, String zip, String phone, int divisionId, int countryId, int id) {
+    public static void updateCustomer(String customerName, String customerAddress, String customerPostalCode,
+                                      String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int customerId, int countryId) {
         try {
-            String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+
+            String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Updated_By = ?, Last_Update = ?, Division_ID = ? WHERE Customer_ID = ?";
             PreparedStatement updateCust = JDBC.conn.prepareStatement(sql);
-            updateCust.setString(1, name);
-            updateCust.setString(2, address);
-            updateCust.setString(3, zip);
-            updateCust.setString(4, phone);
-            updateCust.setInt(5, divisionId);
-            updateCust.setInt(6, id);
+            updateCust.setString(1, customerName);
+            updateCust.setString(2, customerAddress);
+            updateCust.setString(3, customerPostalCode);
+            updateCust.setString(4, customerPhone);
+            updateCust.setString(5, lastUpdatedBy);
+            updateCust.setTimestamp(6, lastUpdated);
+            updateCust.setInt(7, customerDivisionId);
+            updateCust.setInt(8, customerId);
             updateCust.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void addCustomer(String name, String address, String zip, String phone, int divisionId) throws SQLException {
-        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?)";
+    public static void addCustomer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, LocalDateTime createdDate, LocalDateTime lastUpdated, int divisionId) throws SQLException {
+        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Last_Update, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement insertCust = JDBC.conn.prepareStatement(sql);
-        insertCust.setString(1, name);
-        insertCust.setString(2, address);
-        insertCust.setString(3, zip);
-        insertCust.setString(4, phone);
-        insertCust.setInt(5, divisionId);
-
-
+        insertCust.setString(1, customerName);
+        insertCust.setString(2, customerAddress);
+        insertCust.setString(3, customerPostalCode);
+        insertCust.setString(4, customerPhone);
+        insertCust.setTimestamp(5, Timestamp.valueOf(createdDate));
+        insertCust.setTimestamp(6, Timestamp.valueOf(lastUpdated));
+        insertCust.setInt(7, divisionId);
         insertCust.executeUpdate();
+    }
+
+    public static void updateCustomer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int countryId) {
     }
 
 //    public static ObservableList<Customer> getCustomersById() {

@@ -18,6 +18,7 @@ import model.FirstLVLDivision;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class CustomerAdd implements Initializable {
@@ -37,28 +38,26 @@ public class CustomerAdd implements Initializable {
      */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         try {
-            String name = customerNameTextField.getText();
-            String address = customerAddressTextField.getText();
-            String zip = customerPostalTextField.getText();
-            String phone = customerPhoneTextField.getText();
+            String customerName = customerNameTextField.getText();
+            String customerAddress = customerAddressTextField.getText();
+            String customerPostalCode = customerPostalTextField.getText();
+            String customerPhone = customerPhoneTextField.getText();
             FirstLVLDivision divId = customerDivisionCombo.getValue();
+            LocalDateTime createdDate = LocalDateTime.now();
+            LocalDateTime lastUpdated = LocalDateTime.now();
             int divisionId = divId.getDivisionID();
-            CustomerDAO.addCustomer(name, address, zip, phone, divisionId);
+            CustomerDAO.addCustomer(customerName, customerAddress, customerPostalCode, customerPhone, createdDate, lastUpdated,  divisionId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         System.out.println("Test");
-        FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        backToCustomers(actionEvent);
     }
 
-    public void actionCancelButton(ActionEvent actionEvent) {
+    public void actionCancelButton(ActionEvent actionEvent) throws IOException {
+        backToCustomers(actionEvent);
     }
 
     @Override
@@ -74,5 +73,14 @@ public class CustomerAdd implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void backToCustomers(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 }

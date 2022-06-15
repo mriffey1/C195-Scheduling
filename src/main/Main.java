@@ -17,12 +17,12 @@ public class Main extends Application {
         stage.setTitle("Scheduling Application");
         stage.setScene(new Scene(root));
         stage.show();
+        stage.centerOnScreen();
     }
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
-
-       launch(args);
+        launch(args);
         JDBC.closeConnection();
     }
 }

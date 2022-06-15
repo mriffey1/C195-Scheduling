@@ -21,7 +21,10 @@ import model.FirstLVLDivision;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
+
+import static java.time.LocalDateTime.now;
 
 public class CustomerModify implements Initializable {
     public TextField customerIDTextField;
@@ -54,18 +57,39 @@ public class CustomerModify implements Initializable {
      */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         try {
-            int id = Integer.parseInt(customerIDTextField.getText());
-            String name = customerNameTextField.getText();
-            String address = customerAddressTextField.getText();
-            String zip = customerPostalTextField.getText();
-            String phone = customerPhoneTextField.getText();
-            int divisionId = customerDivisionCombo.getValue().getDivisionID();
+            int customerId = Integer.parseInt(customerIDTextField.getText());
+            String customerName = customerNameTextField.getText();
+            if (customerNameTextField.getText().isEmpty()){
+                helper.ErrorMsg.getError(1);
+                return;
+            }
+
+            String customerAddress = customerAddressTextField.getText();
+            if (customerAddressTextField.getText().isEmpty() || customerAddressTextField.getText().isBlank()) {
+                helper.ErrorMsg.getError(1);
+                return;
+            }
+
+            String customerPostalCode = customerPostalTextField.getText();
+            if (customerPostalTextField.getText().isEmpty() || customerPostalTextField.getText().isBlank()) {
+                helper.ErrorMsg.getError(1);
+                return;
+            }
+
+            String customerPhone = customerPhoneTextField.getText();
+            if (customerPhoneTextField.getText().isEmpty() || customerPhoneTextField.getText().isBlank()) {
+                helper.ErrorMsg.getError(1);
+                return;
+            }
+
+            int customerDivisionId = customerDivisionCombo.getValue().getDivisionID();
             int countryId = customerCountryCombo.getValue().getCountryId();
-            CustomerDAO.updateCustomer(name, address, zip, phone, divisionId, countryId, id);
+            String lastUpdatedBy = "script";
+            Timestamp lastUpdated = Timestamp.valueOf(now());
+            CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId, customerId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        System.out.println("Test");
         FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
         Scene scene = new Scene(parent);
@@ -81,7 +105,6 @@ public class CustomerModify implements Initializable {
      * @throws IOException
      */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
-        System.out.println("Test");
         FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
         Scene scene = new Scene(parent);

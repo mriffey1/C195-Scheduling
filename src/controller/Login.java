@@ -23,11 +23,13 @@ import static DAO.UserDAO.*;
 
 /**
  * Login class
+ *
  * @author Megan Riffey
  */
 
 public class Login implements Initializable {
 
+    public static Object userName;
     public Label labelLocation;
     public TextField txtFieldUserName;
     public TextField txtFieldUserPassword;
@@ -43,12 +45,12 @@ public class Login implements Initializable {
     /**
      * Validates user login using username and password and displaying appropriate error or success messages and logging
      * the successful or unsuccessful login in the login_activity.txt file upon clicking the "Login" button.
+     *
      * @param actionEvent
      * @throws IOException
      * @throws SQLException
      */
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
-
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
         LocalDateTime time = LocalDateTime.now();
@@ -97,16 +99,16 @@ public class Login implements Initializable {
             fwritter.write(User_Name + " has successfully logged on " + LDTUTC);
             fwritter.write("\n");
             fwritter.close();
-
-// this is to test that it's pulling the appropriate user ID
-            //System.out.println(getUserId(User_Name));
-
+            String userName = getUserName(User_Name);
+            System.out.println(userName);
+          //  System.out.println(getUserId(User_Name));
         } else helper.ErrorMsg.getError(2);
     }
 
     /**
      * Action event for Cancel button on login screen. Displays a warning asking for confirmation
      * to exit the program (OK button) or by staying inside the program (Cancel button).
+     *
      * @param actionEvent
      */
     public void actionCancelButton(ActionEvent actionEvent) {
@@ -128,6 +130,7 @@ public class Login implements Initializable {
     /**
      * Sets the timezone label, the text-field labels, the button text and program title to change languages based on
      * user's language settings on computer.
+     *
      * @param url
      * @param resourceBundle
      */

@@ -8,12 +8,14 @@ import model.FirstLVLDivision;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class FirstLvlDivisionDAO {
     public static ObservableList<FirstLVLDivision> getAllDivisionId() {
         ObservableList<FirstLVLDivision> divisionList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Division_ID, Division, Country_ID FROM first_level_divisions";
+            String sql = "SELECT * FROM first_level_divisions";
             PreparedStatement division = JDBC.conn.prepareStatement(sql);
             ResultSet rs = division.executeQuery();
 
@@ -21,7 +23,13 @@ public class FirstLvlDivisionDAO {
                 int divisionId = rs.getInt("Division_ID");
                 String divisionName = rs.getString("Division");
                 int countryId = rs.getInt("Country_ID");
-                FirstLVLDivision d = new FirstLVLDivision(divisionId, divisionName, countryId);
+                Timestamp Create_Date = rs.getTimestamp("Create_Date");
+                LocalDateTime createDate = Create_Date.toLocalDateTime();
+                String createBy = rs.getString("Created_By");
+                Timestamp Last_Updated = rs.getTimestamp("Last_Update");
+                LocalDateTime lastUpdated = Last_Updated.toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                FirstLVLDivision d = new FirstLVLDivision(divisionId, divisionName, countryId, createDate, createBy, lastUpdated, lastUpdatedBy);
                 divisionList.add(d);
             }
         } catch (SQLException e) {
@@ -62,8 +70,14 @@ public class FirstLvlDivisionDAO {
                 int divisionId = rs.getInt("Division_ID");
                 String divisionName = rs.getString("Division");
                 countryId = rs.getInt("Country_ID");
+                Timestamp Create_Date = rs.getTimestamp("Create_Date");
+                LocalDateTime createDate = Create_Date.toLocalDateTime();
+                String createBy = rs.getString("Created_By");
+                Timestamp Last_Updated = rs.getTimestamp("Last_Update");
+                LocalDateTime lastUpdated = Last_Updated.toLocalDateTime();
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
 
-                FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId);
+                FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId, createDate, createBy, lastUpdated, lastUpdatedBy);
                 divisionCountryOptions.add(c);
             }
             return divisionCountryOptions;

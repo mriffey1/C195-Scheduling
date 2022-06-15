@@ -108,11 +108,12 @@ public class ErrorMsg implements Initializable {
                 alert.setHeaderText("Are you sure you want to delete?");
                 alert.setContentText("Press OK to delete this product. ");
                 alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) ;
+                if (alert.getResult() == ButtonType.OK);
                 break;
 
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

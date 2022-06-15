@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  * Model for Customers
  *
@@ -11,6 +13,10 @@ public class Customer {
     private String customerAddress;
     private String customerPostalCode;
     private String customerPhone;
+    private LocalDateTime createdDate;
+    private String createdBy;
+    private LocalDateTime lastUpdated;
+    private String lastUpdatedBy;
     private int customerDivisionId;
     private int customerCountryId;
 
@@ -20,8 +26,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, int customerDivisionId, int customerCountryId) {
-
+    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
+                    String createdBy, String lastUpdatedBy, int customerDivisionId, int customerCountryId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -29,6 +35,10 @@ public class Customer {
         this.customerDivisionId = customerDivisionId;
         this.customerCountryId = customerCountryId;
         this.customerPhone = customerPhone;
+        this.createdBy = createdBy;
+        this.lastUpdated = lastUpdated;
+        this.lastUpdatedBy = lastUpdatedBy;
+
     }
 
 

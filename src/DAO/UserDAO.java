@@ -28,6 +28,7 @@ public class UserDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,18 +80,30 @@ public class UserDAO {
 
     public static int getUserId(String userName) throws SQLException {
         int userId = 0;
-        String sqlStatement = "select User_ID from users where User_Name = '" + userName + "'";
+        String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
         PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             userId = rs.getInt("User_ID");
-            System.out.println(userId);
+            userName = rs.getString("User_Name");
+            System.out.println(userId + userName);
         }
         return userId;
     }
 
-
+    public static String getUserName(String userName) throws SQLException {
+        int userId = 0;
+        String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            userId = rs.getInt("User_ID");
+            userName = rs.getString("User_Name");
+            System.out.println(userName);
+        }
+        return userName;
+    }
 }
 
 
