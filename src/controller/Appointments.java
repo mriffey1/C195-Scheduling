@@ -110,11 +110,18 @@ public class Appointments implements Initializable {
             confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
             confirmRemoval.showAndWait();
             if (confirmRemoval.getResult() == ButtonType.OK) {
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmation.setTitle("Alert");
+                confirmation.setContentText("Appointment ID# " + appointTable.getSelectionModel().getSelectedItem().getAppointmentId() + " for " + appointTable.getSelectionModel().getSelectedItem().getAppointmentType() + " has been cancelled.");
+                confirmation.getButtonTypes().clear();
+                confirmation.getButtonTypes().addAll(ButtonType.OK);
+                confirmation.showAndWait();
                 AppointmentDAO.deleteAppointment(appointTable.getSelectionModel().getSelectedItem().getAppointmentId());
-                helper.ErrorMsg.confirmation(2);
+
                 AppointmentList = AppointmentDAO.getAppointmentList();
                 appointTable.setItems(AppointmentList);
                 appointTable.refresh();
+
             } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
                 confirmRemoval.close();
             }
@@ -135,10 +142,10 @@ public class Appointments implements Initializable {
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
             stage.show();
-       } else {
+        } else {
 
             System.out.println("Error");
-       }
+        }
     }
 
     @Override

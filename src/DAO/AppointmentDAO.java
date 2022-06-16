@@ -8,7 +8,7 @@ import model.Appointment;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class AppointmentDAO {
 
@@ -25,8 +25,8 @@ public class AppointmentDAO {
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
                 String appointmentType = rs.getString("Type");
-                Timestamp appointmentStart = rs.getTimestamp("Start");
-                Timestamp appointmentEnd = rs.getTimestamp("End");
+                LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
@@ -52,8 +52,8 @@ public class AppointmentDAO {
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
                 String appointmentType = rs.getString("Type");
-                Timestamp appointmentStart = rs.getTimestamp("Start");
-                Timestamp appointmentEnd = rs.getTimestamp("End");
+                LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
@@ -90,8 +90,8 @@ public class AppointmentDAO {
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
                 String appointmentType = rs.getString("Type");
-                Timestamp appointmentStart = rs.getTimestamp("Start");
-                Timestamp appointmentEnd = rs.getTimestamp("End");
+                LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
@@ -117,8 +117,8 @@ public class AppointmentDAO {
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
                 String appointmentType = rs.getString("Type");
-                Timestamp appointmentStart = rs.getTimestamp("Start");
-                Timestamp appointmentEnd = rs.getTimestamp("End");
+                LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");

@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Appointment {
 
@@ -9,15 +9,15 @@ public class Appointment {
     private String appointmentDescription;
     private int appointmentContact;
     private String appointmentType;
-    private Timestamp appointmentStart;
-    private Timestamp appointmentEnd;
+    private LocalDateTime appointmentStart;
+    private LocalDateTime appointmentEnd;
     private int appointmentCustomerId;
     private int appointmentUserId;
     private String appointmentLocation;
 
 
     public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact,
-                       String appointmentType, Timestamp appointmentStart, Timestamp appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
+                       String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
         this.appointmentDescription = appointmentDescription;
@@ -76,20 +76,20 @@ public class Appointment {
         this.appointmentContact = appointmentContact;
     }
 
-    public Timestamp getAppointmentStart() {
+    public LocalDateTime getAppointmentStart() {
         return appointmentStart;
     }
 
-    public void setAppointmentStart(Timestamp appointmentStart) {
+    public void setAppointmentStart(LocalDateTime appointmentStart) {
         this.appointmentStart = appointmentStart;
     }
 
 
-    public Timestamp getAppointmentEnd() {
+    public LocalDateTime getAppointmentEnd() {
         return appointmentEnd;
     }
 
-    public void setAppointmentEnd(Timestamp appointmentEnd) {
+    public void setAppointmentEnd(LocalDateTime appointmentEnd) {
         this.appointmentEnd = appointmentEnd;
     }
 

@@ -1,5 +1,7 @@
 package controller;
 
+import DAO.AppointmentDAO;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointment;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -88,22 +92,52 @@ public class Login implements Initializable {
             fwritter.close();
 
         } else if (userLogin(User_Name, Password)) {
-            helper.ErrorMsg.confirmation(1);
-            FXMLLoader loader = new FXMLLoader();
-            Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
+           // helper.ErrorMsg.confirmation(1);
+            int id = getUserId(User_Name);
+            ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+            if (id > 0) {
+                FXMLLoader loader = new FXMLLoader();
+                Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
+                // Appointment's within 15 minutes
+                LocalDateTime currentTimeMinus15Min = LocalDateTime.now().minusMinutes(15);
+                LocalDateTime currentTimePlus15Min = LocalDateTime.now().plusMinutes(15);
+                LocalDateTime startTime;
+                int getAppointmentId = 0;
+                LocalDateTime displayTime = null;
+                boolean appointmentWithin15Min = false;
+
+                for (Appointment appointment : appointmentList) {
+                    startTime = appointment.getAppointmentStart();
+                    if ((startTime.isAfter(currentTimeMinus15Min) || startTime.isEqual(currentTimeMinus15Min)) && (startTime.isBefore(currentTimePlus15Min) || (startTime.isEqual(currentTimePlus15Min)))) {
+                        getAppointmentId = appointment.getAppointmentId();
+                        displayTime = startTime;
+                        appointmentWithin15Min = true;
+                    }
+                }
+                    if (appointmentWithin15Min != false) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Appointment within 15 minutes: " + getAppointmentId + " and appointment start time of: " + displayTime);
+                        Optional<ButtonType> confirmation = alert.showAndWait();
+                        System.out.println("There is an appointment within 15 minutes");
+                    }
+                }
+            }
             fwritter.write(User_Name + " has successfully logged on " + LDTUTC);
             fwritter.write("\n");
             fwritter.close();
+
             String userName = getUserName(User_Name);
             System.out.println(userName);
-          //  System.out.println(getUserId(User_Name));
-        } else helper.ErrorMsg.getError(2);
-    }
+            //  System.out.println(getUserId(User_Name));
+        }
+
+    //else {
+    //   helper.ErrorMsg.getError(2);
+
 
     /**
      * Action event for Cancel button on login screen. Displays a warning asking for confirmation
