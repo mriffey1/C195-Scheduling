@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -33,7 +34,7 @@ import static DAO.UserDAO.*;
 
 public class Login implements Initializable {
 
-    public static Object userName;
+    //  public static Object userName;
     public Label labelLocation;
     public TextField txtFieldUserName;
     @FXML
@@ -44,35 +45,39 @@ public class Login implements Initializable {
     public Button cancelButton;
     public Label loginTitle;
 
-    Stage stage;
+    //  Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
-    ObservableList<Appointment> appointment15List = AppointmentDAO.getAppointmentList();
+
     LocalDateTime currentTime = LocalDateTime.now();
     ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
-
-public void loginActivity(String value) throws IOException {
-
+    LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
     ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
-    String filename = "login_activity.txt", items;
-    FileWriter fwritter = new FileWriter(filename, true);
-    fwritter.write(value);
-    fwritter.write("\n");
-    fwritter.close();
-}
+
+    /**
+     * Sets the timezone label, the text-field labels, the button text and program title to change languages based on
+     * user's language settings on computer.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        TimeZone userTimeZone = TimeZone.getDefault();
+        String tz1 = userTimeZone.getID();
+        labelLocation.setText(tz1);
+
+        labelUserName.setText(langBundle.getString("Username"));
+        labelUserPassword.setText(langBundle.getString("Password"));
+        loginTitle.setText(langBundle.getString("SchedulingApplication"));
+        loginButton.setText(langBundle.getString("Login"));
+        cancelButton.setText(langBundle.getString("Cancel"));
+    }
+
 
     /**
      * Validates user login using username and password and displaying appropriate error or success messages and logging
      * the successful or unsuccessful login in the login_activity.txt file upon clicking the "Login" button.
-     *
      */
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
-
-        LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
-        ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
-        ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
-
 
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             helper.ErrorMsg.getError(5);
@@ -81,6 +86,7 @@ public void loginActivity(String value) throws IOException {
         } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) {
             helper.ErrorMsg.getError(3);
             System.out.println("Everything is incorrect");
+            loginActivity("User " + " has failed login due to an incorrect USERNAME and PASSWORD " + LDTUTC);
 
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(6);
@@ -98,8 +104,8 @@ public void loginActivity(String value) throws IOException {
         } else if (userLogin(User_Name, Password)) {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
-            FXMLLoader loader = new FXMLLoader();
-            Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+            new FXMLLoader();
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -138,7 +144,7 @@ public void loginActivity(String value) throws IOException {
      * Action event for Cancel button on login screen. Displays a warning asking for confirmation
      * to exit the program (OK button) or by staying inside the program (Cancel button).
      *
-     * @param actionEvent
+     * @param actionEvent test
      */
     public void actionCancelButton(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.WARNING, langBundle.getString("Cancel"));
@@ -156,24 +162,11 @@ public void loginActivity(String value) throws IOException {
         }
     }
 
-    /**
-     * Sets the timezone label, the text-field labels, the button text and program title to change languages based on
-     * user's language settings on computer.
-     *
-     * @param url
-     * @param resourceBundle
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        TimeZone tz = TimeZone.getDefault();
-        TimeZone userTimeZone = TimeZone.getDefault();
-        String tz1 = userTimeZone.getID();
-        labelLocation.setText(tz1);
-
-        labelUserName.setText(langBundle.getString("Username"));
-        labelUserPassword.setText(langBundle.getString("Password"));
-        loginTitle.setText(langBundle.getString("SchedulingApplication"));
-        loginButton.setText(langBundle.getString("Login"));
-        cancelButton.setText(langBundle.getString("Cancel"));
+    public void loginActivity(String value) throws IOException {
+        String filename = "login_activity.txt";
+        FileWriter fwritter = new FileWriter(filename, true);
+        fwritter.write(value);
+        fwritter.write("\n");
+        fwritter.close();
     }
 }

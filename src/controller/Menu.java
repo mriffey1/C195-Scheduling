@@ -9,17 +9,18 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Menu {
 
     /**
      * Action event for button Customer that will redirect to the Customers screen.
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent test
+     * @throws IOException test
      */
     public void menuCustomer(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -29,8 +30,8 @@ public class Menu {
 
     /**
      * Action event for button Appointment that will redirect to the Appointments screen.
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent test
+     * @throws IOException test
      */
     public void menuAppoint(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
