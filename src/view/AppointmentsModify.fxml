@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsModify">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsModify">
    <children>
-      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="483.0" prefWidth="600.0">
+      <AnchorPane layoutX="-30.0" layoutY="2.0" prefHeight="608.0" prefWidth="600.0">
          <children>
-            <GridPane layoutX="173.0" layoutY="63.0" prefHeight="257.0" prefWidth="297.0">
+            <GridPane layoutX="173.0" layoutY="63.0" prefHeight="281.0" prefWidth="298.0">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="134.39994880108804" minWidth="10.0" prefWidth="103.3454315740413" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.87275757844805" minWidth="9.96365512816378" prefWidth="9.96365512816378" />
@@ -52,8 +46,18 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="saveButton" layoutX="214.0" layoutY="418.0" mnemonicParsing="false" onAction="#actionSaveButton" prefWidth="75.0" text="Save" />
-            <Button fx:id="cancelButton" layoutX="365.0" layoutY="419.0" mnemonicParsing="false" onAction="#actionCancelButton" prefWidth="75.0" text="Cancel" />
+            <Button fx:id="saveButton" layoutX="214.0" layoutY="541.0" mnemonicParsing="false" onAction="#actionSaveButton" prefWidth="75.0" text="Save" />
+            <Button fx:id="cancelButton" layoutX="365.0" layoutY="542.0" mnemonicParsing="false" onAction="#actionCancelButton" prefWidth="75.0" text="Cancel" />
+            <DatePicker fx:id="startDatePicker" layoutX="283.0" layoutY="352.0" prefHeight="26.0" prefWidth="119.0" />
+            <Label layoutX="189.0" layoutY="356.0" text="Start Date/Time" />
+            <ComboBox fx:id="startTimeCombo" layoutX="419.0" layoutY="352.0" prefHeight="26.0" prefWidth="75.0" />
+            <Label layoutX="191.0" layoutY="403.0" text="End Date/Time" />
+            <DatePicker fx:id="endDatePicker" layoutX="283.0" layoutY="398.0" prefHeight="26.0" prefWidth="119.0" />
+            <ComboBox fx:id="endTimeCombo" layoutX="419.0" layoutY="398.0" prefHeight="26.0" prefWidth="75.0" />
+            <ComboBox fx:id="userCombo" layoutX="283.0" layoutY="443.0" prefHeight="26.0" prefWidth="180.0" />
+            <ComboBox fx:id="customerCombo" layoutX="283.0" layoutY="487.0" prefHeight="26.0" prefWidth="180.0" />
+            <Label layoutX="230.0" layoutY="447.0" text="User ID:" />
+            <Label layoutX="201.0" layoutY="491.0" text="Customer ID: " />
          </children>
       </AnchorPane>
    </children>

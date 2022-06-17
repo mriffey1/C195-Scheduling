@@ -31,6 +31,10 @@ public class User {
         this.userName = userName;
     }
 
+    public User(int userId, String userName) {
+        this.userID = userId;
+        this.userName = userName;
+    }
 
 
     /**
@@ -105,6 +109,10 @@ public class User {
 
     @Override
     public String toString() {
-        return (userName);
+        return "#" + Integer.toString(userID) + " - " + userName;
     }
+//    @Override
+//    public String toString() {
+//        return (userName);
+//    }
 }

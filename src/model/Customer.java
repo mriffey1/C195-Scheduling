@@ -26,6 +26,8 @@ public class Customer {
     public Customer() {
     }
 
+
+
     public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
                     String createdBy, String lastUpdatedBy, int customerDivisionId, int customerCountryId) {
         this.customerId = customerId;
@@ -140,9 +142,10 @@ public class Customer {
         this.customerCountryId = customerCountryId;
     }
 
-    public Customer(String customerName, int customerId) {
-        this.customerName = customerName;
+    public Customer(int customerId, String customerName ) {
         this.customerId = customerId;
+        this.customerName = customerName;
+
     }
 
     /**
@@ -170,6 +173,6 @@ public class Customer {
      */
     @Override
     public String toString() {
-        return customerName;
+        return "#" + Integer.toString(customerId) + " - " + customerName;
     }
 }

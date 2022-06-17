@@ -17,10 +17,10 @@ public class CustomerDAO {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try {
 
-               String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, " +
-                        "customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, " +
-                      "customers.Phone, customers.Division_ID, first_level_divisions.Country_ID FROM customers " +
-                       "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
+            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, " +
+                    "customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, " +
+                    "customers.Phone, customers.Division_ID, first_level_divisions.Country_ID FROM customers " +
+                    "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -43,7 +43,18 @@ public class CustomerDAO {
         }
         return customerList;
     }
+    public static Customer customerIdDisplay(int customerId) {
+        try {
+            String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerId + "'";
+            PreparedStatement deleteCust = JDBC.conn.prepareStatement(sqlStatement);
+            deleteCust.setInt(1, customerId);
+            deleteCust.execute();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static void deleteCustomer(int customerId) {
         try {
             String sqldelete = "DELETE FROM customers WHERE Customer_ID = ?";
@@ -88,30 +99,21 @@ public class CustomerDAO {
         insertCust.executeUpdate();
     }
 
-    public static void updateCustomer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int countryId) {
+
+    public static Customer returnCustomerList(int customerId) throws SQLException {
+        String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setInt(1, customerId);
+        ps.execute();
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int searchedCustomerId = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+
+            Customer c = new Customer(searchedCustomerId, customerName);
+            return c;
+        }
+        return null;
     }
-
-//    public static ObservableList<Customer> getCustomersById() {
-//        ObservableList<Customer> customerList = FXCollections.observableArrayList();
-//        try {
-//            String sql = "SELECT Customer_Name, Customer_ID FROM customers";
-//
-//            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//
-//            while (rs.next()) {
-//
-//                String customerName = rs.getString("Customer_Name");
-//                int customerId = rs.getInt("Customer_ID");
-//                Customer c = new Customer(customerName, customerId);
-//                customerList.add(c);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return customerList;
-//    }
-
-
 }

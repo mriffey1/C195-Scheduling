@@ -5,7 +5,6 @@ public class Contact {
     private String contactName;
     private String contactEmail;
 
-
     public Contact(int contactId, String contactName, String contactEmail) {
         this.contactId = contactId;
         this.contactName = contactName;

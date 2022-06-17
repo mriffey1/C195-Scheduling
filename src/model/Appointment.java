@@ -16,6 +16,7 @@ public class Appointment {
     private String appointmentLocation;
 
 
+
     public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact,
                        String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
         this.appointmentId = appointmentId;

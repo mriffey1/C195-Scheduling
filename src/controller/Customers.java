@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class Customers implements Initializable {
 
+    public TableColumn custCountryCol;
     @FXML
     private TableView<Customer> custTable;
     @FXML

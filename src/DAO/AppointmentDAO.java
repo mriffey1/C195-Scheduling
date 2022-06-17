@@ -15,6 +15,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getAppointmentList() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try {
+
             String sql = "SELECT * FROM appointments";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -29,6 +30,7 @@ public class AppointmentDAO {
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
+
                 Appointment c = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 appointmentList.add(c);
@@ -42,7 +44,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getWeeklyAppointments() {
         ObservableList<Appointment> weeklyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * from appointments WHERE WEEK(Start) = WEEK(NOW())";
+            String sql = "SELECT * from appointments WHERE Start >= NOW() + 7";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

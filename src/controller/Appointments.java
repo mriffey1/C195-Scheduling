@@ -17,6 +17,7 @@ import model.Appointment;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -131,7 +132,7 @@ public class Appointments implements Initializable {
     public void actionAppointAdd(ActionEvent actionEvent) {
     }
 
-    public void actionAppointUpdate(ActionEvent actionEvent) throws IOException {
+    public void actionAppointUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointTable.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/AppointmentsModify.fxml"));

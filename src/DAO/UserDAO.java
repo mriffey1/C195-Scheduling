@@ -1,6 +1,9 @@
 package DAO;
 
 import helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +16,27 @@ import java.sql.SQLException;
  */
 
 public class UserDAO {
+
+    public static ObservableList<User> getUserList() {
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * FROM users";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("User_ID");
+                String userName = rs.getString("User_Name");
+
+                User u = new User(userId, userName);
+                userList.add(u);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userList;
+    }
+
     /**
      * Selecting and preparing the username and password from database
      *
@@ -87,24 +111,43 @@ public class UserDAO {
         while (rs.next()) {
             userId = rs.getInt("User_ID");
             userName = rs.getString("User_Name");
-
         }
         return userId;
     }
 
-    public static String getUserName(String userName) throws SQLException {
-        int userId = 0;
-        String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
-        PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            userId = rs.getInt("User_ID");
-            userName = rs.getString("User_Name");
-            System.out.println(userName);
+    public static User returnUserId(int userId) {
+        try {
+            String sql = "SELECT User_ID, User_Name FROM users WHERE User_ID = ?";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.execute();
+
+            ResultSet rs = ps.getResultSet();
+
+            rs.next();
+            int searchedUserId = rs.getInt("User_ID");
+            String userName = rs.getString("User_Name");
+            User u = new User(searchedUserId, userName);
+            return u;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return userName;
     }
 }
+
+
+//    public static String getUserName(String userName) throws SQLException {
+//        int userId = 0;
+//        String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
+//        PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
+//        ResultSet rs = ps.executeQuery();
+//        while (rs.next()) {
+//            userId = rs.getInt("User_ID");
+//            userName = rs.getString("User_Name");
+//            System.out.println(userName);
+//        }
+//        return userName;
+//    }
 
 
 
