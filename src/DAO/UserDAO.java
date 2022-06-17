@@ -87,7 +87,7 @@ public class UserDAO {
         while (rs.next()) {
             userId = rs.getInt("User_ID");
             userName = rs.getString("User_Name");
-            System.out.println(userId + userName);
+
         }
         return userId;
     }

@@ -108,7 +108,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getUserAppointments(int userId) {
         ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
         try {
-            String sqlStatement="SELECT * FROM Appointments WHERE User_ID  = '" + userId + "'";
+            String sqlStatement = "SELECT * FROM Appointments WHERE User_ID  = '" + userId + "'";
             PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -132,5 +132,6 @@ public class AppointmentDAO {
         return userAppointments;
     }
 }
+
 
 

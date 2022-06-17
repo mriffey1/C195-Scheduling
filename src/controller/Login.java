@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -45,6 +44,8 @@ public class Login implements Initializable {
 
     Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
+    ObservableList<Appointment> appointment15List = AppointmentDAO.getAppointmentList();
+
 
     /**
      * Validates user login using username and password and displaying appropriate error or success messages and logging
@@ -62,10 +63,6 @@ public class Login implements Initializable {
         ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
         String filename = "login_activity.txt", items;
         FileWriter fwritter = new FileWriter(filename, true);
-
-        // May not need this
-        // Scanner keyboard = new Scanner(System.in);
-        //  PrintWriter pwVariable = new PrintWriter(fwritter);
 
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             helper.ErrorMsg.getError(5);
@@ -92,51 +89,38 @@ public class Login implements Initializable {
             fwritter.close();
 
         } else if (userLogin(User_Name, Password)) {
-           // helper.ErrorMsg.confirmation(1);
-            int id = getUserId(User_Name);
-            ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
-            if (id > 0) {
-                FXMLLoader loader = new FXMLLoader();
-                Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
-                Scene scene = new Scene(parent);
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
-                // Appointment's within 15 minutes
-                LocalDateTime currentTimeMinus15Min = LocalDateTime.now().minusMinutes(15);
-                LocalDateTime currentTimePlus15Min = LocalDateTime.now().plusMinutes(15);
-                LocalDateTime startTime;
-                int getAppointmentId = 0;
-                LocalDateTime displayTime = null;
-                boolean appointmentWithin15Min = false;
-
-                for (Appointment appointment : appointmentList) {
-                    startTime = appointment.getAppointmentStart();
-                    if ((startTime.isAfter(currentTimeMinus15Min) || startTime.isEqual(currentTimeMinus15Min)) && (startTime.isBefore(currentTimePlus15Min) || (startTime.isEqual(currentTimePlus15Min)))) {
-                        getAppointmentId = appointment.getAppointmentId();
-                        displayTime = startTime;
-                        appointmentWithin15Min = true;
-                    }
-                }
-                    if (appointmentWithin15Min != false) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Appointment within 15 minutes: " + getAppointmentId + " and appointment start time of: " + displayTime);
-                        Optional<ButtonType> confirmation = alert.showAndWait();
-                        System.out.println("There is an appointment within 15 minutes");
+            int userId = getUserId(User_Name);
+            ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
+            LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
+            for (Appointment appointment : userAppointments) {
+                LocalDateTime startTime = appointment.getAppointmentStart();
+                if (userId == appointment.getAppointmentUserId()) {
+                    if ((startTime.isAfter(currentTime) || startTime.isEqual(currentTimePlus15)) &&
+                            (startTime.isBefore(currentTimePlus15) || startTime.isEqual(currentTime))) {
+                        System.out.println(appointment.getAppointmentId());
+                        Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                        confirmRemoval.setTitle("Alert");
+                        confirmRemoval.setContentText(appointment.getAppointmentId() + " " + appointment.getAppointmentStart());
+                        confirmRemoval.getButtonTypes().clear();
+                        confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                        confirmRemoval.showAndWait();
                     }
                 }
             }
-            fwritter.write(User_Name + " has successfully logged on " + LDTUTC);
+            FXMLLoader loader = new FXMLLoader();
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+            fwritter.write(User_Name + " has successfully logged on " + LocalDateTime.now());
             fwritter.write("\n");
             fwritter.close();
-
-            String userName = getUserName(User_Name);
-            System.out.println(userName);
-            //  System.out.println(getUserId(User_Name));
         }
 
-    //else {
-    //   helper.ErrorMsg.getError(2);
+    }
 
 
     /**
