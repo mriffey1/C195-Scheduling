@@ -14,14 +14,15 @@ public class ContactDAO {
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Contact_ID, Contact_Name FROM contacts";
+            String sql = "SELECT Contact_ID, Contact_Name, Email FROM contacts";
             PreparedStatement contacts = JDBC.conn.prepareStatement(sql);
             ResultSet rs = contacts.executeQuery();
 
             while (rs.next()) {
                 int contactId = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
-                Contact d = new Contact(contactId, contactName);
+                String contactEmail = rs.getString("Email");
+                Contact d = new Contact(contactId, contactName, contactEmail);
                 contactList.add(d);
             }
         } catch (SQLException e) {
@@ -32,9 +33,11 @@ public class ContactDAO {
 
     public static Contact returnContactList(int contactId) {
         try {
-            String sql = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_ID = ?";
+            String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ps.setInt(1, contactId);
+
+
             ps.execute();
 
             ResultSet rs = ps.getResultSet();
@@ -42,10 +45,13 @@ public class ContactDAO {
             rs.next();
             int searchedContactId = rs.getInt("Contact_ID");
             String contactName = rs.getString("Contact_Name");
-            Contact s = new Contact(searchedContactId, contactName);
+            String contactEmail = rs.getString("Email");
+            Contact s = new Contact(searchedContactId, contactName, contactEmail);
             return s;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }

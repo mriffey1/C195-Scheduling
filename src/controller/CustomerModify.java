@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.time.LocalDateTime.now;
@@ -91,7 +92,7 @@ public class CustomerModify implements Initializable {
             e.printStackTrace();
         }
         FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -106,7 +107,7 @@ public class CustomerModify implements Initializable {
      */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/Customers.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -129,6 +130,5 @@ public class CustomerModify implements Initializable {
         customerDivisionCombo.setValue(s);
         Country c = CountryDAO.returnCountry(customer.getCustomerCountryId());
         customerCountryCombo.setValue(c);
-
     }
 }
