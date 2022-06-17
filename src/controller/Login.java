@@ -3,6 +3,7 @@ package controller;
 import DAO.AppointmentDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -35,7 +36,8 @@ public class Login implements Initializable {
     public static Object userName;
     public Label labelLocation;
     public TextField txtFieldUserName;
-    public TextField txtFieldUserPassword;
+    @FXML
+    private PasswordField txtFieldUserPassword;
     public Label labelUserName;
     public Label labelUserPassword;
     public Button loginButton;
@@ -45,24 +47,32 @@ public class Login implements Initializable {
     Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
     ObservableList<Appointment> appointment15List = AppointmentDAO.getAppointmentList();
+    LocalDateTime currentTime = LocalDateTime.now();
+    ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
 
+public void loginActivity(String value) throws IOException {
+
+    ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
+    String filename = "login_activity.txt", items;
+    FileWriter fwritter = new FileWriter(filename, true);
+    fwritter.write(value);
+    fwritter.write("\n");
+    fwritter.close();
+}
 
     /**
      * Validates user login using username and password and displaying appropriate error or success messages and logging
      * the successful or unsuccessful login in the login_activity.txt file upon clicking the "Login" button.
      *
-     * @param actionEvent
-     * @throws IOException
-     * @throws SQLException
      */
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
-        LocalDateTime time = LocalDateTime.now();
-        ZonedDateTime LDTConvert = time.atZone(ZoneId.systemDefault());
+
+        LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
+        ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
         ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
-        String filename = "login_activity.txt", items;
-        FileWriter fwritter = new FileWriter(filename, true);
+
 
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             helper.ErrorMsg.getError(5);
@@ -78,36 +88,16 @@ public class Login implements Initializable {
         } else if (!usernameValidation(User_Name)) {
             helper.ErrorMsg.getError(1);
             System.out.println("Incorrect/Invalid Username");
-            fwritter.write("User " + " has failed login due to incorrect username " + LDTUTC);
-            fwritter.write("\n");
-            fwritter.close();
+            loginActivity("User " + " has failed login due to an incorrect USERNAME " + LDTUTC);
 
         } else if (!passwordValidation(Password)) {
             helper.ErrorMsg.getError(2);
-            fwritter.write(User_Name + " has failed login due to incorrect password " + LDTUTC);
-            fwritter.write("\n");
-            fwritter.close();
+            loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
+
 
         } else if (userLogin(User_Name, Password)) {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
-            LocalDateTime currentTime = LocalDateTime.now();
-            LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
-            for (Appointment appointment : userAppointments) {
-                LocalDateTime startTime = appointment.getAppointmentStart();
-                if (userId == appointment.getAppointmentUserId()) {
-                    if ((startTime.isAfter(currentTime) || startTime.isEqual(currentTimePlus15)) &&
-                            (startTime.isBefore(currentTimePlus15) || startTime.isEqual(currentTime))) {
-                        System.out.println(appointment.getAppointmentId());
-                        Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-                        confirmRemoval.setTitle("Alert");
-                        confirmRemoval.setContentText(appointment.getAppointmentId() + " " + appointment.getAppointmentStart());
-                        confirmRemoval.getButtonTypes().clear();
-                        confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                        confirmRemoval.showAndWait();
-                    }
-                }
-            }
             FXMLLoader loader = new FXMLLoader();
             Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
             Scene scene = new Scene(parent);
@@ -115,11 +105,32 @@ public class Login implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-            fwritter.write(User_Name + " has successfully logged on " + LocalDateTime.now());
-            fwritter.write("\n");
-            fwritter.close();
-        }
+            loginActivity(User_Name + " has successfully logged in on " + LocalDateTime.now());
 
+            boolean isValid = false;
+            for (Appointment appointment : userAppointments) {
+                LocalDateTime startTime = appointment.getAppointmentStart();
+                if ((startTime.isAfter(currentTime) || startTime.isEqual(currentTimePlus15)) &&
+                        (startTime.isBefore(currentTimePlus15) || startTime.isEqual(currentTime))) {
+                    System.out.println(appointment.getAppointmentId());
+                    Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                    confirmRemoval.setTitle("Alert");
+                    confirmRemoval.setContentText(appointment.getAppointmentId() + " " + appointment.getAppointmentStart());
+                    confirmRemoval.getButtonTypes().clear();
+                    confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                    confirmRemoval.showAndWait();
+                    isValid = true;
+                }
+            }
+            if (!isValid) {
+                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                confirmRemoval.setTitle("Alert");
+                confirmRemoval.setContentText("No appointments");
+                confirmRemoval.getButtonTypes().clear();
+                confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                confirmRemoval.showAndWait();
+            }
+        }
     }
 
 
