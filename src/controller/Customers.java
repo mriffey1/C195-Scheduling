@@ -58,6 +58,8 @@ public class Customers implements Initializable {
         int count = 0;
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
         int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
+
+
         if (selectedCustomer == 0) {
             helper.ErrorMsg.getError(7);
         } else {
@@ -65,23 +67,6 @@ public class Customers implements Initializable {
                 int appointmentCustId = appointment.getAppointmentCustomerId();
                 if (appointmentCustId == selectedCustomer) {
                     count++;
-                } else if (count == 0) {
-                    Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-                    confirmRemoval.setTitle("Alert");
-                    confirmRemoval.setContentText("Remove Selected Part?");
-                    confirmRemoval.getButtonTypes().clear();
-                    confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                    confirmRemoval.showAndWait();
-                    if (confirmRemoval.getResult() == ButtonType.OK) {
-                        CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
-                        helper.ErrorMsg.confirmation(2);
-                        CustomerList = CustomerDAO.getCustomerList();
-                        custTable.setItems(CustomerList);
-                        custTable.refresh();
-                        break;
-                    } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
-                        confirmRemoval.close();
-                    }
                 }
             }
             if (count > 0) {
@@ -99,7 +84,8 @@ public class Customers implements Initializable {
                 associatedAppoint.showAndWait();
                 if (associatedAppoint.getResult() == ButtonType.OK) {
                     for (Appointment appointment : appointmentList) {
-                        AppointmentDAO.deleteAppointment(appointment.getAppointmentId());
+                        if (appointment.getAppointmentCustomerId() == selectedCustomer)
+                            AppointmentDAO.deleteAppointment(appointment.getAppointmentId());
                     }
                     CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
                     helper.ErrorMsg.confirmation(2);
@@ -110,9 +96,27 @@ public class Customers implements Initializable {
                     associatedAppoint.close();
                 }
             }
+            if (count == 0) {
+                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                confirmRemoval.setTitle("Alert");
+                confirmRemoval.setContentText("Remove selected customer?\n" +
+                        "Press OK to remove.\nCancel to return to screen.");
+                confirmRemoval.getButtonTypes().clear();
+                confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                confirmRemoval.showAndWait();
+                if (confirmRemoval.getResult() == ButtonType.OK) {
+                    CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                    helper.ErrorMsg.confirmation(2);
+                    CustomerList = CustomerDAO.getCustomerList();
+                    custTable.setItems(CustomerList);
+                    custTable.refresh();
+                } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
+                    confirmRemoval.close();
+                }
+            }
         }
-
     }
+
 
     /**
      * Action event for add button to add a customer. It will redirect to the CustomerAdd file.
@@ -155,7 +159,6 @@ public class Customers implements Initializable {
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custTable.setItems(CustomerDAO.getCustomerList());
@@ -177,7 +180,3 @@ public class Customers implements Initializable {
         stage.show();
     }
 }
-
-
-
-
