@@ -45,7 +45,6 @@ public class Login implements Initializable {
     public Button cancelButton;
     public Label loginTitle;
 
-    //  Stage stage;
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
     LocalDateTime currentTime = LocalDateTime.now();
@@ -62,14 +61,12 @@ public class Login implements Initializable {
         TimeZone userTimeZone = TimeZone.getDefault();
         String tz1 = userTimeZone.getID();
         labelLocation.setText(tz1);
-
         labelUserName.setText(langBundle.getString("Username"));
         labelUserPassword.setText(langBundle.getString("Password"));
         loginTitle.setText(langBundle.getString("SchedulingApplication"));
         loginButton.setText(langBundle.getString("Login"));
         cancelButton.setText(langBundle.getString("Cancel"));
     }
-
 
     /**
      * Validates user login using username and password and displaying appropriate error or success messages and logging
@@ -78,7 +75,6 @@ public class Login implements Initializable {
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
-
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             helper.ErrorMsg.getError(5);
             System.out.println("Username is blank");
@@ -100,7 +96,6 @@ public class Login implements Initializable {
             helper.ErrorMsg.getError(2);
             loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
 
-
         } else if (userLogin(User_Name, Password)) {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
@@ -112,7 +107,6 @@ public class Login implements Initializable {
             stage.centerOnScreen();
             stage.show();
             loginActivity(User_Name + " has successfully logged in on " + LocalDateTime.now());
-
             boolean isValid = false;
             for (Appointment appointment : userAppointments) {
                 LocalDateTime startTime = appointment.getAppointmentStart();
@@ -129,16 +123,10 @@ public class Login implements Initializable {
                 }
             }
             if (!isValid) {
-                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-                confirmRemoval.setTitle("Alert");
-                confirmRemoval.setContentText("No appointments");
-                confirmRemoval.getButtonTypes().clear();
-                confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                confirmRemoval.showAndWait();
+                helper.ErrorMsg.confirmation(1);
             }
         }
     }
-
 
     /**
      * Action event for Cancel button on login screen. Displays a warning asking for confirmation

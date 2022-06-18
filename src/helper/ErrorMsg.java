@@ -1,23 +1,28 @@
 package helper;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 
+
 public class ErrorMsg implements Initializable {
     static ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
     private int whichError;
+    Stage stage;
+    Parent scene;
 
 
-    public static void getError(int whichError) throws IOException {
+    public static void getError(int whichError)  {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (whichError) {
+
             // Incorrect Username error message
             case 1:
                 alert.setTitle(langBundle.getString("ErrorUsername"));
@@ -48,16 +53,21 @@ public class ErrorMsg implements Initializable {
 
             // Username is blank error message
             case 5:
-                alert.setTitle("ErrorBlankUserName");
-                alert.setContentText("blankUserName");
+                alert.setTitle(langBundle.getString("ErrorBlankUserName"));
+                alert.setContentText(langBundle.getString("blankUserName"));
                 alert.showAndWait();
                 break;
 
                 // Password is blank error message
             case 6:
-                alert.setTitle("ErrorBlankPassWord");
-                alert.setContentText("blankPassWord");
+                alert.setTitle(langBundle.getString("ErrorBlankPassWord"));
+                alert.setContentText(langBundle.getString("blankPassWord"));
                 alert.showAndWait();
+            case 7:
+                alert.setTitle("No Selection");
+                alert.setContentText("Please select a customer to continue.");
+                alert.showAndWait();
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }
@@ -69,13 +79,12 @@ public class ErrorMsg implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         switch (confirmation) {
             case 1:
-                alert.setTitle(langBundle.getString("Successfullyloggedin"));
-                alert.setHeaderText(langBundle.getString("Success"));
-                alert.setContentText(langBundle.getString("loggedInMessage"));
+             //   Alert noAppointment = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Alert");
+                alert.setContentText("No appointments");
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) ;
+                alert.showAndWait();
                 break;
             case 2:
                 alert.setTitle("Customer has been removed");
@@ -110,6 +119,15 @@ public class ErrorMsg implements Initializable {
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.OK);
                 break;
+            case 3:
+                Alert alert2 = new Alert(Alert.AlertType.WARNING, langBundle.getString("Cancel"));
+                alert2.setTitle("Exit Application");
+                alert2.setHeaderText(langBundle.getString("Areyousureyouwanttoexit?"));
+                alert2.setContentText(langBundle.getString("PressOKtoexitorpressCanceltostay."));
+                alert2.getButtonTypes().clear();
+                alert2.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                alert2.showAndWait();
+
 
         }
     }

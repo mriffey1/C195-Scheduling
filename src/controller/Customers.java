@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentDAO;
 import DAO.CustomerDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Customer;
 
 import java.io.IOException;
@@ -53,26 +55,63 @@ public class Customers implements Initializable {
      * @throws Exception
      */
     public void actionCustDelete(ActionEvent actionEvent) throws Exception {
-        Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
-        if (selectedCustomer == null) {
-            System.out.println("Error");
+        int count = 0;
+        ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+        int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
+        if (selectedCustomer == 0) {
+            helper.ErrorMsg.getError(7);
         } else {
-            Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-            confirmRemoval.setTitle("Alert");
-            confirmRemoval.setContentText("Remove Selected Part?");
-            confirmRemoval.getButtonTypes().clear();
-            confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-            confirmRemoval.showAndWait();
-            if (confirmRemoval.getResult() == ButtonType.OK) {
-                CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
-                helper.ErrorMsg.confirmation(2);
-                CustomerList = CustomerDAO.getCustomerList();
-                custTable.setItems(CustomerList);
-                custTable.refresh();
-            } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
-                confirmRemoval.close();
+            for (Appointment appointment : appointmentList) {
+                int appointmentCustId = appointment.getAppointmentCustomerId();
+                if (appointmentCustId == selectedCustomer) {
+                    count++;
+                } else if (count == 0) {
+                    Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+                    confirmRemoval.setTitle("Alert");
+                    confirmRemoval.setContentText("Remove Selected Part?");
+                    confirmRemoval.getButtonTypes().clear();
+                    confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                    confirmRemoval.showAndWait();
+                    if (confirmRemoval.getResult() == ButtonType.OK) {
+                        CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                        helper.ErrorMsg.confirmation(2);
+                        CustomerList = CustomerDAO.getCustomerList();
+                        custTable.setItems(CustomerList);
+                        custTable.refresh();
+                        break;
+                    } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
+                        confirmRemoval.close();
+                    }
+                }
+            }
+            if (count > 0) {
+                System.out.println("Appointment found");
+                Alert associatedAppoint = new Alert(Alert.AlertType.WARNING);
+                associatedAppoint.setTitle("Alert");
+                associatedAppoint.setHeaderText("Alert: " + count + " associated appointment(s).");
+                associatedAppoint.setContentText("There are " + count + " associated appointment(s) for the selected customer.\n\n" +
+                        "Please select OK to delete the associated appointments and customer.\n\n" +
+                        "Otherwise, please press cancel to return to the main screen.");
+                associatedAppoint.getButtonTypes().clear();
+                associatedAppoint.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                associatedAppoint.getDialogPane().setMinHeight(250);
+                associatedAppoint.getDialogPane().setMinWidth(400);
+                associatedAppoint.showAndWait();
+                if (associatedAppoint.getResult() == ButtonType.OK) {
+                    for (Appointment appointment : appointmentList) {
+                        AppointmentDAO.deleteAppointment(appointment.getAppointmentId());
+                    }
+                    CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                    helper.ErrorMsg.confirmation(2);
+                    CustomerList = CustomerDAO.getCustomerList();
+                    custTable.setItems(CustomerList);
+                    custTable.refresh();
+                } else if (associatedAppoint.getResult() == ButtonType.CANCEL) {
+                    associatedAppoint.close();
+                }
             }
         }
+
     }
 
     /**
@@ -82,7 +121,7 @@ public class Customers implements Initializable {
      * @throws IOException
      */
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        //  FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/CustomerAdd.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -112,7 +151,7 @@ public class Customers implements Initializable {
             stage.centerOnScreen();
             stage.show();
         } else {
-            System.out.println("Error");
+            helper.ErrorMsg.getError(7);
         }
     }
 

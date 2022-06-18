@@ -19,7 +19,7 @@ public class Menu {
      * @throws IOException test
      */
     public void menuCustomer(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+    //    FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -34,7 +34,7 @@ public class Menu {
      * @throws IOException test
      */
     public void menuAppoint(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+      //  FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -49,7 +49,7 @@ public class Menu {
      * @throws IOException
      */
     public void menuReport(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+     //   FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Reports.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
