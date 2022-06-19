@@ -118,11 +118,9 @@ public class Appointments implements Initializable {
                 confirmation.getButtonTypes().addAll(ButtonType.OK);
                 confirmation.showAndWait();
                 AppointmentDAO.deleteAppointment(appointTable.getSelectionModel().getSelectedItem().getAppointmentId());
-
                 AppointmentList = AppointmentDAO.getAppointmentList();
                 appointTable.setItems(AppointmentList);
                 appointTable.refresh();
-
             } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
                 confirmRemoval.close();
             }
@@ -144,7 +142,6 @@ public class Appointments implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
         } else {
-
             System.out.println("Error");
         }
     }

@@ -59,7 +59,6 @@ public class Customers implements Initializable {
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
         int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
 
-
         if (selectedCustomer == 0) {
             helper.ErrorMsg.getError(7);
         } else {
@@ -171,7 +170,7 @@ public class Customers implements Initializable {
     }
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
+        new FXMLLoader();
         Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
