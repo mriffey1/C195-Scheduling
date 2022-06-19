@@ -37,7 +37,6 @@ public class ContactDAO {
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ps.setInt(1, contactId);
 
-
             ps.execute();
 
             ResultSet rs = ps.getResultSet();
@@ -51,6 +50,19 @@ public class ContactDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static int returnContactId(String contactName) throws SQLException {
+        int contactId = 0;
+        String sql = "SELECT * FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.setString(1, contactName);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            contactId = rs.getInt("Contact_ID");
+        }
+        return contactId;
     }
 
 

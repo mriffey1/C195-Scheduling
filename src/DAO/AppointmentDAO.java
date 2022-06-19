@@ -15,7 +15,6 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getAppointmentList() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try {
-
             String sql = "SELECT * FROM appointments";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -131,6 +130,33 @@ public class AppointmentDAO {
             throw new RuntimeException(e);
         }
         return userAppointments;
+    }
+
+    public static ObservableList<Appointment> getContactAppointment(int contactId) {
+        ObservableList<Appointment> contactAppointment = FXCollections.observableArrayList();
+        try {
+            String sqlStatement = "SELECT * FROM Appointments WHERE Contact_ID  = '" + contactId + "'";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String appointmentTitle = rs.getString("Title");
+                String appointmentDescription = rs.getString("Description");
+                int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentType = rs.getString("Type");
+                LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
+                int appointmentCustomerId = rs.getInt("Customer_ID");
+                int appointmentUserId = rs.getInt("User_ID");
+                String appointmentLocation = rs.getString("Location");
+                Appointment results = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+                        appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
+                contactAppointment.add(results);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return contactAppointment;
     }
 }
 
