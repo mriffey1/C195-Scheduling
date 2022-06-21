@@ -14,7 +14,7 @@ public class CountryDAO {
     public static ObservableList<Country> getAllCountry() {
         ObservableList<Country> countryList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Country_ID, Country FROM countries";
+            String sql = "SELECT DISTINCT Country_ID, Country FROM countries";
             PreparedStatement country = JDBC.conn.prepareStatement(sql);
             ResultSet rs = country.executeQuery();
 

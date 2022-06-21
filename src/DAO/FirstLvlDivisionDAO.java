@@ -15,7 +15,7 @@ public class FirstLvlDivisionDAO {
     public static ObservableList<FirstLVLDivision> getAllDivisionId() {
         ObservableList<FirstLVLDivision> divisionList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * FROM first_level_divisions";
+            String sql = "SELECT DISTINCT * FROM first_level_divisions";
             PreparedStatement division = JDBC.conn.prepareStatement(sql);
             ResultSet rs = division.executeQuery();
 

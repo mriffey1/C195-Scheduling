@@ -59,7 +59,6 @@ public class Login implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId zoneId = ZoneId.systemDefault();
         String location = zoneId.systemDefault().toString();
-     //   String tz1 = zoneId.sy;
         labelLocation.setText(location);
         labelUserName.setText(langBundle.getString("Username"));
         labelUserPassword.setText(langBundle.getString("Password"));

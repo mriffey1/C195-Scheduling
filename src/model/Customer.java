@@ -19,6 +19,8 @@ public class Customer {
     private String lastUpdatedBy;
     private int customerDivisionId;
     private int customerCountryId;
+    private String customerDivisionName;
+    private String customerCountryName;
 
 
     // static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
@@ -28,20 +30,48 @@ public class Customer {
 
 
 
-    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
-                    String createdBy, String lastUpdatedBy, int customerDivisionId, int customerCountryId) {
+//    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
+//                    String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId) {
+//        this.customerId = customerId;
+//        this.customerName = customerName;
+//        this.customerAddress = customerAddress;
+//        this.customerPostalCode = customerPostalCode;
+//        this.customerDivisionId = customerDivisionId;
+//        this.customerDivisionName = customerDivisionName;
+//        this.customerCountryId = customerCountryId;
+//        this.customerPhone = customerPhone;
+//        this.createdBy = createdBy;
+//        this.lastUpdated = lastUpdated;
+//        this.lastUpdatedBy = lastUpdatedBy;
+//
+//    }
+
+
+
+
+
+    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId, String customerCountryName) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
         this.customerDivisionId = customerDivisionId;
+        this.customerDivisionName = customerDivisionName;
         this.customerCountryId = customerCountryId;
+        this.customerCountryName = customerCountryName;
         this.customerPhone = customerPhone;
         this.createdBy = createdBy;
         this.lastUpdated = lastUpdated;
         this.lastUpdatedBy = lastUpdatedBy;
-
     }
+
+    public String getCustomerDivisionName(){
+        return customerDivisionName;
+}
+
+public String getCustomerCountryName(){
+        return customerCountryName;
+}
 
 
     /**

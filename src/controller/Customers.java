@@ -166,7 +166,9 @@ public class Customers implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
+        custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionName"));
+        custCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountryName"));
+
     }
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {

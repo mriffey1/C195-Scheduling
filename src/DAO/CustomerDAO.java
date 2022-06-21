@@ -16,11 +16,7 @@ public class CustomerDAO {
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try {
-
-            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, " +
-                    "customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, " +
-                    "customers.Phone, customers.Division_ID, first_level_divisions.Country_ID FROM customers " +
-                    "INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
+            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division, first_level_divisions.Country_ID, countries.Country FROM customers INNER JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID  INNER JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -32,9 +28,12 @@ public class CustomerDAO {
                 String createdBy = rs.getString("Created_By");
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
                 int customerDivisionId = rs.getInt("Division_ID");
+                String customerDivisionName = rs.getString("Division");
                 int customerCountryId = rs.getInt("Country_ID");
+                String customerCountryName = rs.getString("Country");
 
-                Customer c = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, createdBy, lastUpdatedBy, customerDivisionId, customerCountryId);
+
+                Customer c = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, createdBy, lastUpdatedBy, customerDivisionId, customerDivisionName, customerCountryId, customerCountryName);
 
                 customerList.add(c);
             }
