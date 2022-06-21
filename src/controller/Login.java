@@ -22,7 +22,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 import static DAO.UserDAO.*;
 
@@ -58,9 +57,10 @@ public class Login implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TimeZone userTimeZone = TimeZone.getDefault();
-        String tz1 = userTimeZone.getID();
-        labelLocation.setText(tz1);
+        ZoneId zoneId = ZoneId.systemDefault();
+        String location = zoneId.systemDefault().toString();
+     //   String tz1 = zoneId.sy;
+        labelLocation.setText(location);
         labelUserName.setText(langBundle.getString("Username"));
         labelUserPassword.setText(langBundle.getString("Password"));
         loginTitle.setText(langBundle.getString("SchedulingApplication"));

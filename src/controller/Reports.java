@@ -4,6 +4,7 @@ import DAO.AppointmentDAO;
 import DAO.ContactDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -18,34 +19,58 @@ import model.Contact;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class Reports implements Initializable {
-    public TableColumn appointTotalType;
-    public TableColumn appointTypeTotal;
-    public TableColumn appointMonth;
-    public TableColumn appointMonthTotal;
-    public Tab contactSchedule;
-    public TableColumn appointId;
-    public TableColumn appointTitle;
-    public TableColumn appointDescription;
-    public TableColumn appointContact;
-    public TableColumn appointType;
-    public TableColumn appointStart;
-    public TableColumn appointEnd;
-    public TableColumn appointCustId;
-    public TableColumn appointUserId;
-    public ComboBox<Contact> contactCombo;
-    public TableColumn appointCountry;
-    public TableColumn appointCountryTotal;
-    public Button backToMenu;
-    public Tab appointCountryTab;
-    public Tab contactScheduleTab;
-    public Tab appointTotalTab;
-    public TableView contactTable;
-
+    public TableView appointTypeTable;
+    public TableView appointMonthTable;
+    @FXML
+    private TableColumn<Appointment, String> appointTotalType;
+    @FXML
+    private TableColumn appointTypeTotal;
+    @FXML
+    private TableColumn appointMonth;
+    @FXML
+    private TableColumn appointMonthTotal;
+    @FXML
+    private Tab contactSchedule;
+    @FXML
+    private TableColumn<Appointment, Integer> appointId;
+    @FXML
+    private TableColumn<Appointment, String> appointTitle;
+    @FXML
+    private TableColumn<Appointment, String> appointDescription;
+    @FXML
+    private TableColumn<Appointment, Integer> appointContact;
+    @FXML
+    private TableColumn<Appointment, String> appointType;
+    @FXML
+    private TableColumn<Appointment, Timestamp> appointStart;
+    @FXML
+    private TableColumn<Appointment, Timestamp> appointEnd;
+    @FXML
+    private TableColumn<Appointment, Integer> appointCustId;
+    @FXML
+    private TableColumn<Appointment, Integer> appointUserId;
+    @FXML
+    private ComboBox<Contact> contactCombo;
+    @FXML
+    private TableColumn appointCountry;
+    @FXML
+    private TableColumn appointCountryTotal;
+    @FXML
+    private Button backToMenu;
+    @FXML
+    private Tab appointCountryTab;
+    @FXML
+    private Tab contactScheduleTab;
+    @FXML
+    private Tab appointTotalTab;
+    @FXML
+    private TableView contactTable;
+    ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
     ObservableList<Contact> contactList = ContactDAO.getAllContacts();
-    ObservableList<Appointment> AppointmentList = AppointmentDAO.getAppointmentList();
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
         new FXMLLoader();
@@ -57,18 +82,16 @@ public class Reports implements Initializable {
         stage.show();
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        appointMonthTable.setPlaceholder(new Label("No data for month is available."));
         contactCombo.setItems(contactList);
         contactCombo.setVisibleRowCount(10);
-
         appointId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        //  appointLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
         appointContact.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
-        //  appointTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointStart.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
         appointEnd.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
         appointCustId.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
@@ -76,6 +99,15 @@ public class Reports implements Initializable {
         appointUserId.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
         contactTable.setPlaceholder(new Label("Please select a contact."));
         contactTable.refresh();
+        appointTypeTable.setPlaceholder(new Label("No data for Type is available."));
+
+        ObservableList<Appointment> appointmentListType = AppointmentDAO.appointmentType();
+        appointTypeTable.setItems(AppointmentDAO.appointmentType());
+        appointTotalType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        appointMonthTable.setItems(AppointmentDAO.appointmentType());
+        appointMonth.setCellValueFactory(new PropertyValueFactory<>("appointmentStart1"));
+
+
     }
 
     public void contactPopulate(ActionEvent actionEvent) throws SQLException {
@@ -91,5 +123,10 @@ public class Reports implements Initializable {
         } else {
             contactTable.setItems(AppointmentDAO.getContactAppointment(contactId));
         }
+    }
+
+    public void appointmentTotal() {
+
+
     }
 }

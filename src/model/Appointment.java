@@ -10,10 +10,22 @@ public class Appointment {
     private int appointmentContact;
     private String appointmentType;
     private LocalDateTime appointmentStart;
+    public long appointmentStart1;
     private LocalDateTime appointmentEnd;
     private int appointmentCustomerId;
     private int appointmentUserId;
     private String appointmentLocation;
+
+    public String appointmentMonth;
+    public int appointmentTotal;
+
+    public String appointmentMonthType;
+    public int appointmentTotalType;
+
+    public Appointment(String appointmentMonth, int appointmentTotal) {
+        this.appointmentMonth = appointmentMonth;
+        this.appointmentTotal = appointmentTotal;
+    }
 
 
 
@@ -29,7 +41,27 @@ public class Appointment {
         this.appointmentCustomerId = appointmentCustomerId;
         this.appointmentUserId = appointmentUserId;
         this.appointmentLocation = appointmentLocation;
+
     }
+
+    public Appointment(String appointmentType, LocalDateTime appointmentStart) {
+        this.appointmentType = appointmentType;
+        this.appointmentStart = appointmentStart;
+    }
+
+    public Appointment(String appointmentType) {
+        this.appointmentType = appointmentType;
+    }
+
+    public Appointment(String appointmentType, long appointmentStart1) {
+        this.appointmentType = appointmentType;
+        this.appointmentStart1 = appointmentStart1;
+    }
+
+    public long getAppointmentStart1(){
+        return appointmentStart1;
+    }
+
     public String getAppointmentType() {
         return appointmentType;
     }

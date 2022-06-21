@@ -158,7 +158,25 @@ public class AppointmentDAO {
         }
         return contactAppointment;
     }
-}
 
+    public static ObservableList<Appointment> appointmentType() {
+        ObservableList<Appointment> appointmentListType = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT DISTINCT appointments.Type, MONTH(appointments.Start) AS Start FROM appointments";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String appointmentType = rs.getString("Type");
+                long appointmentStart1 = rs.getLong("Start");
+                Appointment results = new Appointment(appointmentType, appointmentStart1);
+                appointmentListType.add(results);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appointmentListType;
+
+    }
+}
 
 

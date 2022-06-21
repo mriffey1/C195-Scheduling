@@ -127,7 +127,14 @@ public class Appointments implements Initializable {
         }
     }
 
-    public void actionAppointAdd(ActionEvent actionEvent) {
+    public void actionAppointAdd(ActionEvent actionEvent) throws IOException {
+      //  FXMLLoader loader = new FXMLLoader();
+        Parent parent = FXMLLoader.load(getClass().getResource("../view/AppointmentsAdd.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 
     public void actionAppointUpdate(ActionEvent actionEvent) throws IOException, SQLException {
@@ -162,6 +169,7 @@ public class Appointments implements Initializable {
         appointUserIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
 
         appointTable1.setItems(AppointmentDAO.getWeeklyAppointments());
+        appointTable1.setPlaceholder(new Label("Currently there are no appointments within the next week."));
         appointIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitleCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointDescriptionCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
@@ -174,6 +182,7 @@ public class Appointments implements Initializable {
         appointUserIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
 
         appointTable11.setItems(AppointmentDAO.getMonthlyAppointments());
+        appointTable11.setPlaceholder(new Label("Currently there are no appointments within the next month."));
         appointIdCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitleCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointDescriptionCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
