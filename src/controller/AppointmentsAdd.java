@@ -25,31 +25,50 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsAdd implements Initializable {
-    public TextField appointmentIDTextField;
-    public TextField appointTitleTextField;
-    public TextField appointDescriptionTextField;
-    public TextField appointLocationTextField;
-    public TextField appointTypeTextField;
+    @FXML
+    private TextField appointmentIDTextField;
+    @FXML
+    private TextField appointTitleTextField;
+    @FXML
+    private TextField appointDescriptionTextField;
+    @FXML
+    private TextField appointLocationTextField;
+    @FXML
+    private TextField appointTypeTextField;
     @FXML
     private ComboBox<Contact> contactComboAdd;
-    public Button saveButton;
-    public Button cancelButton;
-    public DatePicker startDatePickerAdd;
-    public ComboBox<LocalTime> startTimeComboAdd;
-    public DatePicker endDatePickerAdd;
-    public ComboBox<LocalTime> endTimeComboAdd;
-    public ComboBox<User> userComboAdd;
-    public ComboBox<Customer> customerComboAdd;
-   // public static boolean requiredInputCheck;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private DatePicker startDatePickerAdd;
+    @FXML
+    private ComboBox<LocalTime> startTimeComboAdd;
+    @FXML
+    private DatePicker endDatePickerAdd;
+    @FXML
+    private ComboBox<LocalTime> endTimeComboAdd;
+    @FXML
+    private ComboBox<User> userComboAdd;
+    @FXML
+    private ComboBox<Customer> customerComboAdd;
     private final int noOfDaysToAdd = 0;
 
+    /**
+     * Action event for save button that will verify and display the appropriate message for missing/blank fields,
+     * along with verifying no overlapping appointments with respective customers and ensure appointments are scheduled
+     * during business hours.
+     *
+     * @param actionEvent event for save button
+     * @throws IOException addresses unhandled exceptions
+     */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         try {
             String appointmentTitle = appointTitleTextField.getText();
             String appointmentDescription = appointDescriptionTextField.getText();
             LocalDateTime appointmentStart = null;
             LocalDateTime appointmentEnd = null;
-
 
             // Handling null pointer exception and alert message
             Contact contact = contactComboAdd.getValue();
@@ -119,14 +138,36 @@ public class AppointmentsAdd implements Initializable {
         }
     }
 
+    /**
+     * Action event for cancel button that redirects the user back to the main appointments screen
+     *
+     * @param actionEvent event for cancel button
+     * @throws IOException addresses unhandled exception
+     */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         Appointment.backToAppointments(actionEvent);
     }
 
-    public LocalTime plusMinutes(long MinutesToAdd) {
-        return plusMinutes(MinutesToAdd);
+    /**
+     * Method to add minutes onto End time combo based on start time combo.
+     *
+     * @param MinutesToAdd returns the number of minutes to add
+     */
+    public long plusMinutes(long MinutesToAdd) {
+        try {
+            return MinutesToAdd;
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
+     * 30 minutes automatically onto the end time based on the selected start time.
+     *
+     * @param url URL
+     * @param resourceBundle ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startTimeComboAdd.setItems(Appointment.getTimes());

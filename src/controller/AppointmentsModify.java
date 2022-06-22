@@ -6,6 +6,7 @@ import DAO.CustomerDAO;
 import DAO.UserDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,21 +29,41 @@ import static java.time.LocalDateTime.now;
 
 public class AppointmentsModify implements Initializable {
 
-    public TextField appointmentIDTextField;
-    public TextField appointmentTitleTextField;
-    public TextField appointmentDescriptionTextField;
-    public TextField appointmentLocationTextField;
-    public TextField appointmentTypeTextField;
-    public ComboBox<Contact> contactCombo;
-    public Button saveButton;
-    public Button cancelButton;
-    public DatePicker startDatePicker;
-    public ComboBox<LocalTime> startTimeCombo;
-    public DatePicker endDatePicker;
-    public ComboBox<LocalTime> endTimeCombo;
-    public ComboBox<User> userCombo;
-    public ComboBox<Customer> customerCombo;
+    @FXML
+    private TextField appointmentIDTextField;
+    @FXML
+    private TextField appointmentTitleTextField;
+    @FXML
+    private TextField appointmentDescriptionTextField;
+    @FXML
+    private TextField appointmentLocationTextField;
+    @FXML
+    private TextField appointmentTypeTextField;
+    @FXML
+    private ComboBox<Contact> contactCombo;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private ComboBox<LocalTime> startTimeCombo;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private ComboBox<LocalTime> endTimeCombo;
+    @FXML
+    private ComboBox<User> userCombo;
+    @FXML
+    private ComboBox<Customer> customerCombo;
 
+    /**
+     * Initializing combo boxes for contacts, customers and users and setting the values
+     *
+     * @param url            URL
+     * @param resourceBundle ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Contact> contactList = ContactDAO.getAllContacts();
@@ -58,7 +79,12 @@ public class AppointmentsModify implements Initializable {
         userCombo.setVisibleRowCount(10);
     }
 
-
+    /**
+     * Action for save button that will get values from each field and updating the appointment
+     *
+     * @param actionEvent event for save button
+     * @throws IOException addresses unhandled exception
+     */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         int appointmentId = Integer.parseInt(appointmentIDTextField.getText());
         String appointmentTitle = appointmentTitleTextField.getText();
@@ -79,11 +105,22 @@ public class AppointmentsModify implements Initializable {
 
     }
 
+    /**
+     * Action event for cancel button that redirects the user back to the main appointments page
+     *
+     * @param actionEvent event for cancel button
+     * @throws IOException addresses unhandled exceptions
+     */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         Appointment.backToAppointments(actionEvent);
     }
 
-
+    /**
+     * Displays the appointment information in the appropriate field in the form
+     *
+     * @param appointment references appointment object
+     * @throws SQLException addresses unhandled SQL exceptions
+     */
     public void getAppointmentInfo(Appointment appointment) throws SQLException {
         appointmentIDTextField.setText(Integer.toString(appointment.getAppointmentId()));
         appointmentTitleTextField.setText(appointment.getAppointmentTitle());
