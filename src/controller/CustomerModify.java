@@ -4,6 +4,7 @@ import DAO.CountryDAO;
 import DAO.CustomerDAO;
 import DAO.FirstLvlDivisionDAO;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,16 +28,31 @@ import java.util.ResourceBundle;
 import static java.time.LocalDateTime.now;
 
 public class CustomerModify implements Initializable {
-    public TextField customerIDTextField;
-    public TextField customerNameTextField;
-    public TextField customerPhoneTextField;
-    public TextField customerAddressTextField;
-    public TextField customerPostalTextField;
-    public ComboBox<FirstLVLDivision> customerDivisionCombo;
-    public ComboBox<Country> customerCountryCombo;
-    public Button saveButton;
-    public Button cancelButton;
+    @FXML
+    private TextField customerIDTextField;
+    @FXML
+    private TextField customerNameTextField;
+    @FXML
+    private TextField customerPhoneTextField;
+    @FXML
+    private TextField customerAddressTextField;
+    @FXML
+    private TextField customerPostalTextField;
+    @FXML
+    private ComboBox<FirstLVLDivision> customerDivisionCombo;
+    @FXML
+    private ComboBox<Country> customerCountryCombo;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
 
+    /**
+     * Initializes list of countries in the country combo field
+     *
+     * @param url            URL
+     * @param resourceBundle ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerCountryCombo.setItems(CountryDAO.getAllCountry());
@@ -44,12 +60,11 @@ public class CustomerModify implements Initializable {
 
     /**
      * Action event for the save button. This will attempt to update the database and then redirect back to the Customers
-     * tableview to display newly modified customer.
+     * tableview to display newly modified customer. Appropriate error message will display if a field is blank.
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent event for save button when modifying a customer
      */
-    public void actionSaveButton(ActionEvent actionEvent) throws IOException {
+    public void actionSaveButton(ActionEvent actionEvent) {
         try {
             int customerId = Integer.parseInt(customerIDTextField.getText());
             String customerName = customerNameTextField.getText();
@@ -76,13 +91,25 @@ public class CustomerModify implements Initializable {
             int countryId = customerCountryCombo.getValue().getCountryId();
             String lastUpdatedBy = "script";
             Timestamp lastUpdated = Timestamp.valueOf(now());
-            //    Customer newCustomer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId);
             CustomerDAO.updateCustomer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId);
-            //  Customer.updateCustomer(Index, newCustomer);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (NumberFormatException | IOException e) {
+            throw new RuntimeException(e);
         }
-        FXMLLoader loader = new FXMLLoader();
+    }
+
+    /**
+     * Action event for the cancel button. Upon clicking the button, it will redirect the user back to the main Customers tableview.
+     *
+     * @param actionEvent event for cancel button
+     * @throws IOException addresses unhandled exception for load
+     */
+    public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -91,20 +118,10 @@ public class CustomerModify implements Initializable {
     }
 
     /**
-     * Action event for the cancel button. Upon click, it will redirect the user back to the main Customers tableview.
+     * Loads associated/matching division information when country is selected
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent event to load division combo once country is selected
      */
-    public void actionCancelButton(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public void actionCountryLoad(ActionEvent actionEvent) {
         Country C = customerCountryCombo.getValue();
         try {
@@ -117,8 +134,8 @@ public class CustomerModify implements Initializable {
     /**
      * This method gets the selected customer data from the database and displays it in the appropriate fields.
      *
-     * @param customer
-     * @throws SQLException
+     * @param customer selects customer information
+     * @throws SQLException addresses unhandled SQL exceptions
      */
     public void getCustomerInfo(Customer customer) throws SQLException {
         customerIDTextField.setText(Integer.toString(customer.getCustomerId()));

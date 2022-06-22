@@ -103,11 +103,11 @@ public class Appointments implements Initializable {
     public void actionAppointDelete(ActionEvent actionEvent) {
         Appointment selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
-            System.out.println("Error");
+           helper.ErrorMsg.getError(12);
         } else {
             Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
             confirmRemoval.setTitle("Alert");
-            confirmRemoval.setContentText("Remove Selected Part?");
+            confirmRemoval.setContentText("Would you like to remove the selected appointment?");
             confirmRemoval.getButtonTypes().clear();
             confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
             confirmRemoval.showAndWait();
@@ -129,7 +129,7 @@ public class Appointments implements Initializable {
     }
 
     public void actionAppointAdd(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/AppointmentsAdd.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/AppointmentsAdd.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -196,7 +196,6 @@ public class Appointments implements Initializable {
     }
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
-    //    FXMLLoader loader = new FXMLLoader();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

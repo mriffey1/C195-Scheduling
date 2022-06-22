@@ -34,16 +34,24 @@ import static DAO.UserDAO.*;
 public class Login implements Initializable {
 
     //  public static Object userName;
-    public Label labelLocation;
-    public TextField txtFieldUserName;
+    @FXML
+    private Label labelLocation;
+    @FXML
+    private TextField txtFieldUserName;
     @FXML
     private PasswordField txtFieldUserPassword;
-    public Label labelUserName;
-    public Label labelUserPassword;
-    public Button loginButton;
-    public Button cancelButton;
-    public Label loginTitle;
+    @FXML
+    private Label labelUserName;
+    @FXML
+    private Label labelUserPassword;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Label loginTitle;
 
+    // Loads language bundle to convert languages based on user's system language
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
     LocalDateTime currentTime = LocalDateTime.now();
@@ -53,12 +61,12 @@ public class Login implements Initializable {
 
     /**
      * Sets the timezone label, the text-field labels, the button text and program title to change languages based on
-     * user's language settings on computer.
+     * user's language settings on computer. Currently, French and English are supported.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ZoneId zoneId = ZoneId.systemDefault();
-        String location = zoneId.systemDefault().toString();
+        String location = ZoneId.systemDefault().toString();
         labelLocation.setText(location);
         labelUserName.setText(langBundle.getString("Username"));
         labelUserPassword.setText(langBundle.getString("Password"));
@@ -68,33 +76,30 @@ public class Login implements Initializable {
     }
 
     /**
-     * Validates user login using username and password and displaying appropriate error or success messages and logging
-     * the successful or unsuccessful login in the login_activity.txt file upon clicking the "Login" button.
+     * Validates user login using username and password and displaying appropriate error or success messages, then logging
+     * the successful or unsuccessful login attempts in the login_activity.txt file upon clicking the "Login" button.
+     *
+     * @param actionEvent event for Login button to execute validation
+     * @throws IOException  addresses numerous unhandled exceptions
+     * @throws SQLException addresses SQL exceptions for validation
      */
     public void actionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
+
         if (User_Name.isEmpty() || User_Name.isBlank()) {
             helper.ErrorMsg.getError(5);
-            System.out.println("Username is blank");
-
         } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) {
             helper.ErrorMsg.getError(3);
-            System.out.println("Everything is incorrect");
             loginActivity("User " + " has failed login due to an incorrect USERNAME and PASSWORD " + LDTUTC);
-
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(6);
-
         } else if (!usernameValidation(User_Name)) {
             helper.ErrorMsg.getError(1);
-            System.out.println("Incorrect/Invalid Username");
             loginActivity("User " + " has failed login due to an incorrect USERNAME " + LDTUTC);
-
         } else if (!passwordValidation(Password)) {
             helper.ErrorMsg.getError(2);
             loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
-
         } else if (userLogin(User_Name, Password)) {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
@@ -106,6 +111,8 @@ public class Login implements Initializable {
             stage.centerOnScreen();
             stage.show();
             loginActivity(User_Name + " has successfully logged in on " + LocalDateTime.now());
+
+            // Checking for appointments upon successful login
             boolean isValid = false;
             for (Appointment appointment : userAppointments) {
                 LocalDateTime startTime = appointment.getAppointmentStart();
@@ -131,7 +138,7 @@ public class Login implements Initializable {
      * Action event for Cancel button on login screen. Displays a warning asking for confirmation
      * to exit the program (OK button) or by staying inside the program (Cancel button).
      *
-     * @param actionEvent test
+     * @param actionEvent action for cancel button that closes the program
      */
     public void actionCancelButton(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.WARNING, langBundle.getString("Cancel"));
@@ -149,6 +156,12 @@ public class Login implements Initializable {
         }
     }
 
+    /**
+     * Method to record login attempts and activity to login_activity.txt
+     *
+     * @param value holds the appropriate string value based on login
+     * @throws IOException addresses unhandled exception
+     */
     public void loginActivity(String value) throws IOException {
         String filename = "login_activity.txt";
         FileWriter fwritter = new FileWriter(filename, true);

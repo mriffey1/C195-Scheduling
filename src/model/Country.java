@@ -9,6 +9,10 @@ public class Country {
         this.countryName = countryName;
     }
 
+    public Country(int countryId){
+        this.countryId = countryId;
+    }
+
     public int getCountryId() {
         return countryId;
     }

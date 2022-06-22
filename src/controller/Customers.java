@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Country;
 import model.Customer;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class Customers implements Initializable {
 
-    public TableColumn custCountryCol;
+    public TableColumn<Country, Integer> custCountryCol;
     @FXML
     private TableView<Customer> custTable;
     @FXML
@@ -39,9 +40,12 @@ public class Customers implements Initializable {
     private TableColumn<Customer, String> custPhoneCol;
     @FXML
     private TableColumn<Customer, Integer> custFirstCol;
-    public Button custDeleteLabel;
-    public Button custAddLabel;
-    public Button custUpdateLabel;
+    @FXML
+    private Button custDeleteLabel;
+    @FXML
+    private Button custAddLabel;
+    @FXML
+    private Button custUpdateLabel;
 
 
     ObservableList<Customer> CustomerList = CustomerDAO.getCustomerList();
@@ -50,11 +54,11 @@ public class Customers implements Initializable {
      * Action event for delete button on customer screen. If no customer is selected, an error message will be generated
      * and if a valid customer is selected and has no attached appointments, a warning message to confirm removal will be generated
      * and once OK is selected - the customer will be deleted from the database and the list of customers refreshed in the tableview.
+     * If appointments are found for a customer - an alert will be generated to confirm both removal of the associated appointments and customer.
      *
-     * @param actionEvent
-     * @throws Exception
+     * @param actionEvent event for when delete button on customer screen is pressed
      */
-    public void actionCustDelete(ActionEvent actionEvent) throws Exception {
+    public void actionCustDelete(ActionEvent actionEvent) {
         int count = 0;
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
         int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
@@ -120,12 +124,11 @@ public class Customers implements Initializable {
     /**
      * Action event for add button to add a customer. It will redirect to the CustomerAdd file.
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent event for add button for customer
+     * @throws IOException addresses unhandled exception for load
      */
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
-        //  FXMLLoader loader = new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/CustomerAdd.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/CustomerAdd.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -137,9 +140,9 @@ public class Customers implements Initializable {
      * Action event for update button for customers and will redirect to the CustomerModify file.
      * If no customer is selected - an error message will be generated and displayed.
      *
-     * @param actionEvent
-     * @throws IOException
-     * @throws SQLException
+     * @param actionEvent event to load screen to modify an existing customer
+     * @throws IOException  addresses unhandled exceptions
+     * @throws SQLException addresses unhandled SQL exception
      */
     public void actionCustUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (custTable.getSelectionModel().getSelectedItem() != null) {
@@ -158,6 +161,12 @@ public class Customers implements Initializable {
         }
     }
 
+    /**
+     * Initializes customer information on customer screen
+     *
+     * @param url            URL
+     * @param resourceBundle ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custTable.setItems(CustomerDAO.getCustomerList());
@@ -168,12 +177,14 @@ public class Customers implements Initializable {
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionName"));
         custCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountryName"));
-
-
     }
 
-
-
+    /**
+     * Button that takes a user back to the main menu screen
+     *
+     * @param actionEvent action for backToMenu button
+     * @throws IOException addresses unhandled exception
+     */
     public void backToMenu(ActionEvent actionEvent) throws IOException {
         new FXMLLoader();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));

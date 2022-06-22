@@ -10,7 +10,10 @@ public class Contact {
         this.contactName = contactName;
         this.contactEmail = contactEmail;
     }
-
+    public Contact(int contactId, String contactName) {
+        this.contactId = contactId;
+        this.contactName = contactName;
+    }
     public int getContactId() {
         return contactId;
     }

@@ -1,5 +1,6 @@
 package model;
 
+import DAO.AppointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,31 +30,30 @@ public class Appointment {
     private int appointmentCustomerId;
     private int appointmentUserId;
     private String appointmentLocation;
-  private int appointmentTypeMonthTotals;
-  private String appointmentTypeMonth;
+    private int appointmentTypeMonthTotals;
+    private String appointmentTypeMonth;
 
-  //  public String appointmentMonth;
-  //  public int appointmentTotalappo;
+    //  public String appointmentMonth;
+    //  public int appointmentTotalappo;
 
-public int getAppointmentTypeMonthTotals(){
-    return appointmentTypeMonthTotals;
-}
+    public int getAppointmentTypeMonthTotals() {
+        return appointmentTypeMonthTotals;
+    }
+
     public int appointmentTypeTotal;
 
-public String getAppointmentTypeMonth(){
-    return appointmentTypeMonth;
-}
+    public String getAppointmentTypeMonth() {
+        return appointmentTypeMonth;
+    }
 
-public int getAppointmentTypeTotal(){
-    return appointmentTypeTotal;
-}
+    public int getAppointmentTypeTotal() {
+        return appointmentTypeTotal;
+    }
 
     public Appointment(String appointmentType, int appointmentTypeTotal) {
         this.appointmentType = appointmentType;
         this.appointmentTypeTotal = appointmentTypeTotal;
     }
-
-
 
 
     public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact,
@@ -84,7 +84,6 @@ public int getAppointmentTypeTotal(){
         this.appointmentType = appointmentType;
         this.appointmentStart1 = appointmentStart1;
     }
-
 
 
     public String getAppointmentType() {
@@ -169,8 +168,18 @@ public int getAppointmentTypeTotal(){
     }
 
 
-
-
+    public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
+        ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+        for (Appointment appointment : appointmentList) {
+            if (customerId == appointment.getAppointmentCustomerId()) {
+                if ((appointmentStart.isAfter(appointment.getAppointmentStart()) || appointmentStart.isEqual(appointment.getAppointmentStart())) && (appointmentEnd.isBefore(appointment.getAppointmentEnd()) ||
+                        appointmentEnd.isEqual(appointment.getAppointmentEnd()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
     public static boolean businessHours(LocalDateTime isApptValid) {
@@ -178,16 +187,23 @@ public int getAppointmentTypeTotal(){
         systemZone = systemZone.withZoneSameInstant(ZoneId.of("US/Eastern"));
         isApptValid = systemZone.toLocalDateTime();
         LocalTime openingBusinessHours = LocalTime.of(8, 0);
-        LocalTime closingBusinessHours = LocalTime.of(8,0);
-        System.out.println("ZoneId.systemDefault(): " + ZoneId.systemDefault());
-        return isApptValid.toLocalTime().isAfter(openingBusinessHours);
+        LocalTime closingBusinessHours = LocalTime.of(8, 0);
+        if (((isApptValid.toLocalTime().isAfter(openingBusinessHours) || isApptValid.toLocalTime().equals(openingBusinessHours)) &&
+                isApptValid.toLocalTime().isBefore(closingBusinessHours))) {
+            System.out.println("good");
+            return true;
+        } else if (isApptValid.toLocalTime().isBefore(openingBusinessHours) && isApptValid.toLocalTime().isAfter(closingBusinessHours)){
+            System.out.println("outside of business hours");
+            return false;
+        }
+        return false;
     }
 
-    public static ObservableList<LocalTime> getTimes(){
+    public static ObservableList<LocalTime> getTimes() {
         ObservableList<LocalTime> appointmentTimeList = FXCollections.observableArrayList();
-        LocalTime start = LocalTime.of(1,00);
+        LocalTime start = LocalTime.of(1, 00);
         LocalTime end = LocalTime.MIDNIGHT.minusHours(1);
-        while(start.isBefore(end.plusSeconds(1))){
+        while (start.isBefore(end.plusSeconds(1))) {
             appointmentTimeList.add(start);
             start = start.plusMinutes(30);
         }

@@ -68,6 +68,26 @@ public class ErrorMsg implements Initializable {
                 alert.setContentText("Please select a customer to continue.");
                 alert.showAndWait();
                 break;
+            case 8:
+                alert.setTitle("Title is blank");
+                alert.setContentText("Please enter a Title.");
+                alert.showAndWait();
+            case 9:
+                alert.setTitle("Description is blank");
+                alert.setContentText("Please enter a description.");
+                alert.showAndWait();
+            case 10:
+                alert.setTitle("Type is blank");
+                alert.setContentText("Please enter a Type.");
+                alert.showAndWait();
+            case 11:
+                alert.setTitle("Location is blank");
+                alert.setContentText("Please enter a Location.");
+                alert.showAndWait();
+            case 12:
+                alert.setTitle("No Appointment Selected");
+                alert.setContentText("No appointment was selected.");
+                alert.showAndWait();
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }
@@ -81,7 +101,7 @@ public class ErrorMsg implements Initializable {
             case 1:
              //   Alert noAppointment = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Alert");
-                alert.setContentText("No appointments");
+                alert.setContentText("No appointments within the next 15 minutes.");
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
