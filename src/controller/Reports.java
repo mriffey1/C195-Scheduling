@@ -2,6 +2,7 @@ package controller;
 
 import DAO.AppointmentDAO;
 import DAO.ContactDAO;
+import DAO.CountryDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
 public class Reports implements Initializable {
     public TableView appointTypeTable;
     public TableView appointMonthTable;
+    public TableView countryTable;
     @FXML
     private TableColumn<Appointment, String> appointTotalType;
     @FXML
@@ -86,24 +88,6 @@ public class Reports implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
-//        int usCount = 0;
-//        int ukCount = 0;
-//        int canadaCount = 0;
-//        for (Customer customers : customerList){
-//            if (customers.getCustomerCountryId() == 1){
-//                usCount++;
-//            }
-//            if (customers.getCustomerCountryId() == 2){
-//                ukCount++;
-//            }
-//            if (customers.getCustomerCountryId() == 3) {
-//                canadaCount++;
-//            } else {
-//                break;
-//            }
-//        }
-
         appointMonthTable.setPlaceholder(new Label("No data for month is available."));
         contactCombo.setItems(contactList);
         contactCombo.setVisibleRowCount(10);
@@ -126,10 +110,9 @@ public class Reports implements Initializable {
         appointMonthTable.setItems(AppointmentDAO.getAppointmentTypeMonth());
         appointMonth.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointMonthTotal.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
-
-
-
-
+        countryTable.setItems(CountryDAO.countryTotals());
+        appointCountryTotal.setCellValueFactory(new PropertyValueFactory<>("countryMonthTotal"));
+        appointCountry.setCellValueFactory(new PropertyValueFactory<>("countryMonth"));
     }
 
     public void contactPopulate(ActionEvent actionEvent) throws SQLException {
@@ -145,10 +128,5 @@ public class Reports implements Initializable {
         } else {
             contactTable.setItems(AppointmentDAO.getContactAppointment(contactId));
         }
-    }
-
-    public void appointmentTotal() {
-
-
     }
 }

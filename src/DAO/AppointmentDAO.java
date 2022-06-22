@@ -267,8 +267,6 @@ public class AppointmentDAO {
         }
         return appointmentTypeMonthTotal;
     }
-
-
 }
 
 

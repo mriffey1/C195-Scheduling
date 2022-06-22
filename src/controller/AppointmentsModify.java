@@ -141,7 +141,5 @@ public class AppointmentsModify implements Initializable {
         customerCombo.setValue(c);
         User u = UserDAO.returnUserId(appointment.getAppointmentUserId());
         userCombo.setValue(u);
-
-
     }
 }

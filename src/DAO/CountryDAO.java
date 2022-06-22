@@ -49,4 +49,22 @@ public class CountryDAO {
         }
 
     }
+
+    public static ObservableList<Country> countryTotals() {
+        ObservableList<Country> customerCountry = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT  countries.Country AS 'Country', COUNT(appointments.Appointment_ID) AS 'Count' FROM appointments JOIN customers ON customers.Customer_ID = appointments.Customer_ID JOIN first_level_divisions on first_level_divisions.Division_ID = customers.Division_ID JOIN countries on countries.Country_ID = first_level_divisions.Country_ID GROUP BY Country";
+            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String countryMonth = rs.getString("Country");
+                int countryMonthTotal = rs.getInt("Count");
+                Country results = new Country(countryMonth, countryMonthTotal);
+                customerCountry.add(results);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerCountry;
+    }
 }
