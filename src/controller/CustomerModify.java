@@ -3,7 +3,6 @@ package controller;
 import DAO.CountryDAO;
 import DAO.CustomerDAO;
 import DAO.FirstLvlDivisionDAO;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,13 +39,7 @@ public class CustomerModify implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<FirstLVLDivision> divisionList = FirstLvlDivisionDAO.getAllDivisionId();
-        customerDivisionCombo.setItems(divisionList);
-        customerDivisionCombo.setVisibleRowCount(10);
-
-        ObservableList<Country> countryList = CountryDAO.getAllCountry();
-        customerCountryCombo.setItems(countryList);
-        customerCountryCombo.setVisibleRowCount(10);
+        customerCountryCombo.setItems(CountryDAO.getAllCountry());
     }
 
     /**
@@ -60,34 +53,32 @@ public class CustomerModify implements Initializable {
         try {
             int customerId = Integer.parseInt(customerIDTextField.getText());
             String customerName = customerNameTextField.getText();
-            if (customerNameTextField.getText().isEmpty()){
+            if (customerNameTextField.getText().isEmpty()) {
                 helper.ErrorMsg.getError(1);
                 return;
             }
-
             String customerAddress = customerAddressTextField.getText();
             if (customerAddressTextField.getText().isEmpty() || customerAddressTextField.getText().isBlank()) {
                 helper.ErrorMsg.getError(1);
                 return;
             }
-
             String customerPostalCode = customerPostalTextField.getText();
             if (customerPostalTextField.getText().isEmpty() || customerPostalTextField.getText().isBlank()) {
                 helper.ErrorMsg.getError(1);
                 return;
             }
-
             String customerPhone = customerPhoneTextField.getText();
             if (customerPhoneTextField.getText().isEmpty() || customerPhoneTextField.getText().isBlank()) {
                 helper.ErrorMsg.getError(1);
                 return;
             }
-
             int customerDivisionId = customerDivisionCombo.getValue().getDivisionID();
             int countryId = customerCountryCombo.getValue().getCountryId();
             String lastUpdatedBy = "script";
             Timestamp lastUpdated = Timestamp.valueOf(now());
-            CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId, customerId);
+            //    Customer newCustomer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId);
+            CustomerDAO.updateCustomer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId);
+            //  Customer.updateCustomer(Index, newCustomer);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -114,6 +105,15 @@ public class CustomerModify implements Initializable {
         stage.show();
     }
 
+    public void actionCountryLoad(ActionEvent actionEvent) {
+        Country C = customerCountryCombo.getValue();
+        try {
+            customerDivisionCombo.setItems(FirstLvlDivisionDAO.displayDivision(C.getCountryId()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method gets the selected customer data from the database and displays it in the appropriate fields.
      *
@@ -130,5 +130,7 @@ public class CustomerModify implements Initializable {
         customerDivisionCombo.setValue(s);
         Country c = CountryDAO.returnCountry(customer.getCustomerCountryId());
         customerCountryCombo.setValue(c);
+        Country C = customerCountryCombo.getValue();
+        customerDivisionCombo.setItems(FirstLvlDivisionDAO.displayDivision(C.getCountryId()));
     }
 }

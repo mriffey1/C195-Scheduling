@@ -2,7 +2,6 @@ package controller;
 
 import DAO.AppointmentDAO;
 import DAO.CustomerDAO;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +19,7 @@ import model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Customers implements Initializable {
@@ -44,7 +44,7 @@ public class Customers implements Initializable {
     public Button custUpdateLabel;
 
 
-    ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
+    ObservableList<Customer> CustomerList = CustomerDAO.getCustomerList();
 
     /**
      * Action event for delete button on customer screen. If no customer is selected, an error message will be generated
@@ -73,7 +73,7 @@ public class Customers implements Initializable {
                 Alert associatedAppoint = new Alert(Alert.AlertType.WARNING);
                 associatedAppoint.setTitle("Alert");
                 associatedAppoint.setHeaderText("Alert: " + count + " associated appointment(s).");
-                associatedAppoint.setContentText("There are " + count + " associated appointment(s) for the selected customer.\n\n" +
+                associatedAppoint.setContentText("There is " + count + " associated appointment(s) for the selected customer.\n\n" +
                         "Please select OK to delete the associated appointments and customer.\n\n" +
                         "Otherwise, please press cancel to return to the main screen.");
                 associatedAppoint.getButtonTypes().clear();
@@ -169,11 +169,14 @@ public class Customers implements Initializable {
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionName"));
         custCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountryName"));
 
+
     }
+
+
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
         new FXMLLoader();
-        Parent parent = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);

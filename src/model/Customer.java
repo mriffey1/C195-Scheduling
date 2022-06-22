@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
  * @author Megan Riffey
  */
 public class Customer {
-    private int customerId;
     private String customerName;
     private String customerAddress;
     private String customerPostalCode;
@@ -21,7 +20,7 @@ public class Customer {
     private int customerCountryId;
     private String customerDivisionName;
     private String customerCountryName;
-
+    private int customerId;
 
     // static ObservableList<Customer> CustomerList = FXCollections.observableArrayList();
 
@@ -48,9 +47,9 @@ public class Customer {
 
 
 
+  // private static ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
 
-
-    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId, String customerCountryName) {
+    public Customer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId, String customerCountryName, int customerId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -65,6 +64,27 @@ public class Customer {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+
+//
+//    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int countryId) {
+//        this.customerId = customerId;
+//        this.customerName = customerName;
+//        this.customerAddress = customerAddress;
+//        this.customerPostalCode = customerPostalCode;
+//        this.customerDivisionId = customerDivisionId;
+//        this.customerDivisionName = customerDivisionName;
+//        this.customerCountryId = customerCountryId;
+//        this.customerPhone = customerPhone;
+//       this.createdBy = createdBy;
+//     //   this.lastUpdated = lastUpdated;
+//        this.lastUpdatedBy = lastUpdatedBy;
+//    }
+
+   // public static void updateCustomer(int Index, Customer customer){
+ //       customerList.set(Index, customer);
+
+
+ //   }
     public String getCustomerDivisionName(){
         return customerDivisionName;
 }

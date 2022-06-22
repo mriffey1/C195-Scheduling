@@ -28,11 +28,11 @@ public class Reports implements Initializable {
     @FXML
     private TableColumn<Appointment, String> appointTotalType;
     @FXML
-    private TableColumn appointTypeTotal;
+    private TableColumn<Appointment, Integer> appointTypeTotal;
     @FXML
-    private TableColumn appointMonth;
+    private TableColumn<Appointment, String> appointMonth;
     @FXML
-    private TableColumn appointMonthTotal;
+    private TableColumn<Appointment, Integer> appointMonthTotal;
     @FXML
     private Tab contactSchedule;
     @FXML
@@ -85,6 +85,25 @@ public class Reports implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+//        ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
+//        int usCount = 0;
+//        int ukCount = 0;
+//        int canadaCount = 0;
+//        for (Customer customers : customerList){
+//            if (customers.getCustomerCountryId() == 1){
+//                usCount++;
+//            }
+//            if (customers.getCustomerCountryId() == 2){
+//                ukCount++;
+//            }
+//            if (customers.getCustomerCountryId() == 3) {
+//                canadaCount++;
+//            } else {
+//                break;
+//            }
+//        }
+
         appointMonthTable.setPlaceholder(new Label("No data for month is available."));
         contactCombo.setItems(contactList);
         contactCombo.setVisibleRowCount(10);
@@ -100,12 +119,15 @@ public class Reports implements Initializable {
         contactTable.setPlaceholder(new Label("Please select a contact."));
         contactTable.refresh();
         appointTypeTable.setPlaceholder(new Label("No data for Type is available."));
-
         ObservableList<Appointment> appointmentListType = AppointmentDAO.appointmentType();
         appointTypeTable.setItems(AppointmentDAO.appointmentType());
         appointTotalType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        appointMonthTable.setItems(AppointmentDAO.appointmentType());
-        appointMonth.setCellValueFactory(new PropertyValueFactory<>("appointmentStart1"));
+        appointTypeTotal.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
+        appointMonthTable.setItems(AppointmentDAO.getAppointmentTypeMonth());
+        appointMonth.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        appointMonthTotal.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
+
+
 
 
     }

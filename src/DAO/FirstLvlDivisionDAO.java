@@ -15,7 +15,7 @@ public class FirstLvlDivisionDAO {
     public static ObservableList<FirstLVLDivision> getAllDivisionId() {
         ObservableList<FirstLVLDivision> divisionList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT DISTINCT * FROM first_level_divisions";
+            String sql = "SELECT  * FROM first_level_divisions";
             PreparedStatement division = JDBC.conn.prepareStatement(sql);
             ResultSet rs = division.executeQuery();
 
@@ -76,6 +76,7 @@ public class FirstLvlDivisionDAO {
                 Timestamp Last_Updated = rs.getTimestamp("Last_Update");
                 LocalDateTime lastUpdated = Last_Updated.toLocalDateTime();
                 String lastUpdatedBy = rs.getString("Last_Updated_By");
+
 
                 FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId, createDate, createBy, lastUpdated, lastUpdatedBy);
                 divisionCountryOptions.add(c);

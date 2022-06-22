@@ -1,6 +1,20 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Objects;
 
 public class Appointment {
 
@@ -15,17 +29,30 @@ public class Appointment {
     private int appointmentCustomerId;
     private int appointmentUserId;
     private String appointmentLocation;
+  private int appointmentTypeMonthTotals;
+  private String appointmentTypeMonth;
 
-    public String appointmentMonth;
-    public int appointmentTotal;
+  //  public String appointmentMonth;
+  //  public int appointmentTotalappo;
 
-    public String appointmentMonthType;
-    public int appointmentTotalType;
+public int getAppointmentTypeMonthTotals(){
+    return appointmentTypeMonthTotals;
+}
+    public int appointmentTypeTotal;
 
-    public Appointment(String appointmentMonth, int appointmentTotal) {
-        this.appointmentMonth = appointmentMonth;
-        this.appointmentTotal = appointmentTotal;
+public String getAppointmentTypeMonth(){
+    return appointmentTypeMonth;
+}
+
+public int getAppointmentTypeTotal(){
+    return appointmentTypeTotal;
+}
+
+    public Appointment(String appointmentType, int appointmentTypeTotal) {
+        this.appointmentType = appointmentType;
+        this.appointmentTypeTotal = appointmentTypeTotal;
     }
+
 
 
 
@@ -58,9 +85,7 @@ public class Appointment {
         this.appointmentStart1 = appointmentStart1;
     }
 
-    public long getAppointmentStart1(){
-        return appointmentStart1;
-    }
+
 
     public String getAppointmentType() {
         return appointmentType;
@@ -69,6 +94,7 @@ public class Appointment {
     public void setAppointmentType(String appointmentType) {
         this.appointmentType = appointmentType;
     }
+
     public String getAppointmentLocation() {
         return appointmentLocation;
     }
@@ -141,4 +167,40 @@ public class Appointment {
     public void setAppointmentUserId(int appointmentUserId) {
         this.appointmentUserId = appointmentUserId;
     }
+
+
+
+
+
+
+    public static boolean businessHours(LocalDateTime isApptValid) {
+        ZonedDateTime systemZone = isApptValid.atZone(ZoneId.systemDefault());
+        systemZone = systemZone.withZoneSameInstant(ZoneId.of("US/Eastern"));
+        isApptValid = systemZone.toLocalDateTime();
+        LocalTime openingBusinessHours = LocalTime.of(8, 0);
+        LocalTime closingBusinessHours = LocalTime.of(8,0);
+        System.out.println("ZoneId.systemDefault(): " + ZoneId.systemDefault());
+        return isApptValid.toLocalTime().isAfter(openingBusinessHours);
+    }
+
+    public static ObservableList<LocalTime> getTimes(){
+        ObservableList<LocalTime> appointmentTimeList = FXCollections.observableArrayList();
+        LocalTime start = LocalTime.of(1,00);
+        LocalTime end = LocalTime.MIDNIGHT.minusHours(1);
+        while(start.isBefore(end.plusSeconds(1))){
+            appointmentTimeList.add(start);
+            start = start.plusMinutes(30);
+        }
+        return appointmentTimeList;
+    }
+
+    public static void backToAppointments(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(Appointment.class.getResource("../view/Appointments.fxml")));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 }
+

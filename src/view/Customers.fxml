@@ -8,9 +8,9 @@
       <columns>
           <TableColumn fx:id="custIdCol" prefWidth="90.76366806030273" text="Customer ID" />
           <TableColumn fx:id="custNameCol" prefWidth="105.5999755859375" text="Customer Name" />
+          <TableColumn fx:id="custPhoneCol" prefWidth="104.72732543945312" text="Phone #" />
           <TableColumn fx:id="custAddressCol" prefWidth="117.8182373046875" text="Address" />
           <TableColumn fx:id="custPostalCol" prefWidth="127.4180908203125" text="Postal Code" />
-          <TableColumn fx:id="custPhoneCol" prefWidth="104.72732543945312" text="Phone #" />
           <TableColumn fx:id="custFirstCol" prefWidth="124.7999267578125" text="State/Providence" />
          <TableColumn fx:id="custCountryCol" prefWidth="124.7999267578125" text="Country" />
       </columns>
