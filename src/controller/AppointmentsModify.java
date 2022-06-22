@@ -77,6 +77,8 @@ public class AppointmentsModify implements Initializable {
         ObservableList<User> userList = UserDAO.getUserList();
         userCombo.setItems(userList);
         userCombo.setVisibleRowCount(10);
+
+
     }
 
     /**
@@ -122,6 +124,8 @@ public class AppointmentsModify implements Initializable {
      * @throws SQLException addresses unhandled SQL exceptions
      */
     public void getAppointmentInfo(Appointment appointment) throws SQLException {
+        startTimeCombo.setItems(Appointment.getTimes());
+        endTimeCombo.setItems(Appointment.getTimes());
         appointmentIDTextField.setText(Integer.toString(appointment.getAppointmentId()));
         appointmentTitleTextField.setText(appointment.getAppointmentTitle());
         appointmentDescriptionTextField.setText(appointment.getAppointmentDescription());
@@ -137,5 +141,7 @@ public class AppointmentsModify implements Initializable {
         customerCombo.setValue(c);
         User u = UserDAO.returnUserId(appointment.getAppointmentUserId());
         userCombo.setValue(u);
+
+
     }
 }
