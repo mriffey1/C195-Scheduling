@@ -8,17 +8,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentsAdd implements Initializable {
@@ -126,23 +131,29 @@ public class AppointmentsAdd implements Initializable {
                 helper.ErrorMsg.getError(10);
             } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
                 helper.ErrorMsg.getError(11);
-            } else if (Appointment.businessHours(appointmentStart) && Appointment.businessHours(appointmentEnd)) {
-                if (appointmentStart.toLocalTime().isBefore(appointmentEnd.toLocalTime())) {
-                    if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("");
-                        alert.setHeaderText("Customer has another overlapping appointment");
-                        alert.setContentText("Review and adjust either/both start time and end time.");
-                        alert.showAndWait();
-                    } else {
-                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                        alert1.setTitle("");
-                        alert1.setHeaderText("Outside of Business Hours");
-                        alert1.setContentText("business hours");
-                        alert1.showAndWait();
-                    }
-                }
-            } else {
+            } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
+                LocalTime localBusStart = Appointment.localStart();
+                LocalTime localBusEnd = Appointment.getLocalBusinessEnd();
+                JOptionPane.showMessageDialog(null, "Please make sure appointment times are within business hours:\n 08:00-22:00 EST; " + localBusStart.format(DateTimeFormatter.ofPattern("HH:mm")) + "-" + localBusEnd.format(DateTimeFormatter.ofPattern("HH:mm")) + " Local.");
+                return;
+            }
+            //  } else if (Appointment.businessHours(appointmentStart) && Appointment.businessHours(appointmentEnd)) {
+            //     if (appointmentStart.toLocalTime().isBefore(appointmentEnd.toLocalTime())) {
+            //         if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
+            //             Alert alert = new Alert(Alert.AlertType.ERROR);
+            //            alert.setTitle("");
+            //           alert.setHeaderText("Customer has another overlapping appointment");
+            //           alert.setContentText("Review and adjust either/both start time and end time.");
+            //           alert.showAndWait();
+            //      } else {
+            //         Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            //          alert1.setTitle("");
+            //          alert1.setHeaderText("Outside of Business Hours");
+            //          alert1.setContentText("business hours");
+            //           alert1.showAndWait();
+            //         }
+            //    }
+         else {
                 AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
                 Appointment.backToAppointments(actionEvent);
             }
