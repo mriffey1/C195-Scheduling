@@ -135,6 +135,7 @@ public class Appointments implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+        System.out.println("hello");
     }
 
     public void actionAppointUpdate(ActionEvent actionEvent) throws IOException, SQLException {

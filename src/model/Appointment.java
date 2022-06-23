@@ -235,7 +235,7 @@ public static LocalTime localStart(){
     LocalTime busStartLocal = busLocalDT.toLocalTime();
 
     //System.out.println(busStartEST);
-    //System.out.println(busStartLocal);
+    System.out.println(busStartLocal);
     return busStartLocal;
 
 }
