@@ -8,16 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -132,9 +128,17 @@ public class AppointmentsAdd implements Initializable {
             } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
                 helper.ErrorMsg.getError(11);
             } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
-                LocalTime localBusStart = Appointment.localStart();
-                LocalTime localBusEnd = Appointment.getLocalBusinessEnd();
-                JOptionPane.showMessageDialog(null, "Please make sure appointment times are within business hours:\n 08:00-22:00 EST; " + localBusStart.format(DateTimeFormatter.ofPattern("HH:mm")) + "-" + localBusEnd.format(DateTimeFormatter.ofPattern("HH:mm")) + " Local.");
+                LocalTime localStart = Appointment.localStart();
+                LocalTime localEnd = Appointment.localEnd();
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                          alert1.setTitle("");
+                          alert1.setHeaderText("Outside of Business Hours");
+                          alert1.setContentText(String.format("Appointment is outside of business hours: 8:00AM to 10:00PM EST\n" +
+                                  "Please schedule between " + localStart.format(DateTimeFormatter.ofPattern("hh:mm")) + " - " + localEnd.format(DateTimeFormatter.ofPattern("hh:mm")) + "PM local time."));
+                alert1.getDialogPane().setMinHeight(250);
+                alert1.getDialogPane().setMinWidth(400);
+                          alert1.showAndWait();
+
                 return;
             }
             //  } else if (Appointment.businessHours(appointmentStart) && Appointment.businessHours(appointmentEnd)) {
@@ -146,11 +150,7 @@ public class AppointmentsAdd implements Initializable {
             //           alert.setContentText("Review and adjust either/both start time and end time.");
             //           alert.showAndWait();
             //      } else {
-            //         Alert alert1 = new Alert(Alert.AlertType.ERROR);
-            //          alert1.setTitle("");
-            //          alert1.setHeaderText("Outside of Business Hours");
-            //          alert1.setContentText("business hours");
-            //           alert1.showAndWait();
+            //
             //         }
             //    }
          else {

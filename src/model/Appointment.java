@@ -185,62 +185,32 @@ public class Appointment {
 
         LocalDateTime appStartEST = appointmentStart.atZone(localZone).withZoneSameInstant(estZone).toLocalDateTime();
         LocalDateTime appEndEST = appointmentEnd.atZone(localZone).withZoneSameInstant(estZone).toLocalDateTime();
-        //System.out.println(appStartEST);
-        //System.out.println(appEndEST);
+
         LocalDateTime busStartEST = appStartEST.withHour(8).withMinute(0);
         LocalDateTime busEndEST = appEndEST.withHour(22).withMinute(0);
-        //System.out.println(busStartEST);
-        //System.out.println(busEndEST);
 
-        if(appStartEST.isBefore(busStartEST) || appEndEST.isAfter(busEndEST)){
+        if (appStartEST.isBefore(busStartEST) || appEndEST.isAfter(busEndEST)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-//        ZonedDateTime startZonedDateTime = ZonedDateTime.of(startDateTime,ZoneId.systemDefault());
-//        ZonedDateTime endZonedDateTime = ZonedDateTime.of(endDateTime, ZoneId.systemDefault());
-//        ZonedDateTime startBusinessHours = ZonedDateTime.of(appointmentDate, LocalTime.of(8,0),
-//                ZoneId.of("America/New_York"));
-//        ZonedDateTime endBusinessHours = ZonedDateTime.of(appointmentDate, LocalTime.of(22, 0),
-//                ZoneId.of("America/New_York"));
-//
-//        //All possible conflicts for the appointment
-//        return !(startZonedDateTime.isBefore(startBusinessHours) | startZonedDateTime.isAfter(endBusinessHours) |
-//                endZonedDateTime.isBefore(startBusinessHours) | endZonedDateTime.isAfter(endBusinessHours) |
-//                startZonedDateTime.isAfter(endZonedDateTime));
     }
-//        ZonedDateTime systemZone = isApptValid.atZone(ZoneId.systemDefault());
-//        systemZone = systemZone.withZoneSameInstant(ZoneId.of("US/Eastern"));
-//        isApptValid = systemZone.toLocalDateTime();
-//        LocalTime openingBusinessHours = LocalTime.of(8, 0);
-//        LocalTime closingBusinessHours = LocalTime.of(8, 0);
-//        if (isApptValid.toLocalTime().isBefore(openingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours) ||
-//                isApptValid.toLocalTime().isBefore(closingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours)) {
-//            return (isApptValid.toLocalTime().isBefore(openingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours) ||
-//                    isApptValid.toLocalTime().isBefore(closingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours));
-//        } else {
-//
-//            return (isApptValid.toLocalTime().isAfter(openingBusinessHours) || isApptValid.toLocalTime().equals(openingBusinessHours) && isApptValid.toLocalTime().isBefore(closingBusinessHours));
-//        }
 
 public static LocalTime localStart(){
-    LocalTime busStartEST = LocalTime.of(8,0);
+    LocalTime openingBusinessTime = LocalTime.of(8,0);
     ZoneId estZone = ZoneId.of("America/New_York");
     ZoneId localZone = ZoneId.systemDefault();
 
-    LocalDateTime busEstDT = LocalDateTime.of(LocalDate.now(), busStartEST);
-    LocalDateTime busLocalDT = busEstDT.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
+    LocalDateTime businessEastern = LocalDateTime.of(LocalDate.now(), openingBusinessTime);
+    LocalDateTime businessLocal = businessEastern.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
 
-    LocalTime busStartLocal = busLocalDT.toLocalTime();
+    LocalTime busStartLocal = businessLocal.toLocalTime();
 
-    //System.out.println(busStartEST);
     System.out.println(busStartLocal);
     return busStartLocal;
-
 }
 
-    public static LocalTime getLocalBusinessEnd(){
+    public static LocalTime localEnd(){
         LocalTime busEndEST = LocalTime.of(22,0);
         ZoneId estZone = ZoneId.of("America/New_York");
         ZoneId localZone = ZoneId.systemDefault();
@@ -250,8 +220,7 @@ public static LocalTime localStart(){
 
         LocalTime busEndLocal = busLocalDT.toLocalTime();
 
-        //System.out.println(busEndEST);
-        //System.out.println(busEndLocal);
+
         return busEndLocal;
     }
     public static ObservableList<LocalTime> getTimes() {

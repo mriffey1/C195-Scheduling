@@ -112,6 +112,4 @@ public class CustomerDAO {
         }
         return null;
     }
-
-
 }
