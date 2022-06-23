@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 
 public class CustomerDAO {
 
-
-
+    /**
+     * SQL Query that returns a list of all customer information in an observablelist
+     *
+     * @return customerList
+     */
     public static ObservableList<Customer> getCustomerList() {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try {
@@ -41,17 +44,24 @@ public class CustomerDAO {
         }
         return customerList;
     }
-    public static Customer customerIdDisplay(int customerId) {
-        try {
-            String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerId + "'";
-            PreparedStatement deleteCust = JDBC.conn.prepareStatement(sqlStatement);
-            deleteCust.setInt(1, customerId);
-            deleteCust.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
+//    public static Customer customerIdDisplay(int customerId) {
+//        try {
+//            String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerId + "'";
+//            PreparedStatement deleteCust = JDBC.conn.prepareStatement(sqlStatement);
+//            deleteCust.setInt(1, customerId);
+//            deleteCust.execute();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+    /**
+     * SQL Query that deletes customer from database based on selected customer Id
+     *
+     * @param customerId customer ID
+     */
     public static void deleteCustomer(int customerId) {
         try {
             String sqldelete = "DELETE FROM customers WHERE Customer_ID = ?";
@@ -63,6 +73,19 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * SQL Query to update customers in database from the customer modify screen
+     *
+     * @param customerId         customer ID
+     * @param customerName       customer name
+     * @param customerAddress    customer address
+     * @param customerPostalCode customer postal code
+     * @param customerPhone      customer phone number
+     * @param lastUpdatedBy      last updated by
+     * @param lastUpdated        last updated date/time
+     * @param customerDivisionId associated division id
+     * @param countryId          associated country id
+     */
     public static void updateCustomer(int customerId, String customerName, String customerAddress, String customerPostalCode,
                                       String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int countryId) {
         try {
@@ -82,6 +105,18 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * SQL Query to add new customer. Customer ID is auto-incremented by database.
+     *
+     * @param customerName       customer name
+     * @param customerAddress    customer address
+     * @param customerPostalCode customer postal code
+     * @param customerPhone      customer phone number
+     * @param createdDate        created date for customer
+     * @param lastUpdated        last updated date/time
+     * @param divisionId         associated division id
+     * @throws SQLException addresses unhandled SQL exception
+     */
     public static void addCustomer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, LocalDateTime createdDate, LocalDateTime lastUpdated, int divisionId) throws SQLException {
         String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Last_Update, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement insertCust = JDBC.conn.prepareStatement(sql);
@@ -95,7 +130,13 @@ public class CustomerDAO {
         insertCust.executeUpdate();
     }
 
-
+    /**
+     * SQL Query that returns customer name from customer ID
+     *
+     * @param customerId customer Id
+     * @return c- customer ID and customer name
+     * @throws SQLException addresses unhandled SQL exceptions
+     */
     public static Customer returnCustomerList(int customerId) throws SQLException {
         String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.conn.prepareStatement(sql);

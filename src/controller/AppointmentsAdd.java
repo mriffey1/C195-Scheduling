@@ -131,7 +131,7 @@ public class AppointmentsAdd implements Initializable {
         } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
             helper.ErrorMsg.getError(11);
         } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
-           return;
+            return;
         } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
             return;
         } else {

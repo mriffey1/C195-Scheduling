@@ -15,6 +15,7 @@ public class Menu {
 
     /**
      * Action event for button Customer that will redirect to the Customers screen.
+     *
      * @param actionEvent action when button is pressed for Customers screen
      * @throws IOException unhandled exception for load
      */
@@ -29,6 +30,7 @@ public class Menu {
 
     /**
      * Action event for button Appointment that will redirect to the Appointments screen.
+     *
      * @param actionEvent action when button is pressed for Appointments screen
      * @throws IOException unhandled exception for load
      */
@@ -43,6 +45,7 @@ public class Menu {
 
     /**
      * Action event for button Report that will redirect to the Reports screen.
+     *
      * @param actionEvent action when button is pressed for Reports screen
      * @throws IOException unhandled exception for load
      */
@@ -57,6 +60,7 @@ public class Menu {
 
     /**
      * Action event for exit button on the main menu that will close the program.
+     *
      * @param actionEvent action for exit button to close program
      */
     public void menuExit(ActionEvent actionEvent) {

@@ -1,25 +1,26 @@
 package helper;
 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-
 public class ErrorMsg implements Initializable {
     static ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
-    private int whichError;
-    Stage stage;
-    Parent scene;
+    //  private int whichError;
+    //  Stage stage;
+    //  Parent scene;
 
-
-    public static void getError(int whichError)  {
+    /**
+     * Alerts with alert type error
+     *
+     * @param whichError associated case number
+     */
+    public static void getError(int whichError) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         switch (whichError) {
 
@@ -58,57 +59,86 @@ public class ErrorMsg implements Initializable {
                 alert.showAndWait();
                 break;
 
-                // Password is blank error message
+            // Password is blank error message
             case 6:
                 alert.setTitle(langBundle.getString("ErrorBlankPassWord"));
                 alert.setContentText(langBundle.getString("blankPassWord"));
                 alert.showAndWait();
+                break;
+
+            // No customer is selected
             case 7:
                 alert.setTitle("No Selection");
                 alert.setContentText("Please select a customer to continue.");
                 alert.showAndWait();
                 break;
+
+            // Title text-field is blank
             case 8:
                 alert.setTitle("Title is blank");
                 alert.setContentText("Please enter a Title.");
                 alert.showAndWait();
+                break;
+
+            // Description text-field is blank
             case 9:
                 alert.setTitle("Description is blank");
                 alert.setContentText("Please enter a description.");
                 alert.showAndWait();
+                break;
+
+            // Type text-field is blank
             case 10:
                 alert.setTitle("Type is blank");
                 alert.setContentText("Please enter a Type.");
                 alert.showAndWait();
+                break;
+
+            // Location text-field is blank
             case 11:
                 alert.setTitle("Location is blank");
                 alert.setContentText("Please enter a Location.");
                 alert.showAndWait();
+                break;
+
+            // No appointment was selected
             case 12:
                 alert.setTitle("No Appointment Selected");
                 alert.setContentText("No appointment was selected.");
                 alert.showAndWait();
+                break;
+
+            // Overlapping appointments
             case 13:
                 alert.setTitle("Overlapping appointment");
                 alert.setContentText("");
+                break;
+
+            // Default that throws an error
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }
-
-
     }
 
+    /**
+     * Alerts with alert type: confirmation
+     *
+     * @param confirmation associated case number
+     */
     public static void confirmation(int confirmation) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         switch (confirmation) {
+
+            // No Appointments in the next 15 minutes
             case 1:
-             //   Alert noAppointment = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Alert");
                 alert.setContentText("No appointments within the next 15 minutes.");
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
                 break;
+
+            // Customer has successfully been removed
             case 2:
                 alert.setTitle("Customer has been removed");
                 alert.setHeaderText("Success");
@@ -140,7 +170,7 @@ public class ErrorMsg implements Initializable {
                 alert.setHeaderText("Are you sure you want to delete?");
                 alert.setContentText("Press OK to delete this product. ");
                 alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK);
+                if (alert.getResult() == ButtonType.OK) ;
                 break;
             case 3:
                 Alert alert2 = new Alert(Alert.AlertType.WARNING, langBundle.getString("Cancel"));

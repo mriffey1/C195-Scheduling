@@ -100,10 +100,16 @@ public class Appointments implements Initializable {
 
     ObservableList<Appointment> AppointmentList = FXCollections.observableArrayList();
 
+    /**
+     * Action event for delete button on appointment screen. If no appointment is selected - an error dialog will
+     * inform the user.
+     *
+     * @param actionEvent event for delete button
+     */
     public void actionAppointDelete(ActionEvent actionEvent) {
         Appointment selectedAppointment = appointTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
-           helper.ErrorMsg.getError(12);
+            helper.ErrorMsg.getError(12);
         } else {
             Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
             confirmRemoval.setTitle("Alert");
@@ -118,16 +124,25 @@ public class Appointments implements Initializable {
                 confirmation.getButtonTypes().clear();
                 confirmation.getButtonTypes().addAll(ButtonType.OK);
                 confirmation.showAndWait();
+
                 AppointmentDAO.deleteAppointment(appointTable.getSelectionModel().getSelectedItem().getAppointmentId());
                 AppointmentList = AppointmentDAO.getAppointmentList();
                 appointTable.setItems(AppointmentList);
                 appointTable.refresh();
+
             } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
                 confirmRemoval.close();
             }
         }
     }
 
+    /**
+     * Action event for add button on appointment screen. When pressed - the user will be redirected to the add appointments
+     * screen.
+     *
+     * @param actionEvent event for add button
+     * @throws IOException addresses unhandled exception
+     */
     public void actionAppointAdd(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/AppointmentsAdd.fxml")));
         Scene scene = new Scene(parent);
@@ -135,9 +150,17 @@ public class Appointments implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-        System.out.println("hello");
     }
 
+    /**
+     * Action event for update button on appointment screen. If no appointment is selected, the user will be presented
+     * with an error message stating to select an appointment. Once an appointment is selected - the user will be
+     * redirected to the modify appointments screen.
+     *
+     * @param actionEvent event for update button
+     * @throws IOException  addresses unhandled exception
+     * @throws SQLException addresses unhandled SQL exception
+     */
     public void actionAppointUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (appointTable.getSelectionModel().getSelectedItem() != null) {
             FXMLLoader loader = new FXMLLoader();
@@ -150,10 +173,16 @@ public class Appointments implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
         } else {
-            System.out.println("Error");
+            helper.ErrorMsg.getError(12);
         }
     }
 
+    /**
+     * Initializes the 3 appointment table data into the associated table with navigation via tabs.
+     *
+     * @param url            URL
+     * @param resourceBundle ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointTable.setItems(AppointmentDAO.getAppointmentList());
@@ -196,6 +225,12 @@ public class Appointments implements Initializable {
 
     }
 
+    /**
+     * Action event for button to return the user back to the main menu
+     *
+     * @param actionEvent event for backToMenu button
+     * @throws IOException addresses unhandled exceptions
+     */
     public void backToMenu(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
         Scene scene = new Scene(parent);

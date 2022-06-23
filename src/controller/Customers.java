@@ -61,61 +61,63 @@ public class Customers implements Initializable {
     public void actionCustDelete(ActionEvent actionEvent) {
         int count = 0;
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+
+        Customer customer = custTable.getSelectionModel().getSelectedItem();
+        if (customer == null) {
+            helper.ErrorMsg.getError(7);
+            return;
+        }
         int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
 
-        if (selectedCustomer == 0) {
-            helper.ErrorMsg.getError(7);
-        } else {
-            for (Appointment appointment : appointmentList) {
-                int appointmentCustId = appointment.getAppointmentCustomerId();
-                if (appointmentCustId == selectedCustomer) {
-                    count++;
-                }
+
+        for (Appointment appointment : appointmentList) {
+            int appointmentCustId = appointment.getAppointmentCustomerId();
+            if (appointmentCustId == selectedCustomer) {
+                count++;
             }
-            if (count > 0) {
-                System.out.println("Appointment found");
-                Alert associatedAppoint = new Alert(Alert.AlertType.WARNING);
-                associatedAppoint.setTitle("Alert");
-                associatedAppoint.setHeaderText("Alert: " + count + " associated appointment(s).");
-                associatedAppoint.setContentText("There is " + count + " associated appointment(s) for the selected customer.\n\n" +
-                        "Please select OK to delete the associated appointments and customer.\n\n" +
-                        "Otherwise, please press cancel to return to the main screen.");
-                associatedAppoint.getButtonTypes().clear();
-                associatedAppoint.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                associatedAppoint.getDialogPane().setMinHeight(250);
-                associatedAppoint.getDialogPane().setMinWidth(400);
-                associatedAppoint.showAndWait();
-                if (associatedAppoint.getResult() == ButtonType.OK) {
-                    for (Appointment appointment : appointmentList) {
-                        if (appointment.getAppointmentCustomerId() == selectedCustomer)
-                            AppointmentDAO.deleteAppointment(appointment.getAppointmentId());
-                    }
-                    CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
-                    helper.ErrorMsg.confirmation(2);
-                    CustomerList = CustomerDAO.getCustomerList();
-                    custTable.setItems(CustomerList);
-                    custTable.refresh();
-                } else if (associatedAppoint.getResult() == ButtonType.CANCEL) {
-                    associatedAppoint.close();
+        }
+        if (count > 0) {
+            Alert associatedAppoint = new Alert(Alert.AlertType.WARNING);
+            associatedAppoint.setTitle("Alert");
+            associatedAppoint.setHeaderText("Alert: " + count + " associated appointment(s).");
+            associatedAppoint.setContentText("There is " + count + " associated appointment(s) for the selected customer.\n\n" +
+                    "Please select OK to delete the associated appointments and customer.\n\n" +
+                    "Otherwise, please press cancel to return to the main screen.");
+            associatedAppoint.getButtonTypes().clear();
+            associatedAppoint.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+            associatedAppoint.getDialogPane().setMinHeight(250);
+            associatedAppoint.getDialogPane().setMinWidth(400);
+            associatedAppoint.showAndWait();
+            if (associatedAppoint.getResult() == ButtonType.OK) {
+                for (Appointment appointment : appointmentList) {
+                    if (appointment.getAppointmentCustomerId() == selectedCustomer)
+                        AppointmentDAO.deleteAppointment(appointment.getAppointmentId());
                 }
+                CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                helper.ErrorMsg.confirmation(2);
+                CustomerList = CustomerDAO.getCustomerList();
+                custTable.setItems(CustomerList);
+                custTable.refresh();
+            } else if (associatedAppoint.getResult() == ButtonType.CANCEL) {
+                associatedAppoint.close();
             }
-            if (count == 0) {
-                Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
-                confirmRemoval.setTitle("Alert");
-                confirmRemoval.setContentText("Remove selected customer?\n" +
-                        "Press OK to remove.\nCancel to return to screen.");
-                confirmRemoval.getButtonTypes().clear();
-                confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                confirmRemoval.showAndWait();
-                if (confirmRemoval.getResult() == ButtonType.OK) {
-                    CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
-                    helper.ErrorMsg.confirmation(2);
-                    CustomerList = CustomerDAO.getCustomerList();
-                    custTable.setItems(CustomerList);
-                    custTable.refresh();
-                } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
-                    confirmRemoval.close();
-                }
+        }
+        if (count == 0) {
+            Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
+            confirmRemoval.setTitle("Alert");
+            confirmRemoval.setContentText("Remove selected customer?\n" +
+                    "Press OK to remove.\nCancel to return to screen.");
+            confirmRemoval.getButtonTypes().clear();
+            confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+            confirmRemoval.showAndWait();
+            if (confirmRemoval.getResult() == ButtonType.OK) {
+                CustomerDAO.deleteCustomer(custTable.getSelectionModel().getSelectedItem().getCustomerId());
+                helper.ErrorMsg.confirmation(2);
+                CustomerList = CustomerDAO.getCustomerList();
+                custTable.setItems(CustomerList);
+                custTable.refresh();
+            } else if (confirmRemoval.getResult() == ButtonType.CANCEL) {
+                confirmRemoval.close();
             }
         }
     }

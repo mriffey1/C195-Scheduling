@@ -11,6 +11,10 @@ import java.sql.SQLException;
 
 public class CountryDAO {
 
+    /**
+     * SQL Query to get all countries and add to an observablelist
+     * @return countryList
+     */
     public static ObservableList<Country> getAllCountry() {
         ObservableList<Country> countryList = FXCollections.observableArrayList();
         try {
@@ -30,6 +34,11 @@ public class CountryDAO {
         return countryList;
     }
 
+    /**
+     * SQL Query that returns country name based on country ID
+     * @param countryId country ID
+     * @return c - countryId and countryName
+     */
     public static Country returnCountry(int countryId) {
         try {
             String sql = "SELECT Country_ID, Country FROM countries WHERE Country_ID = ?";
@@ -50,6 +59,10 @@ public class CountryDAO {
 
     }
 
+    /**
+     * ObservableList that displays the country totals and the number of appointments per country for reports page
+     * @return customerCountry
+     */
     public static ObservableList<Country> countryTotals() {
         ObservableList<Country> customerCountry = FXCollections.observableArrayList();
         try {

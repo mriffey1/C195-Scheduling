@@ -10,7 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContactDAO {
-
+    /**
+     * SQL Query to get all contacts and add to ObservableList
+     *
+     * @return contactList
+     */
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
         try {
@@ -31,6 +35,12 @@ public class ContactDAO {
         return contactList;
     }
 
+    /**
+     * SQL Query to return contact information from contact Id
+     *
+     * @param contactId contact Id
+     * @return s query
+     */
     public static Contact returnContactList(int contactId) {
         try {
             String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
@@ -52,6 +62,13 @@ public class ContactDAO {
         }
     }
 
+    /**
+     * SQL Query to return contact ID based on contact name
+     *
+     * @param contactName contact name
+     * @return contactId
+     * @throws SQLException addresses unhandled SQL exception
+     */
     public static int returnContactId(String contactName) throws SQLException {
         int contactId = 0;
         String sql = "SELECT * FROM contacts WHERE Contact_Name = ?";
@@ -64,6 +81,4 @@ public class ContactDAO {
         }
         return contactId;
     }
-
-
 }

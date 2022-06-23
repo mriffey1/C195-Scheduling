@@ -16,7 +16,11 @@ import java.sql.SQLException;
  */
 
 public class UserDAO {
-
+    /**
+     * SQL Query to get all users and add to an observablelist
+     *
+     * @return userList
+     */
     public static ObservableList<User> getUserList() {
         ObservableList<User> userList = FXCollections.observableArrayList();
         try {
@@ -102,6 +106,13 @@ public class UserDAO {
         return false;
     }
 
+    /**
+     * SQL Query to get userId based on associated userName
+     *
+     * @param userName user name
+     * @return userId
+     * @throws SQLException addresses unhandled SQL exception
+     */
     public static int getUserId(String userName) throws SQLException {
         int userId = 0;
         String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
@@ -115,6 +126,12 @@ public class UserDAO {
         return userId;
     }
 
+    /**
+     * returns user name based on user Id
+     *
+     * @param userId user id
+     * @return u - userId and user name
+     */
     public static User returnUserId(int userId) {
         try {
             String sql = "SELECT User_ID, User_Name FROM users WHERE User_ID = ?";
@@ -135,19 +152,6 @@ public class UserDAO {
     }
 }
 
-
-//    public static String getUserName(String userName) throws SQLException {
-//        int userId = 0;
-//        String sqlStatement = "select User_ID, User_Name from users where User_Name = '" + userName + "'";
-//        PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
-//        ResultSet rs = ps.executeQuery();
-//        while (rs.next()) {
-//            userId = rs.getInt("User_ID");
-//            userName = rs.getString("User_Name");
-//            System.out.println(userName);
-//        }
-//        return userName;
-//    }
 
 
 

@@ -102,7 +102,7 @@ public class AppointmentsModify implements Initializable {
         String appointmentLocation = appointmentLocationTextField.getText();
         String lastUpdatedBy = "script";
         Timestamp lastUpdated = Timestamp.valueOf(now());
-        AppointmentDAO.updateAppointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
+        AppointmentDAO.updateAppointment(appointmentId, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
         Appointment.backToAppointments(actionEvent);
 
     }
