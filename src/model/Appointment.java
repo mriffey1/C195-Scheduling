@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Appointment {
@@ -169,17 +171,49 @@ public class Appointment {
 
 
     public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
-        ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
-        for (Appointment appointment : appointmentList) {
-            if (appointment.getAppointmentId() == customerId) {
-                if (appointmentStart.isBefore(appointment.getAppointmentStart()) || appointmentStart.isEqual(appointment.getAppointmentStart()) && appointmentEnd.isAfter(appointment.getAppointmentEnd()) ||
-                        appointmentEnd.isEqual(appointment.getAppointmentEnd())) {
-                    return false;
+            ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+            LocalDateTime checkApptStart;
+            LocalDateTime checkApptEnd;
+
+            for (Appointment a : appointmentList) {
+                checkApptStart = a.getAppointmentStart();
+                checkApptEnd = a.getAppointmentEnd();
+                if (customerId != a.getAppointmentCustomerId()) {
+                    continue;
+                } else if (checkApptStart.isEqual(appointmentStart) || checkApptStart.isEqual(appointmentEnd) || checkApptEnd.isEqual(appointmentStart) || checkApptEnd.isEqual(appointmentEnd)){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setContentText("ERROR: Appointments must not start or end at same time as existing customer appointments");
+                    alert.showAndWait();
+                    return true;
+                } else if (appointmentStart.isAfter(checkApptStart) && (appointmentStart.isBefore(checkApptEnd))){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setContentText("ERROR: Appointment start must not be during existing customer appointments");
+                    alert.showAndWait();
+                    return true;
+                } else if (appointmentEnd.isAfter(checkApptStart) && appointmentEnd.isBefore(checkApptEnd)){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setContentText("ERROR: Appointment end must not be during existing customer appointments");
+                    alert.showAndWait();
+                    return true;
                 }
             }
+            return false;
         }
-        return true;
-    }
+
+
+             //   }
+           //     if (customerId == appointment.getAppointmentCustomerId() && appointmentStart.isAfter(appointment.getAppointmentStart()) || appointmentStart.isBefore(appointment.getAppointmentEnd())){
+            //    System.out.println("start time overlaps with existing appointment");
+            //        return false;
+
+
+
+
+
+
 
 
     public static boolean businessHours(LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
@@ -193,6 +227,16 @@ public class Appointment {
         LocalDateTime busEndEST = appEndEST.withHour(22).withMinute(0);
 
         if (appStartEST.isBefore(busStartEST) || appEndEST.isAfter(busEndEST)) {
+            LocalTime localStart = Appointment.localStart();
+            LocalTime localEnd = Appointment.localEnd();
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("");
+            alert1.setHeaderText("Outside of Business Hours");
+            alert1.setContentText(String.format("Appointment is outside of business hours: 8:00AM to 10:00PM EST\n" +
+                    "Please schedule between " + localStart.format(DateTimeFormatter.ofPattern("hh:mm")) + " - " + localEnd.format(DateTimeFormatter.ofPattern("hh:mm")) + "PM local time."));
+            alert1.getDialogPane().setMinHeight(250);
+            alert1.getDialogPane().setMinWidth(400);
+            alert1.showAndWait();
             return true;
         } else {
             return false;
@@ -209,7 +253,6 @@ public class Appointment {
 
         LocalTime busStartLocal = businessLocal.toLocalTime();
 
-        System.out.println(busStartLocal);
         return busStartLocal;
     }
 

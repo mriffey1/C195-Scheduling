@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentDAO;
 import DAO.ContactDAO;
 import DAO.CustomerDAO;
 import DAO.UserDAO;
@@ -7,7 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
@@ -15,6 +19,7 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -59,102 +64,87 @@ public class AppointmentsAdd implements Initializable {
      * @param actionEvent event for save button
      * @throws IOException addresses unhandled exceptions
      */
-    public void actionSaveButton(ActionEvent actionEvent) throws IOException {
-        try {
-            String appointmentTitle = appointTitleTextField.getText();
-            String appointmentDescription = appointDescriptionTextField.getText();
-            LocalDateTime appointmentStart = null;
-            LocalDateTime appointmentEnd = null;
+    public void actionSaveButton(ActionEvent actionEvent) throws IOException, SQLException {
 
-            // Handling null pointer exception and alert message
-            Contact contact = contactComboAdd.getValue();
-            if (contact == null) {
-                System.out.println("Please select the contact");
-                return;
-            }
-            int appointmentContact = contact.getContactId();
+        String appointmentTitle = appointTitleTextField.getText();
+        String appointmentDescription = appointDescriptionTextField.getText();
+        // LocalDateTime appointmentStart = null;
+        //  LocalDateTime appointmentEnd = null;
 
-            String appointmentType = appointTypeTextField.getText();
-            // Handling null pointer exception and alert message
-            LocalDate startPicker = startDatePickerAdd.getValue();
-            if (startPicker == null) {
-                System.out.println("Please select start date");
-                return;
-            }
-            // Handling null pointer exception and alert message
-            LocalTime start = startTimeComboAdd.getValue();
-            if (start == null) {
-                System.out.println("Please select time");
-                return;
-            }
-            appointmentStart = LocalDateTime.of(startDatePickerAdd.getValue(), startTimeComboAdd.getValue());
-            // Handling null pointer exception and alert message
-            LocalDate endPicker = endDatePickerAdd.getValue();
-            if (endPicker == null) {
-                System.out.println("Please select end date");
-                return;
-            }
-            // Handling null pointer exception and alert message
-            LocalTime end = endTimeComboAdd.getValue();
-            if (end == null) {
-                System.out.println("Please select end time");
-                return;
-            }
-            appointmentEnd = LocalDateTime.of(endDatePickerAdd.getValue(), endTimeComboAdd.getValue());
-            // Handling null pointer exception and alert message
-            Customer customer = customerComboAdd.getValue();
-            if (customer == null) {
-                System.out.println("Please select the customer");
-                return;
-            }
-            int appointmentCustomerId = customerComboAdd.getValue().getCustomerId();
-            // Handling null pointer exception and alert message
-            User user = userComboAdd.getValue();
-            if (user == null) {
-                System.out.println("Please select a user");
-                return;
-            }
-            int appointmentUserId = userComboAdd.getValue().getUserID();
-            String appointmentLocation = appointLocationTextField.getText();
-
-            if (appointmentTitle.isBlank() || appointmentTitle.isEmpty()) {
-                helper.ErrorMsg.getError(8);
-            } else if (appointmentDescription.isBlank() || appointmentDescription.isEmpty()) {
-                helper.ErrorMsg.getError(9);
-            } else if (appointmentType.isEmpty() || appointmentType.isBlank()) {
-                helper.ErrorMsg.getError(10);
-            } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
-                helper.ErrorMsg.getError(11);
-            } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("");
-                alert.setHeaderText("Customer has another overlapping appointment");
-                alert.setContentText("Review and adjust either/both start time and end time.");
-                alert.showAndWait();
-                //   } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
-                //        LocalTime localStart = Appointment.localStart();
-                //       LocalTime localEnd = Appointment.localEnd();
-                //     Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                //     alert1.setTitle("");
-                //      alert1.setHeaderText("Outside of Business Hours");
-                //      alert1.setContentText(String.format("Appointment is outside of business hours: 8:00AM to 10:00PM EST\n" +
-                //              "Please schedule between " + localStart.format(DateTimeFormatter.ofPattern("hh:mm")) + " - " + localEnd.format(DateTimeFormatter.ofPattern("hh:mm")) + "PM local time."));
-                //     alert1.getDialogPane().setMinHeight(250);
-                //     alert1.getDialogPane().setMinWidth(400);
-                //     alert1.showAndWait();
-                //     return;
-
-            }
-            //else {
-            //      AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
-            //     Appointment.backToAppointments(actionEvent);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        // Handling null pointer exception and alert message
+        Contact contact = contactComboAdd.getValue();
+        if (contact == null) {
+            System.out.println("Please select the contact");
+            return;
         }
+        int appointmentContact = contact.getContactId();
+
+        String appointmentType = appointTypeTextField.getText();
+        // Handling null pointer exception and alert message
+        LocalDate startPicker = startDatePickerAdd.getValue();
+        if (startPicker == null) {
+            System.out.println("Please select start date");
+            return;
+        }
+        // Handling null pointer exception and alert message
+        LocalTime start = startTimeComboAdd.getValue();
+        if (start == null) {
+            System.out.println("Please select time");
+            return;
+        }
+        LocalDateTime appointmentStart = LocalDateTime.of(startDatePickerAdd.getValue(), startTimeComboAdd.getValue());
+        // Handling null pointer exception and alert message
+        LocalDate endPicker = endDatePickerAdd.getValue();
+        if (endPicker == null) {
+            System.out.println("Please select end date");
+            return;
+        }
+        // Handling null pointer exception and alert message
+        LocalTime end = endTimeComboAdd.getValue();
+        if (end == null) {
+            System.out.println("Please select end time");
+            return;
+        }
+        LocalDateTime appointmentEnd = LocalDateTime.of(endDatePickerAdd.getValue(), endTimeComboAdd.getValue());
+        // Handling null pointer exception and alert message
+        Customer customer = customerComboAdd.getValue();
+        if (customer == null) {
+            System.out.println("Please select the customer");
+            return;
+        }
+        int appointmentCustomerId = customerComboAdd.getValue().getCustomerId();
+        // Handling null pointer exception and alert message
+        User user = userComboAdd.getValue();
+        if (user == null) {
+            System.out.println("Please select a user");
+            return;
+        }
+        int appointmentUserId = userComboAdd.getValue().getUserID();
+        String appointmentLocation = appointLocationTextField.getText();
+
+        if (appointmentTitle.isBlank() || appointmentTitle.isEmpty()) {
+            helper.ErrorMsg.getError(8);
+        } else if (appointmentDescription.isBlank() || appointmentDescription.isEmpty()) {
+            helper.ErrorMsg.getError(9);
+        } else if (appointmentType.isEmpty() || appointmentType.isBlank()) {
+            helper.ErrorMsg.getError(10);
+        } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
+            helper.ErrorMsg.getError(11);
+        } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
+           return;
+        } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
+            return;
+        } else {
+            AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
+            Appointment.backToAppointments(actionEvent);
+        }
+
+//            }
+//
+//
+
+
     }
-
-
-
 
 
     /**
