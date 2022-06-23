@@ -1,6 +1,5 @@
 package controller;
 
-import DAO.AppointmentDAO;
 import DAO.ContactDAO;
 import DAO.CustomerDAO;
 import DAO.UserDAO;
@@ -19,7 +18,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentsAdd implements Initializable {
@@ -127,40 +125,37 @@ public class AppointmentsAdd implements Initializable {
                 helper.ErrorMsg.getError(10);
             } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
                 helper.ErrorMsg.getError(11);
-            } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
-                LocalTime localStart = Appointment.localStart();
-                LocalTime localEnd = Appointment.localEnd();
-                Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                          alert1.setTitle("");
-                          alert1.setHeaderText("Outside of Business Hours");
-                          alert1.setContentText(String.format("Appointment is outside of business hours: 8:00AM to 10:00PM EST\n" +
-                                  "Please schedule between " + localStart.format(DateTimeFormatter.ofPattern("hh:mm")) + " - " + localEnd.format(DateTimeFormatter.ofPattern("hh:mm")) + "PM local time."));
-                alert1.getDialogPane().setMinHeight(250);
-                alert1.getDialogPane().setMinWidth(400);
-                          alert1.showAndWait();
+            } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("");
+                alert.setHeaderText("Customer has another overlapping appointment");
+                alert.setContentText("Review and adjust either/both start time and end time.");
+                alert.showAndWait();
+                //   } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
+                //        LocalTime localStart = Appointment.localStart();
+                //       LocalTime localEnd = Appointment.localEnd();
+                //     Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                //     alert1.setTitle("");
+                //      alert1.setHeaderText("Outside of Business Hours");
+                //      alert1.setContentText(String.format("Appointment is outside of business hours: 8:00AM to 10:00PM EST\n" +
+                //              "Please schedule between " + localStart.format(DateTimeFormatter.ofPattern("hh:mm")) + " - " + localEnd.format(DateTimeFormatter.ofPattern("hh:mm")) + "PM local time."));
+                //     alert1.getDialogPane().setMinHeight(250);
+                //     alert1.getDialogPane().setMinWidth(400);
+                //     alert1.showAndWait();
+                //     return;
 
-                return;
             }
-            //  } else if (Appointment.businessHours(appointmentStart) && Appointment.businessHours(appointmentEnd)) {
-            //     if (appointmentStart.toLocalTime().isBefore(appointmentEnd.toLocalTime())) {
-            //         if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
-            //             Alert alert = new Alert(Alert.AlertType.ERROR);
-            //            alert.setTitle("");
-            //           alert.setHeaderText("Customer has another overlapping appointment");
-            //           alert.setContentText("Review and adjust either/both start time and end time.");
-            //           alert.showAndWait();
-            //      } else {
-            //
-            //         }
-            //    }
-         else {
-                AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
-                Appointment.backToAppointments(actionEvent);
-            }
+            //else {
+            //      AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
+            //     Appointment.backToAppointments(actionEvent);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
 
     /**
      * Action event for cancel button that redirects the user back to the main appointments screen

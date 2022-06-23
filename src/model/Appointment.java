@@ -11,7 +11,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 public class Appointment {
@@ -168,14 +171,14 @@ public class Appointment {
     public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
         for (Appointment appointment : appointmentList) {
-            if (customerId == appointment.getAppointmentCustomerId()) {
-                if ((appointmentStart.isAfter(appointment.getAppointmentStart()) || appointmentStart.isEqual(appointment.getAppointmentStart())) && (appointmentEnd.isBefore(appointment.getAppointmentEnd()) ||
-                        appointmentEnd.isEqual(appointment.getAppointmentEnd()))) {
-                    return true;
+            if (appointment.getAppointmentId() == customerId) {
+                if (appointmentStart.isBefore(appointment.getAppointmentStart()) || appointmentStart.isEqual(appointment.getAppointmentStart()) && appointmentEnd.isAfter(appointment.getAppointmentEnd()) ||
+                        appointmentEnd.isEqual(appointment.getAppointmentEnd())) {
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
 
@@ -196,22 +199,22 @@ public class Appointment {
         }
     }
 
-public static LocalTime localStart(){
-    LocalTime openingBusinessTime = LocalTime.of(8,0);
-    ZoneId estZone = ZoneId.of("America/New_York");
-    ZoneId localZone = ZoneId.systemDefault();
+    public static LocalTime localStart() {
+        LocalTime openingBusinessTime = LocalTime.of(8, 0);
+        ZoneId estZone = ZoneId.of("America/New_York");
+        ZoneId localZone = ZoneId.systemDefault();
 
-    LocalDateTime businessEastern = LocalDateTime.of(LocalDate.now(), openingBusinessTime);
-    LocalDateTime businessLocal = businessEastern.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
+        LocalDateTime businessEastern = LocalDateTime.of(LocalDate.now(), openingBusinessTime);
+        LocalDateTime businessLocal = businessEastern.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
 
-    LocalTime busStartLocal = businessLocal.toLocalTime();
+        LocalTime busStartLocal = businessLocal.toLocalTime();
 
-    System.out.println(busStartLocal);
-    return busStartLocal;
-}
+        System.out.println(busStartLocal);
+        return busStartLocal;
+    }
 
-    public static LocalTime localEnd(){
-        LocalTime busEndEST = LocalTime.of(22,0);
+    public static LocalTime localEnd() {
+        LocalTime busEndEST = LocalTime.of(22, 0);
         ZoneId estZone = ZoneId.of("America/New_York");
         ZoneId localZone = ZoneId.systemDefault();
 
@@ -223,6 +226,7 @@ public static LocalTime localStart(){
 
         return busEndLocal;
     }
+
     public static ObservableList<LocalTime> getTimes() {
         ObservableList<LocalTime> appointmentTimeList = FXCollections.observableArrayList();
         LocalTime start = LocalTime.of(1, 00);
