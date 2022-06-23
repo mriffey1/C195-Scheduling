@@ -79,7 +79,6 @@ public class AppointmentDAO {
         insertAppoint.setInt(7, appointmentCustomerId);
         insertAppoint.setInt(8, appointmentUserId);
         insertAppoint.setInt(9, appointmentContact);
-
         insertAppoint.executeUpdate();
 
     }

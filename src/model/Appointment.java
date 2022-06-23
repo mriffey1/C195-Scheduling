@@ -188,15 +188,15 @@ public class Appointment {
         isApptValid = systemZone.toLocalDateTime();
         LocalTime openingBusinessHours = LocalTime.of(8, 0);
         LocalTime closingBusinessHours = LocalTime.of(8, 0);
-        if (((isApptValid.toLocalTime().isAfter(openingBusinessHours) || isApptValid.toLocalTime().equals(openingBusinessHours)) &&
-                isApptValid.toLocalTime().isBefore(closingBusinessHours))) {
-            System.out.println("good");
-            return true;
-        } else if (isApptValid.toLocalTime().isBefore(openingBusinessHours) && isApptValid.toLocalTime().isAfter(closingBusinessHours)){
-            System.out.println("outside of business hours");
-            return false;
+        if (isApptValid.toLocalTime().isBefore(openingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours) ||
+                isApptValid.toLocalTime().isBefore(closingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours)) {
+            return (isApptValid.toLocalTime().isBefore(openingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours) ||
+                    isApptValid.toLocalTime().isBefore(closingBusinessHours) || isApptValid.toLocalTime().isAfter(closingBusinessHours));
+        } else {
+
+            return (isApptValid.toLocalTime().isAfter(openingBusinessHours) || isApptValid.toLocalTime().equals(openingBusinessHours) && isApptValid.toLocalTime().isBefore(closingBusinessHours));
         }
-        return false;
+
     }
 
     public static ObservableList<LocalTime> getTimes() {

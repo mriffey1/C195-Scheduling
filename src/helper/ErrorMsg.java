@@ -88,6 +88,9 @@ public class ErrorMsg implements Initializable {
                 alert.setTitle("No Appointment Selected");
                 alert.setContentText("No appointment was selected.");
                 alert.showAndWait();
+            case 13:
+                alert.setTitle("Overlapping appointment");
+                alert.setContentText("");
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
         }

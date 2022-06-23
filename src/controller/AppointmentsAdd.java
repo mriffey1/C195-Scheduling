@@ -8,10 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
@@ -129,6 +126,22 @@ public class AppointmentsAdd implements Initializable {
                 helper.ErrorMsg.getError(10);
             } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
                 helper.ErrorMsg.getError(11);
+            } else if (Appointment.businessHours(appointmentStart) && Appointment.businessHours(appointmentEnd)) {
+                if (appointmentStart.toLocalTime().isBefore(appointmentEnd.toLocalTime())) {
+                    if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("");
+                        alert.setHeaderText("Customer has another overlapping appointment");
+                        alert.setContentText("Review and adjust either/both start time and end time.");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("");
+                        alert1.setHeaderText("Outside of Business Hours");
+                        alert1.setContentText("business hours");
+                        alert1.showAndWait();
+                    }
+                }
             } else {
                 AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
                 Appointment.backToAppointments(actionEvent);
@@ -165,11 +178,12 @@ public class AppointmentsAdd implements Initializable {
      * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
      * 30 minutes automatically onto the end time based on the selected start time.
      *
-     * @param url URL
+     * @param url            URL
      * @param resourceBundle ResourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appointmentIDTextField.setId(appointmentIDTextField.getId());
         startTimeComboAdd.setItems(Appointment.getTimes());
         endTimeComboAdd.setItems(Appointment.getTimes());
         ObservableList<Contact> contactList = ContactDAO.getAllContacts();
