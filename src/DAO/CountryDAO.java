@@ -66,7 +66,7 @@ public class CountryDAO {
     public static ObservableList<Country> countryTotals() {
         ObservableList<Country> customerCountry = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT  countries.Country AS 'Country', COUNT(appointments.Appointment_ID) AS 'Count' FROM appointments JOIN customers ON customers.Customer_ID = appointments.Customer_ID JOIN first_level_divisions on first_level_divisions.Division_ID = customers.Division_ID JOIN countries on countries.Country_ID = first_level_divisions.Country_ID GROUP BY Country";
+            String sql = "SELECT countries.Country AS 'Country', COUNT(appointments.Appointment_ID) AS 'Count' FROM appointments JOIN customers ON customers.Customer_ID = appointments.Customer_ID JOIN first_level_divisions on first_level_divisions.Division_ID = customers.Division_ID JOIN countries on countries.Country_ID = first_level_divisions.Country_ID GROUP BY Country";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

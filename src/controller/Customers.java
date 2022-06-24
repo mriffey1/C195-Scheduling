@@ -23,6 +23,11 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Customers class
+ *
+ * @author Megan Riffey
+ */
 public class Customers implements Initializable {
 
     public TableColumn<Country, Integer> custCountryCol;
@@ -47,7 +52,7 @@ public class Customers implements Initializable {
     @FXML
     private Button custUpdateLabel;
 
-
+    // ObservableList with all customers from database
     ObservableList<Customer> CustomerList = CustomerDAO.getCustomerList();
 
     /**
@@ -63,19 +68,21 @@ public class Customers implements Initializable {
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
 
         Customer customer = custTable.getSelectionModel().getSelectedItem();
+
+        // If no customer is selected - an error will inform the user
         if (customer == null) {
             helper.ErrorMsg.getError(7);
             return;
         }
         int selectedCustomer = custTable.getSelectionModel().getSelectedItem().getCustomerId();
-
-
+        // Counts the number of associated appointments for the selected customer
         for (Appointment appointment : appointmentList) {
             int appointmentCustId = appointment.getAppointmentCustomerId();
             if (appointmentCustId == selectedCustomer) {
                 count++;
             }
         }
+        // Displays an alert letting the user know they have associated appointments, the quantity and allows them to agree to delete associated appointments as well.
         if (count > 0) {
             Alert associatedAppoint = new Alert(Alert.AlertType.WARNING);
             associatedAppoint.setTitle("Alert");
@@ -102,6 +109,7 @@ public class Customers implements Initializable {
                 associatedAppoint.close();
             }
         }
+        // If there are no associated appointments for the selected user - an alert will be generated asking to confirm removal of the selected customer
         if (count == 0) {
             Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
             confirmRemoval.setTitle("Alert");

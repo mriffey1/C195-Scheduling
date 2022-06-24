@@ -27,6 +27,10 @@ import java.util.ResourceBundle;
 
 import static java.time.LocalDateTime.now;
 
+/**
+ * CustomerModify class
+ * @author Megan Riffey
+ */
 public class CustomerModify implements Initializable {
     @FXML
     private TextField customerIDTextField;
@@ -60,7 +64,8 @@ public class CustomerModify implements Initializable {
 
     /**
      * Action event for the save button. This will attempt to update the database and then redirect back to the Customers
-     * tableview to display newly modified customer. Appropriate error message will display if a field is blank.
+     * tableview to display newly modified customer. Appropriate error message will display if a field is blank. Upon selection of a country,
+     * the division will update to reflect only options underneath the selected country.
      *
      * @param actionEvent event for save button when modifying a customer
      */

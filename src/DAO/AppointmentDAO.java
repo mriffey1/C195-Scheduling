@@ -21,7 +21,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getAppointmentList() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * FROM appointments";
+            String sql = "SELECT * FROM appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID ORDER BY appointments.Appointment_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -29,6 +29,7 @@ public class AppointmentDAO {
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentContactName = rs.getString("Contact_Name");
                 String appointmentType = rs.getString("Type");
                 LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
                 LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
@@ -36,7 +37,8 @@ public class AppointmentDAO {
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
 
-                Appointment c = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+
+                Appointment c = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact, appointmentContactName,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 appointmentList.add(c);
             }
@@ -124,7 +126,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getWeeklyAppointments() {
         ObservableList<Appointment> weeklyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * from appointments WHERE Start >= NOW() + 7";
+            String sql = "SELECT * from appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE appointments.Start >= NOW() + 7 ORDER BY appointments.Appointment_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -132,13 +134,14 @@ public class AppointmentDAO {
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentContactName = rs.getString("Contact_Name");
                 String appointmentType = rs.getString("Type");
                 LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
                 LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
-                Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+                Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact, appointmentContactName,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 weeklyList.add(weekly);
             }
@@ -172,7 +175,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getMonthlyAppointments() {
         ObservableList<Appointment> monthlyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * FROM appointments WHERE MONTH(Start) = MONTH(NOW())";
+            String sql = "SELECT * from appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE MONTH(appointments.Start) = MONTH(NOW()) ORDER BY appointments.Appointment_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -180,13 +183,14 @@ public class AppointmentDAO {
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentContactName = rs.getString("Contact_Name");
                 String appointmentType = rs.getString("Type");
                 LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
                 LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
-                Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+                Appointment weekly = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact, appointmentContactName,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 monthlyList.add(weekly);
             }
@@ -238,7 +242,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getContactAppointment(int contactId) {
         ObservableList<Appointment> contactAppointment = FXCollections.observableArrayList();
         try {
-            String sqlStatement = "SELECT * FROM Appointments WHERE Contact_ID  = '" + contactId + "'";
+            String sqlStatement = "SELECT * FROM appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE appointments.Contact_ID  = '" + contactId + "'";
             PreparedStatement ps = JDBC.conn.prepareStatement(sqlStatement);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -246,13 +250,14 @@ public class AppointmentDAO {
                 String appointmentTitle = rs.getString("Title");
                 String appointmentDescription = rs.getString("Description");
                 int appointmentContact = rs.getInt("Contact_ID");
+                String appointmentContactName = rs.getString("Contact_Name");
                 String appointmentType = rs.getString("Type");
                 LocalDateTime appointmentStart = rs.getTimestamp("Start").toLocalDateTime();
                 LocalDateTime appointmentEnd = rs.getTimestamp("End").toLocalDateTime();
                 int appointmentCustomerId = rs.getInt("Customer_ID");
                 int appointmentUserId = rs.getInt("User_ID");
                 String appointmentLocation = rs.getString("Location");
-                Appointment results = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact,
+                Appointment results = new Appointment(appointmentId, appointmentTitle, appointmentDescription, appointmentContact, appointmentContactName,
                         appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentLocation);
                 contactAppointment.add(results);
             }

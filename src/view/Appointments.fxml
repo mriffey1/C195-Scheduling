@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="607.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Appointments">
+<AnchorPane prefHeight="607.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Appointments">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="1099.0">
          <children>
@@ -22,76 +22,26 @@
                   <Button fx:id="appointUpdateLabel" mnemonicParsing="false" onAction="#actionAppointUpdate" prefWidth="75.0" text="Update" />
                </children>
             </GridPane>
-            <TabPane fx:id="tabPane" layoutX="15.0" layoutY="14.0" prefHeight="415.0" prefWidth="1065.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab fx:id="allAppointmentsTab" closable="false" text="All Appointments">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="830.0">
-                           <children>
-                              <TableView fx:id="appointTable" prefHeight="386.0" prefWidth="1066.0">
-                                 <columns>
-                                    <TableColumn fx:id="appointIdCol" prefWidth="102.98181533813477" text="Appointment ID" />
-                                    <TableColumn fx:id="appointTitleCol" prefWidth="64.58184814453125" text="Title" />
-                                    <TableColumn fx:id="appointDescriptionCol" prefWidth="118.69090270996094" text="Description" />
-                                    <TableColumn fx:id="appointLocationCol" prefWidth="126.54541015625" text="Location" />
-                                    <TableColumn fx:id="appointContactCol" prefWidth="117.81832885742188" text="Contact" />
-                                    <TableColumn fx:id="appointTypeCol" prefWidth="90.763671875" text="Type" />
-                                    <TableColumn fx:id="appointDateCol" prefWidth="122.1817626953125" text="Start Date/Time" />
-                                    <TableColumn fx:id="appointEndDateCol" prefWidth="126.54541015625" text="End Date/Time" />
-                                    <TableColumn fx:id="appointCustIdCol" prefWidth="98.6180419921875" text="Customer ID" />
-                                    <TableColumn fx:id="appointUserIdCol" prefWidth="82.9090576171875" text="User ID" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab fx:id="appointmentsThisWeek" closable="false" text="Weekly Appointments">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="appointTable1" prefHeight="527.0" prefWidth="1063.0">
-                                 <columns>
-                                    <TableColumn fx:id="appointIdCol1" prefWidth="102.98181533813477" text="Appointment ID" />
-                                    <TableColumn fx:id="appointTitleCol1" prefWidth="64.58184814453125" text="Title" />
-                                    <TableColumn fx:id="appointDescriptionCol1" prefWidth="118.69090270996094" text="Description" />
-                                    <TableColumn fx:id="appointLocationCol1" prefWidth="126.54541015625" text="Location" />
-                                    <TableColumn fx:id="appointContactCol1" prefWidth="117.81832885742188" text="Contact" />
-                                    <TableColumn fx:id="appointTypeCol1" prefWidth="90.763671875" text="Type" />
-                                    <TableColumn fx:id="appointDateCol1" prefWidth="122.1817626953125" text="Start Date/Time" />
-                                    <TableColumn fx:id="appointEndDateCol1" prefWidth="126.54541015625" text="End Date/Time" />
-                                    <TableColumn fx:id="appointCustIdCol1" prefWidth="98.6180419921875" text="Customer ID" />
-                                    <TableColumn fx:id="appointUserIdCol1" prefWidth="82.9090576171875" text="User ID" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab fx:id="appointmentsMonthly" closable="false" text="Monthly Appointments">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="appointTable11" prefHeight="527.0" prefWidth="1063.0">
-                                 <columns>
-                                    <TableColumn fx:id="appointIdCol11" prefWidth="102.98181533813477" text="Appointment ID" />
-                                    <TableColumn fx:id="appointTitleCol11" prefWidth="64.58184814453125" text="Title" />
-                                    <TableColumn fx:id="appointDescriptionCol11" prefWidth="118.69090270996094" text="Description" />
-                                    <TableColumn fx:id="appointLocationCol11" prefWidth="126.54541015625" text="Location" />
-                                    <TableColumn fx:id="appointContactCol11" prefWidth="117.81832885742188" text="Contact" />
-                                    <TableColumn fx:id="appointTypeCol11" prefWidth="90.763671875" text="Type" />
-                                    <TableColumn fx:id="appointDateCol11" prefWidth="122.1817626953125" text="Start Date/Time" />
-                                    <TableColumn fx:id="appointEndDateCol11" prefWidth="126.54541015625" text="End Date/Time" />
-                                    <TableColumn fx:id="appointCustIdCol11" prefWidth="98.6180419921875" text="Customer ID" />
-                                    <TableColumn fx:id="appointUserIdCol11" prefWidth="82.9090576171875" text="User ID" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
+            <TableView fx:id="appointTable" layoutX="50.0" layoutY="48.0" prefHeight="386.0" prefWidth="1066.0">
+               <columns>
+                  <TableColumn fx:id="appointIdCol" prefWidth="102.98181533813477" text="Appointment ID" />
+                  <TableColumn fx:id="appointTitleCol" prefWidth="64.58184814453125" text="Title" />
+                  <TableColumn fx:id="appointDescriptionCol" prefWidth="118.69090270996094" text="Description" />
+                  <TableColumn fx:id="appointLocationCol" prefWidth="126.54541015625" text="Location" />
+                  <TableColumn fx:id="appointContactCol" prefWidth="117.81832885742188" text="Contact" />
+                  <TableColumn fx:id="appointTypeCol" prefWidth="90.763671875" text="Type" />
+                  <TableColumn fx:id="appointDateCol" prefWidth="122.1817626953125" text="Start Date/Time" />
+                  <TableColumn fx:id="appointEndDateCol" prefWidth="126.54541015625" text="End Date/Time" />
+                  <TableColumn fx:id="appointCustIdCol" prefWidth="98.6180419921875" text="Customer ID" />
+                  <TableColumn fx:id="appointUserIdCol" prefWidth="82.9090576171875" text="User ID" />
+               </columns>
+            </TableView>
+            <RadioButton layoutX="358.0" layoutY="19.0" mnemonicParsing="false" onAction="#allAppointments" selected="true" text="All Appointments">
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentView" />
+               </toggleGroup></RadioButton>
+            <RadioButton layoutX="640.0" layoutY="18.0" mnemonicParsing="false" onAction="#monthlyAppointments" text="Month" toggleGroup="$appointmentView" />
+            <RadioButton layoutX="532.0" layoutY="18.0" mnemonicParsing="false" onAction="#weeklyAppointments" text="Week" toggleGroup="$appointmentView" />
          </children>
       </AnchorPane>
       <Button layoutX="992.0" layoutY="556.0" mnemonicParsing="false" onAction="#backToMenu" text="Back to Menu" />

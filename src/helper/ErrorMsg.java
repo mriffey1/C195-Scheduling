@@ -112,8 +112,69 @@ public class ErrorMsg implements Initializable {
             case 13:
                 alert.setTitle("Overlapping appointment");
                 alert.setContentText("");
+                alert.showAndWait();
                 break;
 
+            case 14:
+                alert.setTitle("Customer Name is blank");
+                alert.setContentText("The Customer Name field is blank.\nPlease enter a valid name.");
+                alert.showAndWait();
+                break;
+
+            case 15:
+                alert.setTitle("Customer Address is blank");
+                alert.setContentText("The Customer Address field is blank.\nPlease enter a valid address.");
+                alert.showAndWait();
+                break;
+
+            case 16:
+                alert.setTitle("Customer Postal Code is blank");
+                alert.setContentText("The Customer postal code field is blank.\nPlease enter a valid postal code.");
+                alert.showAndWait();
+                break;
+
+            case 17:
+                alert.setTitle("Division/Country Field");
+                alert.setContentText("Please check the division and country field.");
+                alert.showAndWait();
+                break;
+
+            case 18:
+                alert.setTitle("Please select a valid start date");
+                alert.setContentText("The start date field is blank. Please choose a date.");
+                alert.showAndWait();
+                break;
+
+            case 19:
+                alert.setTitle("Please select a valid start time");
+                alert.setContentText("The start time is blank. Please choose a start time.");
+                alert.showAndWait();
+                break;
+            case 20:
+                alert.setTitle("Please select a valid end date");
+                alert.setContentText("The end date field is blank. Please choose a date.");
+                alert.showAndWait();
+                break;
+            case 21:
+                alert.setTitle("Please select a valid end time");
+                alert.setContentText("The end time is blank. Please choose an end time.");
+                alert.showAndWait();
+                break;
+            case 22:
+                alert.setTitle("Please select a valid customer");
+                alert.setContentText("Please select a valid customer.");
+                alert.showAndWait();
+                break;
+            case 23:
+                alert.setTitle("Please select a valid user");
+                alert.setContentText("Please select a valid user.");
+                alert.showAndWait();
+                break;
+            case 24:
+                alert.setTitle("Please select a valid contact");
+                alert.setContentText("Please select a valid contact.");
+                alert.showAndWait();
+                break;
             // Default that throws an error
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
@@ -123,11 +184,11 @@ public class ErrorMsg implements Initializable {
     /**
      * Alerts with alert type: confirmation
      *
-     * @param confirmation associated case number
+     * @param confirm associated case number
      */
-    public static void confirmation(int confirmation) {
+    public static void confirmation(int confirm) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        switch (confirmation) {
+        switch (confirm) {
 
             // No Appointments in the next 15 minutes
             case 1:
@@ -143,6 +204,28 @@ public class ErrorMsg implements Initializable {
                 alert.setTitle("Customer has been removed");
                 alert.setHeaderText("Success");
                 alert.setContentText("Customer has been successfully removed. ");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(ButtonType.OK);
+                alert.showAndWait();
+
+            case 3:
+                alert.setTitle("Customer has been successfully added");
+                alert.setHeaderText("Success");
+                alert.setContentText("Customer has been successfully added. ");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(ButtonType.OK);
+                alert.showAndWait();
+            case 4:
+                alert.setTitle("Appointment has been successfully modified");
+                alert.setHeaderText("Success");
+                alert.setContentText("Appointment has been successfully modified. ");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(ButtonType.OK);
+                alert.showAndWait();
+            case 5:
+                alert.setTitle("Appointment has been successfully added");
+                alert.setHeaderText("Success");
+                alert.setContentText("Appointment has been successfully added. ");
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();

@@ -33,23 +33,7 @@ public class Appointment {
     private int appointmentUserId;
     private String appointmentLocation;
     private int appointmentTypeTotal;
-//    private int appointmentTypeMonthTotals;
-    //   private String appointmentTypeMonth;
-
-    //  public String appointmentMonth;
-    //  public int appointmentTotalappo;
-
-    /**
-     * @return
-     */
-    //  public int getAppointmentTypeMonthTotals() {
-    //      return appointmentTypeMonthTotals;
-    //  }
-
-
-    //   public String getAppointmentTypeMonth() {
-    //       return appointmentTypeMonth;
-    //   }
+    private String appointmentContactName;
 
     /**
      * Overloaded constructor for Appointments to retrieve information from the database
@@ -77,6 +61,7 @@ public class Appointment {
         this.appointmentCustomerId = appointmentCustomerId;
         this.appointmentUserId = appointmentUserId;
         this.appointmentLocation = appointmentLocation;
+
     }
 
     /**
@@ -91,14 +76,34 @@ public class Appointment {
         this.appointmentTypeTotal = appointmentTypeTotal;
     }
 
-//    public Appointment(String appointmentType, LocalDateTime appointmentStart) {
-//        this.appointmentType = appointmentType;
-//        this.appointmentStart = appointmentStart;
-//    }
-
-//    public Appointment(String appointmentType) {
-//        this.appointmentType = appointmentType;
-//    }
+    /**
+     * Overloaded constructor for Appointments to retrieve information from the database
+     *
+     * @param appointmentId          appointment id
+     * @param appointmentTitle       appointment title
+     * @param appointmentDescription appointment description
+     * @param appointmentContact     associated appointment contact Id
+     * @param appointmentContactName associated appointment contact name
+     * @param appointmentType        appointment type
+     * @param appointmentStart       appointment start date/time
+     * @param appointmentEnd         appointment end date/time
+     * @param appointmentCustomerId  associated appointment customer id
+     * @param appointmentUserId      associated appointment user id
+     * @param appointmentLocation    appointment location
+     */
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact, String appointmentContactName, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
+        this.appointmentId = appointmentId;
+        this.appointmentTitle = appointmentTitle;
+        this.appointmentDescription = appointmentDescription;
+        this.appointmentContact = appointmentContact;
+        this.appointmentContactName = appointmentContactName;
+        this.appointmentType = appointmentType;
+        this.appointmentStart = appointmentStart;
+        this.appointmentEnd = appointmentEnd;
+        this.appointmentCustomerId = appointmentCustomerId;
+        this.appointmentUserId = appointmentUserId;
+        this.appointmentLocation = appointmentLocation;
+    }
 
     /**
      * Getter for appointment id
@@ -170,6 +175,14 @@ public class Appointment {
      */
     public void setAppointmentContact(int appointmentContact) {
         this.appointmentContact = appointmentContact;
+    }
+
+    public String getAppointmentContactName(){
+        return appointmentContactName;
+    }
+
+    public void setAppointmentContactName(String appointmentContactName) {
+        this.appointmentContactName = appointmentContactName;
     }
 
     /**
@@ -297,13 +310,6 @@ public class Appointment {
     public void setAppointmentTypeTotal(int appointmentTypeTotal) {
         this.appointmentTypeTotal = appointmentTypeTotal;
     }
-
-
-    //  public Appointment(String appointmentType, long appointmentStart1) {
-    //      this.appointmentType = appointmentType;
-    //      this.appointmentStart1 = appointmentStart1;
-    //  }
-
 
 
     /**

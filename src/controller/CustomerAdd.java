@@ -49,21 +49,33 @@ public class CustomerAdd implements Initializable {
      */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException {
         try {
-            String customerName = customerNameTextField.getText();
-            String customerAddress = customerAddressTextField.getText();
-            String customerPostalCode = customerPostalTextField.getText();
-            String customerPhone = customerPhoneTextField.getText();
-            FirstLVLDivision divId = customerDivisionCombo.getValue();
-            LocalDateTime createdDate = LocalDateTime.now();
-            LocalDateTime lastUpdated = LocalDateTime.now();
-            int divisionId = divId.getDivisionID();
-            CustomerDAO.addCustomer(customerName, customerAddress, customerPostalCode, customerPhone, createdDate, lastUpdated, divisionId);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+            if (customerNameTextField.getText().isEmpty() || customerNameTextField.getText().isBlank()) {
+                helper.ErrorMsg.getError(14);
+            } else if (customerAddressTextField.getText().isEmpty() || customerAddressTextField.getText().isBlank()) {
+                helper.ErrorMsg.getError(15);
+            } else if (customerPostalTextField.getText().isBlank() || customerPostalTextField.getText().isEmpty()) {
+                helper.ErrorMsg.getError(16);
+            } else if (customerDivisionCombo.getValue() == null) {
+                Country country = customerCountryCombo.getValue();
+                if (country == null) {
+                    helper.ErrorMsg.getError(17);
+                } else {
+                    String customerName = customerNameTextField.getText();
+                    String customerAddress = customerAddressTextField.getText();
+                    String customerPostalCode = customerPostalTextField.getText();
+                    String customerPhone = customerPhoneTextField.getText();
+                    FirstLVLDivision divId = customerDivisionCombo.getValue();
+                    LocalDateTime createdDate = LocalDateTime.now();
+                    LocalDateTime lastUpdated = LocalDateTime.now();
+                    int divisionId = divId.getDivisionID();
+                    CustomerDAO.addCustomer(customerName, customerAddress, customerPostalCode, customerPhone, createdDate, lastUpdated, divisionId);
+                    helper.ErrorMsg.confirmation(3);
+                    backToCustomers(actionEvent);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        backToCustomers(actionEvent);
     }
 
     /**

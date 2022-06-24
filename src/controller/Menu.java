@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Main Menu class
+ * @author Megan Riffey
+ */
 public class Menu {
 
     /**

@@ -68,55 +68,55 @@ public class AppointmentsAdd implements Initializable {
 
         String appointmentTitle = appointTitleTextField.getText();
         String appointmentDescription = appointDescriptionTextField.getText();
-        // LocalDateTime appointmentStart = null;
-        //  LocalDateTime appointmentEnd = null;
+        String appointmentType = appointTypeTextField.getText();
 
         // Handling null pointer exception and alert message
         Contact contact = contactComboAdd.getValue();
         if (contact == null) {
-            System.out.println("Please select the contact");
+            helper.ErrorMsg.getError(24);
             return;
         }
         int appointmentContact = contact.getContactId();
 
-        String appointmentType = appointTypeTextField.getText();
         // Handling null pointer exception and alert message
         LocalDate startPicker = startDatePickerAdd.getValue();
         if (startPicker == null) {
-            System.out.println("Please select start date");
+            helper.ErrorMsg.getError(18);
             return;
         }
+
         // Handling null pointer exception and alert message
         LocalTime start = startTimeComboAdd.getValue();
         if (start == null) {
-            System.out.println("Please select time");
+            helper.ErrorMsg.getError(19);
             return;
         }
         LocalDateTime appointmentStart = LocalDateTime.of(startDatePickerAdd.getValue(), startTimeComboAdd.getValue());
+
         // Handling null pointer exception and alert message
         LocalDate endPicker = endDatePickerAdd.getValue();
         if (endPicker == null) {
-            System.out.println("Please select end date");
+            helper.ErrorMsg.getError(20);
             return;
         }
         // Handling null pointer exception and alert message
         LocalTime end = endTimeComboAdd.getValue();
         if (end == null) {
-            System.out.println("Please select end time");
+            helper.ErrorMsg.getError(21);
             return;
         }
         LocalDateTime appointmentEnd = LocalDateTime.of(endDatePickerAdd.getValue(), endTimeComboAdd.getValue());
         // Handling null pointer exception and alert message
         Customer customer = customerComboAdd.getValue();
         if (customer == null) {
-            System.out.println("Please select the customer");
+            helper.ErrorMsg.getError(22);
             return;
         }
         int appointmentCustomerId = customerComboAdd.getValue().getCustomerId();
         // Handling null pointer exception and alert message
         User user = userComboAdd.getValue();
         if (user == null) {
-            System.out.println("Please select a user");
+            helper.ErrorMsg.getError(23);
             return;
         }
         int appointmentUserId = userComboAdd.getValue().getUserID();
@@ -137,18 +137,8 @@ public class AppointmentsAdd implements Initializable {
         } else {
             AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
             Appointment.backToAppointments(actionEvent);
+            helper.ErrorMsg.confirmation(5);
         }
-    }
-
-
-    /**
-     * Action event for cancel button that redirects the user back to the main appointments screen
-     *
-     * @param actionEvent event for cancel button
-     * @throws IOException addresses unhandled exception
-     */
-    public void actionCancelButton(ActionEvent actionEvent) throws IOException {
-        Appointment.backToAppointments(actionEvent);
     }
 
     /**
@@ -165,8 +155,8 @@ public class AppointmentsAdd implements Initializable {
     }
 
     /**
-     * LAMBDA EXPRESSION: Data Picker: takes value from start date and sets the value in the end date picker.
-     * LAMBDA EXPRESSION: Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
+     * LAMBDA EXPRESSION: Line 179 - Data Picker: takes value from start date and sets the value in the end date picker.
+     * LAMBDA EXPRESSION: Line 180 - Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
      * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
      * 30 minutes automatically onto the end time based on the selected start time.
      *
@@ -188,5 +178,15 @@ public class AppointmentsAdd implements Initializable {
         // Lambda expressions
         startDatePickerAdd.valueProperty().addListener((ov, oldValueDate, newValueDate) -> endDatePickerAdd.setValue(newValueDate.plusDays(noOfDaysToAdd)));
         startTimeComboAdd.valueProperty().addListener((observableValue, oldValueTime, newValueTime) -> endTimeComboAdd.setValue(newValueTime.plusMinutes(30)));
+    }
+
+    /**
+     * Action event for cancel button that redirects the user back to the main appointments screen
+     *
+     * @param actionEvent event for cancel button
+     * @throws IOException addresses unhandled exception
+     */
+    public void actionCancelButton(ActionEvent actionEvent) throws IOException {
+        Appointment.backToAppointments(actionEvent);
     }
 }

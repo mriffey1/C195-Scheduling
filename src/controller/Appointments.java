@@ -19,11 +19,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Appointments class
+ * @author Megan Riffey
+ */
 public class Appointments implements Initializable {
 
+    public ToggleGroup appointmentView;
     @FXML
     private TableView<Appointment> appointTable11;
     @FXML
@@ -68,13 +74,6 @@ public class Appointments implements Initializable {
     private TableColumn<Appointment, Integer> appointCustIdCol;
     @FXML
     private TableColumn<Appointment, Integer> appointUserIdCol;
-    public Button appointDeleteLabel;
-    public Button appointAddLabel;
-    public Button appointUpdateLabel;
-    public Tab allAppointmentsTab;
-    public Tab appointmentsThisWeek;
-    public Tab appointmentsMonthly;
-    public TabPane tabPane;
     @FXML
     private TableView<Appointment> appointTable1;
     @FXML
@@ -97,6 +96,8 @@ public class Appointments implements Initializable {
     private TableColumn<Appointment, Integer> appointCustIdCol1;
     @FXML
     private TableColumn<Appointment, Integer> appointUserIdCol1;
+    ZonedDateTime startRange;
+    ZonedDateTime endRange;
 
     ObservableList<Appointment> AppointmentList = FXCollections.observableArrayList();
 
@@ -191,38 +192,16 @@ public class Appointments implements Initializable {
         appointTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
         appointLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        appointContactCol.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
+        appointContactCol.setCellValueFactory(new PropertyValueFactory<>("appointmentContactName"));
         appointTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointDateCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
         appointEndDateCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
         appointCustIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
         appointUserIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
 
-        appointTable1.setItems(AppointmentDAO.getWeeklyAppointments());
-        appointTable1.setPlaceholder(new Label("Currently, no appointments exist within the next week."));
-        appointIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        appointTitleCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
-        appointDescriptionCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        appointLocationCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        appointContactCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
-        appointTypeCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        appointDateCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
-        appointEndDateCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
-        appointCustIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
-        appointUserIdCol1.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
 
-        appointTable11.setItems(AppointmentDAO.getMonthlyAppointments());
-        appointTable11.setPlaceholder(new Label("Currently, no appointments exist within the next month."));
-        appointIdCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        appointTitleCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
-        appointDescriptionCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        appointLocationCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        appointContactCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentContact"));
-        appointTypeCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        appointDateCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
-        appointEndDateCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
-        appointCustIdCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
-        appointUserIdCol11.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
+
+
 
     }
 
@@ -239,5 +218,20 @@ public class Appointments implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public void allAppointments(ActionEvent actionEvent) {
+        appointTable.setItems(AppointmentDAO.getAppointmentList());
+
+    }
+
+    public void monthlyAppointments(ActionEvent actionEvent) {
+        appointTable.setItems(AppointmentDAO.getMonthlyAppointments());
+        appointTable.setPlaceholder(new Label("Currently, no appointments exist within the next month."));
+    }
+
+    public void weeklyAppointments(ActionEvent actionEvent) {
+        appointTable.setItems(AppointmentDAO.getWeeklyAppointments());
+        appointTable.setPlaceholder(new Label("Currently, no appointments exist within the next week."));
     }
 }

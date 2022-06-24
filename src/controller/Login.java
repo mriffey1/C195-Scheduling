@@ -56,6 +56,7 @@ public class Login implements Initializable {
     // Loads language bundle to convert languages based on user's system language
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
 
+    // Converting time and getting 15 minutes from now to display associated appointments
     LocalDateTime currentTime = LocalDateTime.now();
     ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
     LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
@@ -90,26 +91,24 @@ public class Login implements Initializable {
         String User_Name = txtFieldUserName.getText();
         String Password = txtFieldUserPassword.getText();
 
-        if (User_Name.isEmpty() || User_Name.isBlank()) {
+
+        if (User_Name.isEmpty() || User_Name.isBlank()) { // Displays an alert if the username is empty or blank.
             helper.ErrorMsg.getError(5);
-        } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) {
+        } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) { // Displays an alert if username AND password are incorrect.
             helper.ErrorMsg.getError(3);
             loginActivity();
             loginSuccess = false;
-       //     loginActivity("User " + " has failed login due to an incorrect USERNAME and PASSWORD " + LDTUTC);
-        } else if (Password.isEmpty() || Password.isBlank()) {
+        } else if (Password.isEmpty() || Password.isBlank()) { // Displays an alert if password is empty or blank
             helper.ErrorMsg.getError(6);
-        } else if (!usernameValidation(User_Name)) {
+        } else if (!usernameValidation(User_Name)) { // Displays an alert if only the username is incorrect
             helper.ErrorMsg.getError(1);
             loginSuccess = false;
             loginActivity();
-       //     loginActivity("User " + " has failed login due to an incorrect USERNAME " + LDTUTC);
-        } else if (!passwordValidation(Password)) {
+        } else if (!passwordValidation(Password)) { // Displays an alert if only the password is incorrect
             helper.ErrorMsg.getError(2);
             loginSuccess = false;
             loginActivity();
-          //  loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
-        } else if (userLogin(User_Name, Password)) {
+        } else if (userLogin(User_Name, Password)) { // Verifies password and username are correct and loads main menu
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
             new FXMLLoader();
@@ -129,7 +128,6 @@ public class Login implements Initializable {
                 LocalDateTime startTime = appointment.getAppointmentStart();
                 if ((startTime.isAfter(currentTime) || startTime.isEqual(currentTimePlus15)) &&
                         (startTime.isBefore(currentTimePlus15) || startTime.isEqual(currentTime))) {
-                    System.out.println(appointment.getAppointmentId());
                     Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
                     confirmRemoval.setTitle("Alert");
                     confirmRemoval.setContentText(appointment.getAppointmentId() + " " + appointment.getAppointmentStart());
@@ -139,6 +137,7 @@ public class Login implements Initializable {
                     isValid = true;
                 }
             }
+            // Displays an alert if no appointments exist within 15 minutes
             if (!isValid) {
                 helper.ErrorMsg.confirmation(1);
             }
@@ -166,35 +165,36 @@ public class Login implements Initializable {
             alert.close();
         }
     }
-    interface LogActivity{
+
+    /**
+     * Interface to get file name for lambda on line 177-179
+     */
+    interface LogActivity {
         public String getFileName();
     }
 
+    /**
+     * LAMBDA EXPRESSION: LINES 180-182 to get file name for all login activity
+     */
     LogActivity logActivity = () -> {
         return "login_activity.txt";
     };
 
     /**
-     * Method to record login attempts and activity to login_activity.txt
+     * Method to record login attempts and activity to login_activity.txt and uses a lambda on lines 180-182 to get filename
      *
      * @throws IOException addresses unhandled exception
      */
     public void loginActivity() throws IOException {
         FileWriter fwritter = new FileWriter(logActivity.getFileName(), true);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ssa");
         ZoneId localZone = ZoneId.systemDefault();
         if (loginSuccess) {
             fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(LDTUTC));
-        } else if (!loginSuccess){
-            fwritter.write(txtFieldUserName.getText() + " has failed login on " + LocalDateTime.now());
+        } else if (!loginSuccess) {
+            fwritter.write(txtFieldUserName.getText() + " has failed login on " + formatter.format(LDTUTC));
         }
         fwritter.write("\n");
         fwritter.close();
-
-//        FileWriter fwritter = new FileWriter(filename, true);
-//        fwritter.write(value);
-//        fwritter.write("\n");
-//        fwritter.close();
     }
 }

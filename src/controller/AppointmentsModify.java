@@ -20,12 +20,10 @@ import model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-
-import static java.time.LocalDateTime.now;
 
 public class AppointmentsModify implements Initializable {
 
@@ -77,8 +75,6 @@ public class AppointmentsModify implements Initializable {
         ObservableList<User> userList = UserDAO.getUserList();
         userCombo.setItems(userList);
         userCombo.setVisibleRowCount(10);
-
-
     }
 
     /**
@@ -91,20 +87,81 @@ public class AppointmentsModify implements Initializable {
         int appointmentId = Integer.parseInt(appointmentIDTextField.getText());
         String appointmentTitle = appointmentTitleTextField.getText();
         String appointmentDescription = appointmentDescriptionTextField.getText();
-        int appointmentContact = contactCombo.getValue().getContactId();
         String appointmentType = appointmentTypeTextField.getText();
-        LocalDateTime appointmentStart = null;
-        LocalDateTime appointmentEnd = null;
-        appointmentStart = appointmentStart.of(startDatePicker.getValue(), startTimeCombo.getValue());
-        appointmentEnd = appointmentEnd.of(endDatePicker.getValue(), endTimeCombo.getValue());
-        int appointmentCustomerId = customerCombo.getValue().getCustomerId();
-        int appointmentUserId = userCombo.getValue().getUserID();
         String appointmentLocation = appointmentLocationTextField.getText();
-        String lastUpdatedBy = "script";
-        Timestamp lastUpdated = Timestamp.valueOf(now());
-        AppointmentDAO.updateAppointment(appointmentId, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
-        Appointment.backToAppointments(actionEvent);
 
+        // Handling null pointer exception and alert message
+        Contact contact = contactCombo.getValue();
+        if (contact == null){
+            helper.ErrorMsg.getError(24);
+        }
+        int appointmentContact = contactCombo.getValue().getContactId();
+
+
+        // Handling null pointer exception and alert message
+        LocalDate startPicker = startDatePicker.getValue();
+        if (startPicker == null) {
+            helper.ErrorMsg.getError(18);
+            return;
+        }
+
+        // Handling null pointer exception and alert message
+        LocalTime startTime = startTimeCombo.getValue();
+        if (startTime == null) {
+            helper.ErrorMsg.getError(19);
+            return;
+        }
+        LocalDateTime appointmentStart = LocalDateTime.of(startDatePicker.getValue(), startTimeCombo.getValue());
+
+        // Handling null pointer exception and alert message
+        LocalDate endPicker = endDatePicker.getValue();
+        if (endPicker == null) {
+            helper.ErrorMsg.getError(20);
+            return;
+        }
+
+        // Handling null pointer exception and alert message
+        LocalTime end = endTimeCombo.getValue();
+        if (end == null) {
+            helper.ErrorMsg.getError(21);
+            return;
+        }
+        LocalDateTime appointmentEnd = LocalDateTime.of(endDatePicker.getValue(), endTimeCombo.getValue());
+
+        // Handling null pointer exception and alert message
+        Customer customer = customerCombo.getValue();
+        if (customer == null) {
+            helper.ErrorMsg.getError(22);
+            return;
+        }
+        int appointmentCustomerId = customerCombo.getValue().getCustomerId();
+
+        // Handling null pointer exception and alert message
+        User user = userCombo.getValue();
+        if (user == null) {
+            helper.ErrorMsg.getError(23);
+            return;
+        }
+        int appointmentUserId = userCombo.getValue().getUserID();
+
+        // Checking and verifying text-fields are valid and not blank or empty
+        if (appointmentTitle.isBlank() || appointmentTitle.isEmpty()) {
+            helper.ErrorMsg.getError(8);
+        } else if (appointmentDescription.isBlank() || appointmentDescription.isEmpty()) {
+            helper.ErrorMsg.getError(9);
+        } else if (appointmentType.isEmpty() || appointmentType.isBlank()) {
+            helper.ErrorMsg.getError(10);
+        } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
+            helper.ErrorMsg.getError(11);
+        } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
+            return;
+        } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
+            return;
+        } else {
+            AppointmentDAO.updateAppointment(appointmentId, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
+            Appointment.backToAppointments(actionEvent);
+            helper.ErrorMsg.confirmation(4);
+        }
     }
 
     /**
