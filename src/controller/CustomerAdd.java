@@ -63,7 +63,6 @@ public class CustomerAdd implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Test");
         backToCustomers(actionEvent);
     }
 

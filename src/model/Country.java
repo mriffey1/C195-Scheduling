@@ -6,41 +6,82 @@ public class Country {
     private int countryMonthTotal;
     private String countryMonth;
 
-    public Country(String countryMonth, int countryMonthTotal){
+    /**
+     * Overloaded constructor for Country that is used in CountryDAO to get associated appointment count per country
+     *
+     * @param countryMonth      country month
+     * @param countryMonthTotal country month total
+     */
+    public Country(String countryMonth, int countryMonthTotal) {
         this.countryMonth = countryMonth;
         this.countryMonthTotal = countryMonthTotal;
     }
+
+    /**
+     * Overloaded constructor for Country used in CountryDAO that gets all countries to an observablelist
+     *
+     * @param countryId
+     * @param countryName
+     */
     public Country(int countryId, String countryName) {
         this.countryId = countryId;
         this.countryName = countryName;
     }
-public int getCountryMonthTotal(){
-    return countryMonthTotal;
-}
 
-public String getCountryMonth(){
-        return countryMonth;
-}
-    public Country(int countryId){
-        this.countryId = countryId;
+    public int getCountryMonthTotal() {
+        return countryMonthTotal;
     }
 
+    public String getCountryMonth() {
+        return countryMonth;
+    }
+
+
+//    public Country(int countryId) {
+//        this.countryId = countryId;
+//    }
+
+    /**
+     * Getter for country Id
+     *
+     * @return countryId
+     */
     public int getCountryId() {
         return countryId;
     }
 
+    /**
+     * Setter for country Id
+     *
+     * @param countryId country Id
+     */
     public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 
+    /**
+     * Getter for country name
+     *
+     * @return countryName
+     */
     public String getCountryName() {
         return countryName;
     }
 
+    /**
+     * Setter for country name
+     *
+     * @param countryName country name
+     */
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
 
+    /**
+     * ToString method to display countryNames in combo boxes instead of memory addresses
+     *
+     * @return countryName
+     */
     @Override
     public String toString() {
         return (countryName);

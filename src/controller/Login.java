@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -50,6 +51,7 @@ public class Login implements Initializable {
     private Button cancelButton;
     @FXML
     private Label loginTitle;
+    boolean loginSuccess = false;
 
     // Loads language bundle to convert languages based on user's system language
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
@@ -57,7 +59,8 @@ public class Login implements Initializable {
     LocalDateTime currentTime = LocalDateTime.now();
     ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
     LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
-    ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
+    ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("America/New_York"));
+
 
     /**
      * Sets the timezone label, the text-field labels, the button text and program title to change languages based on
@@ -91,15 +94,21 @@ public class Login implements Initializable {
             helper.ErrorMsg.getError(5);
         } else if (!passwordValidation(Password) && !usernameValidation((User_Name))) {
             helper.ErrorMsg.getError(3);
-            loginActivity("User " + " has failed login due to an incorrect USERNAME and PASSWORD " + LDTUTC);
+            loginActivity();
+            loginSuccess = false;
+       //     loginActivity("User " + " has failed login due to an incorrect USERNAME and PASSWORD " + LDTUTC);
         } else if (Password.isEmpty() || Password.isBlank()) {
             helper.ErrorMsg.getError(6);
         } else if (!usernameValidation(User_Name)) {
             helper.ErrorMsg.getError(1);
-            loginActivity("User " + " has failed login due to an incorrect USERNAME " + LDTUTC);
+            loginSuccess = false;
+            loginActivity();
+       //     loginActivity("User " + " has failed login due to an incorrect USERNAME " + LDTUTC);
         } else if (!passwordValidation(Password)) {
             helper.ErrorMsg.getError(2);
-            loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
+            loginSuccess = false;
+            loginActivity();
+          //  loginActivity(User_Name + " has failed login due to incorrect PASSWORD at " + LDTUTC);
         } else if (userLogin(User_Name, Password)) {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
@@ -110,7 +119,9 @@ public class Login implements Initializable {
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
-            loginActivity(User_Name + " has successfully logged in on " + LocalDateTime.now());
+            loginSuccess = true;
+            loginActivity();
+
 
             // Checking for appointments upon successful login
             boolean isValid = false;
@@ -155,18 +166,35 @@ public class Login implements Initializable {
             alert.close();
         }
     }
+    interface LogActivity{
+        public String getFileName();
+    }
+
+    LogActivity logActivity = () -> {
+        return "login_activity.txt";
+    };
 
     /**
      * Method to record login attempts and activity to login_activity.txt
      *
-     * @param value holds the appropriate string value based on login
      * @throws IOException addresses unhandled exception
      */
-    public void loginActivity(String value) throws IOException {
-        String filename = "login_activity.txt";
-        FileWriter fwritter = new FileWriter(filename, true);
-        fwritter.write(value);
+    public void loginActivity() throws IOException {
+        FileWriter fwritter = new FileWriter(logActivity.getFileName(), true);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ssa");
+        ZoneId localZone = ZoneId.systemDefault();
+        if (loginSuccess) {
+            fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(LDTUTC));
+        } else if (!loginSuccess){
+            fwritter.write(txtFieldUserName.getText() + " has failed login on " + LocalDateTime.now());
+        }
         fwritter.write("\n");
         fwritter.close();
+
+//        FileWriter fwritter = new FileWriter(filename, true);
+//        fwritter.write(value);
+//        fwritter.write("\n");
+//        fwritter.close();
     }
 }

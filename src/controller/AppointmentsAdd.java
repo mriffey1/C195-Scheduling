@@ -138,12 +138,6 @@ public class AppointmentsAdd implements Initializable {
             AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
             Appointment.backToAppointments(actionEvent);
         }
-
-//            }
-//
-//
-
-
     }
 
 
@@ -171,6 +165,8 @@ public class AppointmentsAdd implements Initializable {
     }
 
     /**
+     * LAMBDA EXPRESSION: Data Picker: takes value from start date and sets the value in the end date picker.
+     * LAMBDA EXPRESSION: Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
      * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
      * 30 minutes automatically onto the end time based on the selected start time.
      *
@@ -188,11 +184,9 @@ public class AppointmentsAdd implements Initializable {
         userComboAdd.setItems(userList);
         ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
         customerComboAdd.setItems(customerList);
-        startDatePickerAdd.valueProperty().addListener((ov, oldValue, newValue) -> {
-            endDatePickerAdd.setValue(newValue.plusDays(noOfDaysToAdd));
-        });
-        startTimeComboAdd.valueProperty().addListener((observableValue, oldValueTime, newValueTime) -> {
-            endTimeComboAdd.setValue(newValueTime.plusMinutes(30));
-        });
+
+        // Lambda expressions
+        startDatePickerAdd.valueProperty().addListener((ov, oldValueDate, newValueDate) -> endDatePickerAdd.setValue(newValueDate.plusDays(noOfDaysToAdd)));
+        startTimeComboAdd.valueProperty().addListener((observableValue, oldValueTime, newValueTime) -> endTimeComboAdd.setValue(newValueTime.plusMinutes(30)));
     }
 }

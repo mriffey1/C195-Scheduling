@@ -304,6 +304,8 @@ public class Appointment {
     //      this.appointmentStart1 = appointmentStart1;
     //  }
 
+
+
     /**
      * Boolean method to check if an appointment for the selected contact is overlying with any existing appointments for
      * selected contact
@@ -315,16 +317,17 @@ public class Appointment {
      */
     public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
+
         LocalDateTime checkApptStart;
         LocalDateTime checkApptEnd;
 
         for (Appointment a : appointmentList) {
             checkApptStart = a.getAppointmentStart();
             checkApptEnd = a.getAppointmentEnd();
+
             if (customerId != a.getAppointmentCustomerId()) {
                 continue;
             } else if (checkApptStart.isEqual(appointmentStart) || checkApptEnd.isEqual(appointmentEnd)) {
-                //       checkApptStart.isEqual(appointmentEnd) || checkApptEnd.isEqual(appointmentStart)
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
                 alert.setContentText("ERROR: Appointments must not start or end at same time as existing customer appointments");
@@ -346,12 +349,6 @@ public class Appointment {
         }
         return false;
     }
-
-
-    //   }
-    //     if (customerId == appointment.getAppointmentCustomerId() && appointmentStart.isAfter(appointment.getAppointmentStart()) || appointmentStart.isBefore(appointment.getAppointmentEnd())){
-    //    System.out.println("start time overlaps with existing appointment");
-    //        return false;
 
     /**
      * Boolean method that establishes business hours in eastern time and converts the users local timezone to ensure

@@ -124,6 +124,7 @@ public class CustomerModify implements Initializable {
      */
     public void actionCountryLoad(ActionEvent actionEvent) {
         Country C = customerCountryCombo.getValue();
+
         try {
             customerDivisionCombo.setItems(FirstLvlDivisionDAO.displayDivision(C.getCountryId()));
         } catch (SQLException e) {

@@ -185,6 +185,7 @@ public class Appointments implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         appointTable.setItems(AppointmentDAO.getAppointmentList());
         appointIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
