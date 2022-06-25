@@ -55,6 +55,8 @@ public class CustomerAdd implements Initializable {
         try {
             if (customerNameTextField.getText().isEmpty() || customerNameTextField.getText().isBlank()) {
                 helper.ErrorMsg.getError(14);
+            } else if (customerPhoneTextField.getText().isBlank() || customerPhoneTextField.getText().isEmpty()) {
+                helper.ErrorMsg.getError(25);
             } else if (customerAddressTextField.getText().isEmpty() || customerAddressTextField.getText().isBlank()) {
                 helper.ErrorMsg.getError(15);
             } else if (customerPostalTextField.getText().isBlank() || customerPostalTextField.getText().isEmpty()) {

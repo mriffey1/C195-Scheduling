@@ -192,6 +192,12 @@ public class ErrorMsg implements Initializable {
                 alert.showAndWait();
                 break;
 
+            // Phone number field is empty alert
+            case 25:
+                alert.setTitle("Error: Phone number");
+                alert.setContentText("Please enter a valid phone number.");
+                alert.showAndWait();
+                break;
             // Default that throws an error
             default:
                 throw new IllegalStateException("Unexpected value: " + whichError);
