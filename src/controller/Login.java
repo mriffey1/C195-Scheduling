@@ -130,7 +130,7 @@ public class Login implements Initializable {
                         (startTime.isBefore(currentTimePlus15) || startTime.isEqual(currentTime))) {
                     Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
                     confirmRemoval.setTitle("Alert");
-                    confirmRemoval.setContentText(appointment.getAppointmentId() + " " + appointment.getAppointmentStart());
+                    confirmRemoval.setContentText(appointment.getAppointmentId() + " begins at " + appointment.getAppointmentStart());
                     confirmRemoval.getButtonTypes().clear();
                     confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
                     confirmRemoval.showAndWait();

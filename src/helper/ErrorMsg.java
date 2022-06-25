@@ -209,8 +209,8 @@ public class ErrorMsg implements Initializable {
 
             // No Appointments in the next 15 minutes alert
             case 1:
-                alert.setTitle("Alert");
-                alert.setContentText("No appointments within the next 15 minutes.");
+                alert.setTitle(langBundle.getString("Alert"));
+                alert.setContentText(langBundle.getString("Noappointmentswithinthenext15minutes."));
                 alert.showAndWait();
                 break;
 
