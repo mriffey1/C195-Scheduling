@@ -104,7 +104,7 @@ public class Customer {
     /**
      * Sets customerId
      *
-     * @param customerId
+     * @param customerId customer id
      */
     public void setCustomerID(int customerId) {
         this.customerId = customerId;
@@ -122,7 +122,7 @@ public class Customer {
     /**
      * Set's customer's name
      *
-     * @param customerName
+     * @param customerName customer's name
      */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -140,7 +140,7 @@ public class Customer {
     /**
      * Sets customer address
      *
-     * @param customerAddress
+     * @param customerAddress customer's address
      */
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
@@ -158,7 +158,7 @@ public class Customer {
     /**
      * Sets customer postal code
      *
-     * @param customerPostalCode
+     * @param customerPostalCode customer's postal code
      */
     public void setCustomerPostalCode(String customerPostalCode) {
         this.customerPostalCode = customerPostalCode;
@@ -167,7 +167,7 @@ public class Customer {
     /**
      * Returns customerDivision Code
      *
-     * @return
+     * @return customerDivisionId
      */
     public int getCustomerDivisionId() {
         return customerDivisionId;
@@ -176,7 +176,7 @@ public class Customer {
     /**
      * Sets customer's division code
      *
-     * @param customerDivisionId
+     * @param customerDivisionId associated division Id
      */
     public void setCustomerDivision(int customerDivisionId) {
         this.customerDivisionId = customerDivisionId;
@@ -223,7 +223,7 @@ public class Customer {
     /**
      * Set's customer's phone number
      *
-     * @param customerPhone
+     * @param customerPhone customer's phone number
      */
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;

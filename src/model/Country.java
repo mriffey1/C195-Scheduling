@@ -20,8 +20,8 @@ public class Country {
     /**
      * Overloaded constructor for Country used in CountryDAO that gets all countries to an observablelist
      *
-     * @param countryId
-     * @param countryName
+     * @param countryId country id
+     * @param countryName country name
      */
     public Country(int countryId, String countryName) {
         this.countryId = countryId;
@@ -38,7 +38,7 @@ public class Country {
 
     /**
      * Getter for country
-     * @return
+     * @return countryMonth
      */
     public String getCountryMonth() {
         return countryMonth;

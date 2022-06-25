@@ -44,10 +44,9 @@ public class UserDAO {
     /**
      * Selecting and preparing the username and password from database
      *
-     * @param User_Name
-     * @param Password
-     * @return
-     * @throws SQLException
+     * @param User_Name user's username
+     * @param Password user's password
+     * @return true/false
      */
     public static boolean userLogin(String User_Name, String Password) {
         try (PreparedStatement ps = JDBC.database().prepareStatement("SELECT * FROM Users WHERE  User_Name = ? AND  Password = ?")) {
@@ -67,9 +66,8 @@ public class UserDAO {
     /**
      * Username validation, added BINARY to ensure username was case-sensitive and would not allow accidental login.
      *
-     * @param User_Name
-     * @return
-     * @throws SQLException
+     * @param User_Name user's username
+     * @return true/false
      */
     public static boolean usernameValidation(String User_Name) {
         try (PreparedStatement ps = JDBC.database().prepareStatement("SELECT * FROM Users WHERE BINARY User_Name = ?")) {
@@ -88,11 +86,10 @@ public class UserDAO {
     /**
      * Password Validation - added Binary to ensure the password was case-sensitive and would prevent accidental login with incorrect credentials.
      *
-     * @param Password
-     * @return
-     * @throws SQLException
+     * @param Password user's password
+     * @return true/false
      */
-    public static boolean passwordValidation(String Password) throws SQLException {
+    public static boolean passwordValidation(String Password)  {
         try (PreparedStatement ps = JDBC.database().prepareStatement("SELECT * FROM Users WHERE BINARY Password = ?")) {
             ps.setString(1, Password);
             ResultSet rs = ps.executeQuery();
@@ -109,7 +106,7 @@ public class UserDAO {
     /**
      * SQL Query to get userId based on associated userName
      *
-     * @param userName user name
+     * @param userName username
      * @return userId
      * @throws SQLException addresses unhandled SQL exception
      */
@@ -127,10 +124,10 @@ public class UserDAO {
     }
 
     /**
-     * returns user name based on user Id
+     * returns username based on user Id
      *
      * @param userId user id
-     * @return u - userId and user name
+     * @return u - userId and username
      */
     public static User returnUserId(int userId) {
         try {

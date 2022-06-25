@@ -68,6 +68,7 @@ public class AppointmentsAdd implements Initializable {
      *
      * @param actionEvent event for save button
      * @throws IOException addresses unhandled exceptions
+     * @throws SQLException addresses unhandled SQL exceptions
      */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException, SQLException {
 
@@ -153,6 +154,7 @@ public class AppointmentsAdd implements Initializable {
      * Method to add minutes onto End time combo based on start time combo.
      *
      * @param MinutesToAdd returns the number of minutes to add
+     * @return MinutesToAdd returns the number of minutes
      */
     public long plusMinutes(long MinutesToAdd) {
         try {

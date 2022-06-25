@@ -70,7 +70,7 @@ public class User {
     /**
      * Sets the userID
      *
-     * @param userID
+     * @param userID user's id number
      */
     public void setUserID(int userID) {
         this.userID = userID;
@@ -88,7 +88,7 @@ public class User {
     /**
      * Sets the userName
      *
-     * @param userName
+     * @param userName user's username
      */
     public void setUserName(String userName) {
         this.userName = userName;
@@ -106,7 +106,7 @@ public class User {
     /**
      * Sets the createdBy
      *
-     * @param createdBy
+     * @param createdBy created by
      */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;

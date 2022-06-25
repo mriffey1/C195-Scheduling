@@ -105,7 +105,7 @@ public class AppointmentDAO {
      * @param appointmentCustomerId  associated appointment customer ID
      * @param appointmentUserId      associated appointment user ID
      * @param appointmentContact     associated appointment contact ID
-     * @throws SQLException
+     * @throws SQLException addresses unhandled SQL exception
      */
     public static void addAppointment(String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, int appointmentContact) throws SQLException {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
