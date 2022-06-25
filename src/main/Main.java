@@ -10,6 +10,12 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Scheduling Application
+ * @author Megan Riffey
+ *
+ * Javadoc Location: C195-Riffey/src/javadoc
+ */
 public class Main extends Application {
     /**
      * Redirects to login screen
