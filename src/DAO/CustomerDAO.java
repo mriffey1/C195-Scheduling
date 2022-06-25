@@ -45,17 +45,6 @@ public class CustomerDAO {
         return customerList;
     }
 
-//    public static Customer customerIdDisplay(int customerId) {
-//        try {
-//            String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerId + "'";
-//            PreparedStatement deleteCust = JDBC.conn.prepareStatement(sqlStatement);
-//            deleteCust.setInt(1, customerId);
-//            deleteCust.execute();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     /**
      * SQL Query that deletes customer from database based on selected customer Id

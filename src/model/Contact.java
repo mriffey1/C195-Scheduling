@@ -1,7 +1,5 @@
 package model;
 
-import DAO.ContactDAO;
-
 public class Contact {
     private int contactId;
     private String contactName;
@@ -19,11 +17,6 @@ public class Contact {
         this.contactEmail = contactEmail;
 
     }
-
-//    public Contact(int contactId, String contactName) {
-//        this.contactId = contactId;
-//        this.contactName = contactName;
-//    }
 
     /**
      * Getter for contact id

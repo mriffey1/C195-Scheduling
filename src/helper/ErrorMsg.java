@@ -207,7 +207,7 @@ public class ErrorMsg implements Initializable {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
-
+                break;
             case 3:
                 alert.setTitle("Customer has been successfully added");
                 alert.setHeaderText("Success");
@@ -215,6 +215,7 @@ public class ErrorMsg implements Initializable {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
+                break;
             case 4:
                 alert.setTitle("Appointment has been successfully modified");
                 alert.setHeaderText("Success");
@@ -222,6 +223,7 @@ public class ErrorMsg implements Initializable {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
+                break;
             case 5:
                 alert.setTitle("Appointment has been successfully added");
                 alert.setHeaderText("Success");
@@ -229,6 +231,7 @@ public class ErrorMsg implements Initializable {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.OK);
                 alert.showAndWait();
+                break;
         }
     }
 
@@ -263,7 +266,7 @@ public class ErrorMsg implements Initializable {
                 alert2.getButtonTypes().clear();
                 alert2.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
                 alert2.showAndWait();
-
+                break;
 
         }
     }

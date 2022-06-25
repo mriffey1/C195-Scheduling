@@ -49,14 +49,14 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="appointCountryTab" text="Appointments By Country">
+            <Tab fx:id="appointCountryTab" text="Customer Totals By Country">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="countryTable" layoutX="42.0" layoutY="36.0" prefHeight="250.0" prefWidth="372.0">
                           <columns>
-                            <TableColumn fx:id="appointCountry" prefWidth="181.52727508544922" text="Appointments by Country" />
-                            <TableColumn fx:id="appointCountryTotal" prefWidth="169.30908203125" text="Total" />
+                            <TableColumn fx:id="appointCountry" prefWidth="181.52727508544922" text="Country" />
+                            <TableColumn fx:id="appointCountryTotal" prefWidth="169.30908203125" text="Customer Total" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

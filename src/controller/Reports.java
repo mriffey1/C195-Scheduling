@@ -116,7 +116,7 @@ public class Reports implements Initializable {
         appointTotalType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointTypeTotal.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
 
-        // Appointments by Country for the "Appointments By Country" tab
+        // Contacts by Country
         countryTable.setItems(CountryDAO.countryTotals());
         countryTable.setPlaceholder(new Label("No data for Appointments by Country is available."));
         appointCountryTotal.setCellValueFactory(new PropertyValueFactory<>("countryMonthTotal"));
