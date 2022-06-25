@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Model for Contacts
+ *
+ * @author Megan Riffey
+ */
 public class Contact {
     private int contactId;
     private String contactName;
@@ -7,8 +12,9 @@ public class Contact {
 
     /**
      * Overloaded constructor for Contact
-     * @param contactId contact id
-     * @param contactName contact name
+     *
+     * @param contactId    contact id
+     * @param contactName  contact name
      * @param contactEmail contact email
      */
     public Contact(int contactId, String contactName, String contactEmail) {

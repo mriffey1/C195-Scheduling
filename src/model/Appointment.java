@@ -19,6 +19,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * Model class for Appointments
+ *
+ * @author Megan Riffey
+ */
 public class Appointment {
 
     private int appointmentId;

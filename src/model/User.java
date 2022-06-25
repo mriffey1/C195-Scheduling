@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * Model Class that creates the User Objects
+ * Model Class for User's
  *
  * @author Megan Riffey
  */

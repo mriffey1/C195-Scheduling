@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Model for Countries
+ *
+ * @author Megan Riffey
+ */
 public class Country {
     private int countryId;
     private String countryName;
@@ -20,7 +25,7 @@ public class Country {
     /**
      * Overloaded constructor for Country used in CountryDAO that gets all countries to an observablelist
      *
-     * @param countryId country id
+     * @param countryId   country id
      * @param countryName country name
      */
     public Country(int countryId, String countryName) {
@@ -30,6 +35,7 @@ public class Country {
 
     /**
      * Getter for totals for country month
+     *
      * @return countryMonthTotal
      */
     public int getCountryMonthTotal() {
@@ -38,6 +44,7 @@ public class Country {
 
     /**
      * Getter for country
+     *
      * @return countryMonth
      */
     public String getCountryMonth() {
