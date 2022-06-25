@@ -28,7 +28,6 @@ public class Customer {
     }
 
 
-
 //    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
 //                    String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId) {
 //        this.customerId = customerId;
@@ -46,8 +45,7 @@ public class Customer {
 //    }
 
 
-
-  // private static ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
+    // private static ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
 
     public Customer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId, String customerCountryName, int customerId) {
         this.customerId = customerId;
@@ -80,18 +78,18 @@ public class Customer {
 //        this.lastUpdatedBy = lastUpdatedBy;
 //    }
 
-   // public static void updateCustomer(int Index, Customer customer){
- //       customerList.set(Index, customer);
+    // public static void updateCustomer(int Index, Customer customer){
+    //       customerList.set(Index, customer);
 
 
- //   }
-    public String getCustomerDivisionName(){
+    //   }
+    public String getCustomerDivisionName() {
         return customerDivisionName;
-}
+    }
 
-public String getCustomerCountryName(){
+    public String getCustomerCountryName() {
         return customerCountryName;
-}
+    }
 
 
     /**
@@ -184,18 +182,33 @@ public String getCustomerCountryName(){
         this.customerDivisionId = customerDivisionId;
     }
 
+    /**
+     * Getter for customer ID for customer
+     *
+     * @return customerCountryId
+     */
     public int getCustomerCountryId() {
         return customerCountryId;
     }
 
+    /**
+     * Setter for customer country Id
+     *
+     * @param customerCountryId country Id associated with customer
+     */
     public void setCustomerCountryId(int customerCountryId) {
         this.customerCountryId = customerCountryId;
     }
 
-    public Customer(int customerId, String customerName ) {
+    /**
+     * Constructor for customer Id and customer name
+     *
+     * @param customerId   customer's id number
+     * @param customerName customer's name
+     */
+    public Customer(int customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
-
     }
 
     /**

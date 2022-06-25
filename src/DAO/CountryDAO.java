@@ -9,6 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Country SQL queries to obtain country information from database
+ *
+ * @author Megan Riffey
+ */
 public class CountryDAO {
 
     /**

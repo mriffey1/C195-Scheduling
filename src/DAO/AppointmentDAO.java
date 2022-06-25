@@ -11,6 +11,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Appointment SQL queries to obtain appointment information from database
+ *
+ * @author Megan Riffey
+ */
 public class AppointmentDAO {
 
     /**

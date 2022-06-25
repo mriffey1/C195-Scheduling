@@ -11,7 +11,17 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * First level division queries to access database
+ *
+ * @author Megan Riffey
+ */
 public class FirstLvlDivisionDAO {
+    /**
+     * SQL query to obtain all division ID's with observablelist
+     *
+     * @return divisionList
+     */
     public static ObservableList<FirstLVLDivision> getAllDivisionId() {
         ObservableList<FirstLVLDivision> divisionList = FXCollections.observableArrayList();
         try {
@@ -40,6 +50,7 @@ public class FirstLvlDivisionDAO {
 
     /**
      * SQL query that returns division name from division ID
+     *
      * @param divisionId division ID
      * @return c - division Id and Division Name
      */
@@ -64,6 +75,7 @@ public class FirstLvlDivisionDAO {
 
     /**
      * SQL Query that selects associated division ID and division name from associated countryId for combo boxes
+     *
      * @param countryId country ID
      * @return divisionCountryOptions
      * @throws SQLException addresses unhandled SQL exception
@@ -71,25 +83,25 @@ public class FirstLvlDivisionDAO {
     public static ObservableList<FirstLVLDivision> displayDivision(int countryId) throws SQLException {
         ObservableList<FirstLVLDivision> divisionCountryOptions = FXCollections.observableArrayList();
 
-            String sql = "SELECT * FROM first_level_divisions WHERE Country_ID = " + countryId;
-            PreparedStatement ps = JDBC.conn.prepareStatement(sql);
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
+        String sql = "SELECT * FROM first_level_divisions WHERE Country_ID = " + countryId;
+        PreparedStatement ps = JDBC.conn.prepareStatement(sql);
+        ps.execute();
+        ResultSet rs = ps.getResultSet();
 
-            while (rs.next()) {
-                int divisionId = rs.getInt("Division_ID");
-                String divisionName = rs.getString("Division");
-                countryId = rs.getInt("Country_ID");
-                Timestamp Create_Date = rs.getTimestamp("Create_Date");
-                LocalDateTime createDate = Create_Date.toLocalDateTime();
-                String createBy = rs.getString("Created_By");
-                Timestamp Last_Updated = rs.getTimestamp("Last_Update");
-                LocalDateTime lastUpdated = Last_Updated.toLocalDateTime();
-                String lastUpdatedBy = rs.getString("Last_Updated_By");
+        while (rs.next()) {
+            int divisionId = rs.getInt("Division_ID");
+            String divisionName = rs.getString("Division");
+            countryId = rs.getInt("Country_ID");
+            Timestamp Create_Date = rs.getTimestamp("Create_Date");
+            LocalDateTime createDate = Create_Date.toLocalDateTime();
+            String createBy = rs.getString("Created_By");
+            Timestamp Last_Updated = rs.getTimestamp("Last_Update");
+            LocalDateTime lastUpdated = Last_Updated.toLocalDateTime();
+            String lastUpdatedBy = rs.getString("Last_Updated_By");
 
-                FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId, createDate, createBy, lastUpdated, lastUpdatedBy);
-                divisionCountryOptions.add(c);
-            }
-            return divisionCountryOptions;
+            FirstLVLDivision c = new FirstLVLDivision(divisionId, divisionName, countryId, createDate, createBy, lastUpdated, lastUpdatedBy);
+            divisionCountryOptions.add(c);
         }
+        return divisionCountryOptions;
     }
+}

@@ -42,8 +42,6 @@ public class Reports implements Initializable {
     @FXML
     private TableColumn<Appointment, Integer> appointMonthTotal;
     @FXML
-    private Tab contactSchedule;
-    @FXML
     private TableColumn<Appointment, Integer> appointId;
     @FXML
     private TableColumn<Appointment, String> appointTitle;
@@ -69,12 +67,6 @@ public class Reports implements Initializable {
     private TableColumn appointCountryTotal;
     @FXML
     private Button backToMenu;
-    @FXML
-    private Tab appointCountryTab;
-    @FXML
-    private Tab contactScheduleTab;
-    @FXML
-    private Tab appointTotalTab;
     @FXML
     private TableView contactTable;
 

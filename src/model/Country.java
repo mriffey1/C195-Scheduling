@@ -28,18 +28,22 @@ public class Country {
         this.countryName = countryName;
     }
 
+    /**
+     * Getter for totals for country month
+     * @return countryMonthTotal
+     */
     public int getCountryMonthTotal() {
         return countryMonthTotal;
     }
 
+    /**
+     * Getter for country
+     * @return
+     */
     public String getCountryMonth() {
         return countryMonth;
     }
 
-
-//    public Country(int countryId) {
-//        this.countryId = countryId;
-//    }
 
     /**
      * Getter for country Id

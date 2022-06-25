@@ -25,6 +25,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * AppointmentsModify class
+ *
+ * @author Megan Riffey
+ */
 public class AppointmentsModify implements Initializable {
 
     @FXML
@@ -92,7 +97,7 @@ public class AppointmentsModify implements Initializable {
 
         // Handling null pointer exception and alert message
         Contact contact = contactCombo.getValue();
-        if (contact == null){
+        if (contact == null) {
             helper.ErrorMsg.getError(24);
         }
         int appointmentContact = contactCombo.getValue().getContactId();

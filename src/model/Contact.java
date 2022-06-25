@@ -74,7 +74,7 @@ public class Contact {
     }
 
     /**
-     * Override to display contactName in place of contact Id
+     * Override to display contactName as String
      *
      * @return contactName
      */

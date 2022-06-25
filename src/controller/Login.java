@@ -174,7 +174,7 @@ public class Login implements Initializable {
     }
 
     /**
-     * LAMBDA EXPRESSION: LINES 180-182 to get file name for all login activity
+     * LAMBDA EXPRESSION: LINES 179-181 to get file name for all login activity
      */
     LogActivity logActivity = () -> {
         return "login_activity.txt";

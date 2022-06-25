@@ -177,7 +177,7 @@ public class Appointment {
         this.appointmentContact = appointmentContact;
     }
 
-    public String getAppointmentContactName(){
+    public String getAppointmentContactName() {
         return appointmentContactName;
     }
 
@@ -323,14 +323,11 @@ public class Appointment {
      */
     public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAppointmentList();
-
         LocalDateTime checkApptStart;
         LocalDateTime checkApptEnd;
-
         for (Appointment a : appointmentList) {
             checkApptStart = a.getAppointmentStart();
             checkApptEnd = a.getAppointmentEnd();
-
             if (customerId != a.getAppointmentCustomerId()) {
                 continue;
             } else if (checkApptStart.isEqual(appointmentStart) || checkApptEnd.isEqual(appointmentEnd)) {
@@ -371,10 +368,10 @@ public class Appointment {
         LocalDateTime appStartEST = appointmentStart.atZone(localZone).withZoneSameInstant(estZone).toLocalDateTime();
         LocalDateTime appEndEST = appointmentEnd.atZone(localZone).withZoneSameInstant(estZone).toLocalDateTime();
 
-        LocalDateTime busStartEST = appStartEST.withHour(8).withMinute(0);
-        LocalDateTime busEndEST = appEndEST.withHour(22).withMinute(0);
+        LocalDateTime businessStartEST = appStartEST.withHour(8).withMinute(0);
+        LocalDateTime businessEndEST = appEndEST.withHour(22).withMinute(0);
 
-        if (appStartEST.isBefore(busStartEST) || appEndEST.isAfter(busEndEST)) {
+        if (appStartEST.isBefore(businessStartEST) || appEndEST.isAfter(businessEndEST)) {
             LocalTime localStart = Appointment.localStart();
             LocalTime localEnd = Appointment.localEnd();
             Alert alert1 = new Alert(Alert.AlertType.ERROR);
@@ -395,38 +392,38 @@ public class Appointment {
      * Method to establish local start time from eastern and display in business hours as an alert for users to display their valid local times
      * for scheduling appointments
      *
-     * @return busStartLocal
+     * @return businessStartLocal
      */
     public static LocalTime localStart() {
         LocalTime openingBusinessTime = LocalTime.of(8, 0);
-        ZoneId estZone = ZoneId.of("America/New_York");
+        ZoneId easternZone = ZoneId.of("America/New_York");
         ZoneId localZone = ZoneId.systemDefault();
 
         LocalDateTime businessEastern = LocalDateTime.of(LocalDate.now(), openingBusinessTime);
-        LocalDateTime businessLocal = businessEastern.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
+        LocalDateTime businessLocal = businessEastern.atZone(easternZone).withZoneSameInstant(localZone).toLocalDateTime();
 
-        LocalTime busStartLocal = businessLocal.toLocalTime();
+        LocalTime businessStartLocal = businessLocal.toLocalTime();
 
-        return busStartLocal;
+        return businessStartLocal;
     }
 
     /**
      * Method to establish local end time from eastern and display in business hours as an alert for users to display their valid local times
      * for scheduling appointments
      *
-     * @return busEndLocal
+     * @return businessEndLocal
      */
     public static LocalTime localEnd() {
-        LocalTime busEndEST = LocalTime.of(22, 0);
-        ZoneId estZone = ZoneId.of("America/New_York");
+        LocalTime closingBusinessTime = LocalTime.of(22, 0);
+        ZoneId easternZone = ZoneId.of("America/New_York");
         ZoneId localZone = ZoneId.systemDefault();
 
-        LocalDateTime busEstDT = LocalDateTime.of(LocalDate.now(), busEndEST);
-        LocalDateTime busLocalDT = busEstDT.atZone(estZone).withZoneSameInstant(localZone).toLocalDateTime();
+        LocalDateTime businessEndDT = LocalDateTime.of(LocalDate.now(), closingBusinessTime);
+        LocalDateTime businessLocalDT = businessEndDT.atZone(easternZone).withZoneSameInstant(localZone).toLocalDateTime();
 
-        LocalTime busEndLocal = busLocalDT.toLocalTime();
+        LocalTime businessEndLocal = businessLocalDT.toLocalTime();
 
-        return busEndLocal;
+        return businessEndLocal;
     }
 
     /**

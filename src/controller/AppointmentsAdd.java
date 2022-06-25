@@ -25,6 +25,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * AppointmentsAdd class
+ *
+ * @author Megan Riffey
+ */
 public class AppointmentsAdd implements Initializable {
     @FXML
     private TextField appointmentIDTextField;
@@ -99,6 +104,7 @@ public class AppointmentsAdd implements Initializable {
             helper.ErrorMsg.getError(20);
             return;
         }
+
         // Handling null pointer exception and alert message
         LocalTime end = endTimeComboAdd.getValue();
         if (end == null) {
@@ -106,6 +112,7 @@ public class AppointmentsAdd implements Initializable {
             return;
         }
         LocalDateTime appointmentEnd = LocalDateTime.of(endDatePickerAdd.getValue(), endTimeComboAdd.getValue());
+
         // Handling null pointer exception and alert message
         Customer customer = customerComboAdd.getValue();
         if (customer == null) {
@@ -113,6 +120,7 @@ public class AppointmentsAdd implements Initializable {
             return;
         }
         int appointmentCustomerId = customerComboAdd.getValue().getCustomerId();
+
         // Handling null pointer exception and alert message
         User user = userComboAdd.getValue();
         if (user == null) {
@@ -155,8 +163,8 @@ public class AppointmentsAdd implements Initializable {
     }
 
     /**
-     * LAMBDA EXPRESSION: Line 179 - Data Picker: takes value from start date and sets the value in the end date picker.
-     * LAMBDA EXPRESSION: Line 180 - Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
+     * LAMBDA EXPRESSION: Line 187 - Data Picker: takes value from start date and sets the value in the end date picker.
+     * LAMBDA EXPRESSION: Line 188 - Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
      * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
      * 30 minutes automatically onto the end time based on the selected start time.
      *

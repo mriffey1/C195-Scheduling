@@ -23,7 +23,11 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-
+/**
+ * CustomerAdd class
+ *
+ * @author Megan Riffey
+ */
 public class CustomerAdd implements Initializable {
     @FXML
     private TextField customerIDTextField;
@@ -79,7 +83,7 @@ public class CustomerAdd implements Initializable {
         }
     }
 
-        /**
+    /**
      * Action event for cancel button. When button is pressed, will redirect back to main Customers screen.
      *
      * @param actionEvent event for cancel button

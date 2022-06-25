@@ -9,6 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Contact SQL queries to obtain contact information from database
+ *
+ * @author Megan Riffey
+ */
 public class ContactDAO {
     /**
      * SQL Query to get all contacts and add to ObservableList

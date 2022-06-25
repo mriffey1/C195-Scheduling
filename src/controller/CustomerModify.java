@@ -29,6 +29,7 @@ import static java.time.LocalDateTime.now;
 
 /**
  * CustomerModify class
+ *
  * @author Megan Riffey
  */
 public class CustomerModify implements Initializable {

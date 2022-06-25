@@ -19,39 +19,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
  * Appointments class
+ *
  * @author Megan Riffey
  */
 public class Appointments implements Initializable {
 
-    public ToggleGroup appointmentView;
     @FXML
-    private TableView<Appointment> appointTable11;
-    @FXML
-    private TableColumn<Appointment, Integer> appointIdCol11;
-    @FXML
-    private TableColumn<Appointment, String> appointTitleCol11;
-    @FXML
-    private TableColumn<Appointment, String> appointDescriptionCol11;
-    @FXML
-    private TableColumn<Appointment, String> appointLocationCol11;
-    @FXML
-    private TableColumn<Appointment, Integer> appointContactCol11;
-    @FXML
-    private TableColumn<Appointment, String> appointTypeCol11;
-    @FXML
-    private TableColumn<Appointment, Timestamp> appointDateCol11;
-    @FXML
-    private TableColumn<Appointment, Timestamp> appointEndDateCol11;
-    @FXML
-    private TableColumn<Appointment, Integer> appointCustIdCol11;
-    @FXML
-    private TableColumn<Appointment, Integer> appointUserIdCol11;
+    private ToggleGroup appointmentView;
     @FXML
     private TableView<Appointment> appointTable;
     @FXML
@@ -74,30 +53,7 @@ public class Appointments implements Initializable {
     private TableColumn<Appointment, Integer> appointCustIdCol;
     @FXML
     private TableColumn<Appointment, Integer> appointUserIdCol;
-    @FXML
-    private TableView<Appointment> appointTable1;
-    @FXML
-    private TableColumn<Appointment, Integer> appointIdCol1;
-    @FXML
-    private TableColumn<Appointment, String> appointTitleCol1;
-    @FXML
-    private TableColumn<Appointment, String> appointDescriptionCol1;
-    @FXML
-    private TableColumn<Appointment, String> appointLocationCol1;
-    @FXML
-    private TableColumn<Appointment, Integer> appointContactCol1;
-    @FXML
-    private TableColumn<Appointment, String> appointTypeCol1;
-    @FXML
-    private TableColumn<Appointment, Timestamp> appointDateCol1;
-    @FXML
-    private TableColumn<Appointment, Timestamp> appointEndDateCol1;
-    @FXML
-    private TableColumn<Appointment, Integer> appointCustIdCol1;
-    @FXML
-    private TableColumn<Appointment, Integer> appointUserIdCol1;
-    ZonedDateTime startRange;
-    ZonedDateTime endRange;
+
 
     ObservableList<Appointment> AppointmentList = FXCollections.observableArrayList();
 
@@ -186,7 +142,6 @@ public class Appointments implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         appointTable.setItems(AppointmentDAO.getAppointmentList());
         appointIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
@@ -198,11 +153,6 @@ public class Appointments implements Initializable {
         appointEndDateCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
         appointCustIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
         appointUserIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentUserId"));
-
-
-
-
-
     }
 
     /**
@@ -222,7 +172,6 @@ public class Appointments implements Initializable {
 
     public void allAppointments(ActionEvent actionEvent) {
         appointTable.setItems(AppointmentDAO.getAppointmentList());
-
     }
 
     public void monthlyAppointments(ActionEvent actionEvent) {

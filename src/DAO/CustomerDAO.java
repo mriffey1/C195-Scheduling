@@ -11,6 +11,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Customer SQL queries to access customer information in database
+ *
+ * @author Megan Riffey
+ */
 public class CustomerDAO {
 
     /**
