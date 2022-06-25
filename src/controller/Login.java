@@ -131,7 +131,7 @@ public class Login implements Initializable {
                     Alert confirmRemoval = new Alert(Alert.AlertType.WARNING);
                     confirmRemoval.setTitle("Alert");
                     confirmRemoval.setContentText("Appointment ");
-                    confirmRemoval.setContentText(langBundle.getString("Appointment") + " " + appointment.getAppointmentId() + langBundle.getString("beginsat") + " " +  appointment.getAppointmentStart());
+                    confirmRemoval.setContentText(langBundle.getString("Appointment") + " " + appointment.getAppointmentId() + " " + langBundle.getString("beginsat") + " " +  appointment.getAppointmentStart());
                     confirmRemoval.getButtonTypes().clear();
                     confirmRemoval.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
                     confirmRemoval.showAndWait();
