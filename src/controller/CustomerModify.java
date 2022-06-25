@@ -75,22 +75,22 @@ public class CustomerModify implements Initializable {
             int customerId = Integer.parseInt(customerIDTextField.getText());
             String customerName = customerNameTextField.getText();
             if (customerNameTextField.getText().isEmpty()) {
-                helper.ErrorMsg.getError(1);
+                helper.ErrorMsg.getError(14);
                 return;
             }
             String customerAddress = customerAddressTextField.getText();
             if (customerAddressTextField.getText().isEmpty() || customerAddressTextField.getText().isBlank()) {
-                helper.ErrorMsg.getError(1);
+                helper.ErrorMsg.getError(15);
                 return;
             }
             String customerPostalCode = customerPostalTextField.getText();
             if (customerPostalTextField.getText().isEmpty() || customerPostalTextField.getText().isBlank()) {
-                helper.ErrorMsg.getError(1);
+                helper.ErrorMsg.getError(16);
                 return;
             }
             String customerPhone = customerPhoneTextField.getText();
             if (customerPhoneTextField.getText().isEmpty() || customerPhoneTextField.getText().isBlank()) {
-                helper.ErrorMsg.getError(1);
+                helper.ErrorMsg.getError(25);
                 return;
             }
             int customerDivisionId = customerDivisionCombo.getValue().getDivisionID();
