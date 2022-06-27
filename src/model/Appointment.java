@@ -450,6 +450,7 @@ public class Appointment {
         return appointmentTimeList;
     }
 
+
     /**
      * Action event to return to main appointments screen
      *

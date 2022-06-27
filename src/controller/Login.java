@@ -34,7 +34,6 @@ import static DAO.UserDAO.*;
 
 public class Login implements Initializable {
 
-    //  public static Object userName;
     @FXML
     private Label labelLocation;
     @FXML
@@ -60,7 +59,7 @@ public class Login implements Initializable {
     LocalDateTime currentTime = LocalDateTime.now();
     ZonedDateTime LDTConvert = currentTime.atZone(ZoneId.systemDefault());
     LocalDateTime currentTimePlus15 = LocalDateTime.now().plusMinutes(15);
-    ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("America/New_York"));
+    ZonedDateTime LDTUTC = LDTConvert.withZoneSameInstant(ZoneId.of("Etc/UTC"));
 
 
     /**
@@ -188,7 +187,7 @@ public class Login implements Initializable {
      */
     public void loginActivity() throws IOException {
         FileWriter fwritter = new FileWriter(logActivity.getFileName(), true);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ssa");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ssa z");
         ZoneId localZone = ZoneId.systemDefault();
         if (loginSuccess) {
             fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(LDTUTC));

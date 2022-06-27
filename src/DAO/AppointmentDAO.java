@@ -131,7 +131,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getWeeklyAppointments() {
         ObservableList<Appointment> weeklyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * from appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE appointments.Start >= NOW() + 7 ORDER BY appointments.Appointment_ID";
+            String sql = "SELECT * FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE YEARWEEK(START) = YEARWEEK(NOW()) ORDER BY appointments.Appointment_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -180,7 +180,7 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getMonthlyAppointments() {
         ObservableList<Appointment> monthlyList = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * from appointments JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE MONTH(appointments.Start) = MONTH(NOW()) ORDER BY appointments.Appointment_ID";
+            String sql = "SELECT * FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID WHERE MONTH(START) = MONTH(NOW()) ORDER BY appointments.Appointment_ID";
             PreparedStatement ps = JDBC.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
