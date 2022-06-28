@@ -187,12 +187,12 @@ public class Login implements Initializable {
      */
     public void loginActivity() throws IOException {
         FileWriter fwritter = new FileWriter(logActivity.getFileName(), true);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ssa z");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ss");
         ZoneId localZone = ZoneId.systemDefault();
         if (loginSuccess) {
-            fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(LDTUTC));
+            fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(currentTime));
         } else if (!loginSuccess) {
-            fwritter.write(txtFieldUserName.getText() + " has failed login on " + formatter.format(LDTUTC));
+            fwritter.write(txtFieldUserName.getText() + " has failed login on " + formatter.format(currentTime));
         }
         fwritter.write("\n");
         fwritter.close();
