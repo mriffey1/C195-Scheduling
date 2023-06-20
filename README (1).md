@@ -39,12 +39,29 @@
 <div align="center"><img src="https://github.com/mriffey1/C195-Scheduling/assets/88506324/a36db465-f353-4c17-8ec5-c2dff6b54e65" height="200px" alt-text="image"></div></br>
 Access existing database and adding functionality for adding, updating, deleting appointments and customers. The database schema is no longer available as it lived on a virtual machine during my time with WGU.  
 
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
-* ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-* ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-* ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+<div align="center">
+  
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+
+</div>
+
+* IDE: IntelliJ IDEA 2022.1 (Community Edition) x64
+* JDK: Java 17.0.3
+* JavaFX: JAVAFX.SDK.18.0.1
+ 
+
+
+* Author: Megan Riffey
+Student ID# 000550488
+Application Version 1.2
+Date: 6/24/2022
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
