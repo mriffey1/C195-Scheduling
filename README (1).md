@@ -1,8 +1,6 @@
 
 <a name="readme-top"></a>
 
-
-
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -10,9 +8,6 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
 
 <h3 align="center">WGU C195 - Scheduling Application</h3>
 
@@ -83,6 +78,9 @@ To get a local copy up and running follow these simple example steps.
 This is an example of how to list things you need to use the software and how to install them.
 * [Java 17.0.3](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 * [JAVAFX.SDK.18.0.1](https://gluonhq.com/products/javafx/)
+  ```sh
+  --module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics
+  ```
 * [mysql-connector-java-8.0.29](https://dev.mysql.com/downloads/connector/j/?os=26)
   ```sh
   
