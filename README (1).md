@@ -15,8 +15,6 @@
 
 </div>
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -25,13 +23,6 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -43,110 +34,53 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `mriffey1`, `C195-Scheduling`, `twitter_handle`, `mriffey`, `email_client`, `email`, `WGU C195 - Scheduling Application`, `project_description`
+<div align="center"><img src="https://github.com/mriffey1/C195-Scheduling/assets/88506324/a36db465-f353-4c17-8ec5-c2dff6b54e65" height="200px" alt-text="image"></div></br>
+Access existing database and adding functionality for adding, updating, deleting appointments and customers. The database schema is no longer available as it lived on a virtual machine during my time with WGU.  
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 * ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 * ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 * ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* [Java 17.0.3](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-* [JAVAFX.SDK.18.0.1](https://gluonhq.com/products/javafx/)
-  ```sh
-  --module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics
-  ```
-* [mysql-connector-java-8.0.29](https://dev.mysql.com/downloads/connector/j/?os=26)
-  ```sh
-  
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/mriffey1/C195-Scheduling.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+How to run program:</br>
+Username: test</br>
+Password: test
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Launch program and enter username and password (username and password are case sensitive) on login screen and click the login button or cancel to exit the program.</br>
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+User will receive an alert if username or password is incorrect. Once the user has been validated and logged in - an alert will be display letting the user know if there are any appointments within 15 minutes or not.
 
+<b>MAIN MENU:</b></br>
+After the appointment notification, the user will be directed to the main menu where 4 buttons will appear on the screen.
+
+<b>CUSTOMER:</b></br>
+The customer button will lead to the customer list and provide a table with all the available customer's information. Underneath the table on the left-hand side, there are 3 buttons.
+The update button will allow you to update an existing contact, the add button will allow you to create a new customer, and delete will allow you to remove an existing customer from the system.
+The back to menu button will take you back to the main menu screen.
+
+<b>APPOINTMENT:</b></br>
+The appointment button will lead the user to a screen that displays all existing appointments by default. At the top middle of the screen, the user can select from all appointments, the next rolling week and the
+next rolling month appointments by selecting the appropriate radio button.  Underneath the table on the left-hand side, there are 3 buttons. The update button will allow the user to update an existing
+appointment, the add button will allow a user to create a new appointment and the delete button will allow the user to delete the selected appointment from the system.
+The back to menu button will take you back to the main menu screen.
+
+<b>REPORTS:</b></br>
+The report button will take you to the report list where there will be three tabs. Each tab has its own report, Appointment Totals, Contact Schedules and Customer Totals by Country.
+The appointment totals tab displays the different appointment types and their associated totals. In addition, on the right side of the appointment totals tab, the appointment totals are broken down by month.
+The contact schedules tab has a combobox that allows you to select a contact and will display appointments associated with the content in the tableview.
+
+<B>REPORT A3F:</b></br> The Customer Totals By Country tab shows the number of Customers per country.
+
+The back to menu button will take you back to the main menu screen.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/mriffey1/C195-Scheduling/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 ## License
@@ -155,29 +89,14 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Megan Riffey - [@mriffey1](https://twitter.com/mriffey1) - m@megan.codes
 
 Project Link: [https://github.com/mriffey1/C195-Scheduling](https://github.com/mriffey1/C195-Scheduling)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
