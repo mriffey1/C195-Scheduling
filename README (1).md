@@ -11,7 +11,7 @@
 <h3 align="center">WGU C195 - Scheduling Application</h3>
 
   <p align="center">
-    Standalone Scheduling Application with CRUD functionality created in Java for Software I at WGU
+    Standalone Scheduling Application with CRUD functionality created in Java for Software II at WGU
 
 </div>
 
