@@ -8,7 +8,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 </div>
-<h3 align="center">WGU C195 - Scheduling Application</h3>
+<h2 align="center">WGU C195 - Scheduling Application</h2>
 
   <p align="center">
     Standalone Scheduling Application with CRUD functionality created in Java for Software II at WGU
@@ -26,11 +26,8 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -48,20 +45,15 @@ Access existing database and adding functionality for adding, updating, deleting
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 </div>
 
-* IDE: IntelliJ IDEA 2022.1 (Community Edition) x64
-* JDK: Java 17.0.3
-* JavaFX: JAVAFX.SDK.18.0.1
+* <b>IDE:</b> IntelliJ IDEA 2022.1 (Community Edition) x64
+* <b>JDK:</b> Java 17.0.3
+* <b>JavaFX:</b> JAVAFX.SDK.18.0.1
  
-
-
-* Author: Megan Riffey
-Student ID# 000550488
-Application Version 1.2
-Date: 6/24/2022
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
