@@ -81,9 +81,11 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
+* [Java 17.0.3](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+* [JAVAFX.SDK.18.0.1](https://gluonhq.com/products/javafx/)
+* [mysql-connector-java-8.0.29](https://dev.mysql.com/downloads/connector/j/?os=26)
   ```sh
-  npm install npm@latest -g
+  
   ```
 
 ### Installation
