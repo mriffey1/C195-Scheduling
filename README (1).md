@@ -1,17 +1,16 @@
 
 <a name="readme-top"></a>
 
+<div align="center">
+  
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+</div>
 <h3 align="center">WGU C195 - Scheduling Application</h3>
 
-  <p>
+  <p align="center">
     Standalone Scheduling Application with CRUD functionality created in Java for Software I at WGU
 
 </div>
